@@ -1,0 +1,9 @@
+Drivers/*
+Middlewares/*
+Utilities/*
+*.txt
+!.cproject
+!.project
+!*.ld
+!*.s
+*.orig
