@@ -88,16 +88,4 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef *htim) {
 	gpio_tim.Pin = GPIO_PIN_4;
 	HAL_GPIO_Init(GPIOB, &gpio_tim);
 }
-/**
-  * @}
-  */
 
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
