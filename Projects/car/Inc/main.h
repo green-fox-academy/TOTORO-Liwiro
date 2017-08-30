@@ -47,7 +47,7 @@
 #include "stm32l475e_iot01.h"
 #include "wifi.h"
 #include "init.h"
-#include "ps_control.h"
+#include "motor_control.h"
 #include "wifi_conn.h"
 
 /* Exported types ------------------------------------------------------------*/

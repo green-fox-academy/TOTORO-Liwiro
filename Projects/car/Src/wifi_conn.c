@@ -1,6 +1,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "wifi_conn.h"
-#include "ps_control.h"
+#include "motor_control.h"
 #include "init.h"
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,24 +61,21 @@ void send_ps_command()
 			do {
 				if(datalen > 0) {
 					printf("Received message from Controller\r\n");
-					if (command == 'a') {
-						ctrl_up();
+					if (command == 'w') {
+						go_forward();
 						printf("going forward\r\n");
-					} else if (command == 'b') {
-						ctrl_down();
+					} else if (command == 's') {
+						go_forward();;
 						printf("going backwards\r\n");
-					} else if (command == 'c') {
-						ctrl_stop();
+					} else if (command == 'a') {
+						//ctrl_stop();
 						printf("left\r\n");
 					} else if (command == 'd') {
-						ctrl_stop();
+						//ctrl_stop();
 						printf("right\n");
-					} else if (command == 'e') {
-						ctrl_stop();
+					} else if (command == 'x') {
+						//ctrl_stop();
 						printf("stop\n");
-					} else if (command == 'f') {
-						ctrl_stop();
-						printf("quit\n");
 					} else {
 						printf("wrong command!\n");
 						printf("%d\n", command);
