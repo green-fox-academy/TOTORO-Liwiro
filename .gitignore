@@ -1,9 +1,14 @@
 Drivers/*
 Middlewares/*
 Utilities/*
+Project/Liwiro_PC_Client/bin/*
+Project/Liwiro_PC_Client/obj/*
 *.txt
 !.cproject
 !.project
 !*.ld
 !*.s
 *.orig
+*.o
+*.save
+/Projects/Liwiro_PC_Client/bin/Debug/Liwiro_PC_Client
