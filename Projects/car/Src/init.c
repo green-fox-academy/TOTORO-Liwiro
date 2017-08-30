@@ -2,8 +2,9 @@
 #include "init.h"
 #include "stm32l4xx_hal.h"
 #include "stm32l475e_iot01.h"
+#include "stm32l4xx_hal_tim.h"
+
 /* Private typedef -----------------------------------------------------------*/
-#define PERIOD_VALUE		0xFFFF				/* Period Value  */
 #define PWM_PERIOD_VALUE	100
 /* Private define ------------------------------------------------------------*/
 #define PWM_PULSE_VALUE    (PWM_PERIOD_VALUE/2)	/* Duty cycle 50%  */
@@ -12,16 +13,6 @@
 /* Private variables --------------------------------------------------------*/
 /* UART variables */
 UART_HandleTypeDef uart_handle;
-
-/* PWM variables */
-TIM_HandleTypeDef tim_pwm_handle;
-TIM_OC_InitTypeDef pwm_conf;
-
-/* TIM_Base variables */
-TIM_HandleTypeDef tim_base_handle;
-
-/* Delay variable */
-uint16_t tickstart;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -64,60 +55,12 @@ PUTCHAR_PROTOTYPE
 	return ch;
 }
 
-void time_base_init()
+void tim2_pwm_init()
 {
-	/* Compute the prescaler value to have TIM2 counter clock equal to 1742 Hz, period Time 574 micro sec */
-	uint32_t prescalervalue = (uint32_t)((SystemCoreClock) / 1742) - 1;
+	uint32_t prescalervalue = 20;
 
 	/* Set TIM2 instance */
-	tim_base_handle.Instance = TIM2;
-
-	/* Initialize TIMx peripheral as follows:
-	   + Period = 65535
-	   + Prescaler = ((SystemCoreClock)/1742) - 1
-	   + ClockDivision = 0
-	   + Counter direction = Up
-	*/
-	tim_base_handle.Init.Period            = PERIOD_VALUE;
-	tim_base_handle.Init.Prescaler         = prescalervalue;
-	tim_base_handle.Init.ClockDivision     = 0;
-	tim_base_handle.Init.CounterMode       = TIM_COUNTERMODE_UP;
-	tim_base_handle.Init.RepetitionCounter = 0;
-
-	if (HAL_TIM_Base_Init(&tim_base_handle) != HAL_OK)
-	{
-		/* Initialization Error */
-		error_handling("TIM Base initialization has failed!", HAL_ERROR);
-	}
-
-	/*##-2- Start the TIM Base generation in normal mode ####################*/
-	/* Start Channel1 */
-	if (HAL_TIM_Base_Start(&tim_base_handle) != HAL_OK)
-	{
-		/* Starting Error */
-		error_handling("Starting TIM Base has failed!", HAL_ERROR);
-	}
-}
-
-void delay(uint16_t delay_value)
-{
-	tickstart = __HAL_TIM_GET_COUNTER(&tim_base_handle);
-
-	if ((delay_value + tickstart) > 0xFFFF) {
-		while (__HAL_TIM_GET_COUNTER(&tim_base_handle) != 0);
-		while (__HAL_TIM_GET_COUNTER(&tim_base_handle) != delay_value - (0xFFFF - tickstart));
-	} else {
-		while ((__HAL_TIM_GET_COUNTER(&tim_base_handle) - tickstart) < delay_value);
-	}
-}
-
-void pwm_init()
-{
-	/* Compute the prescaler value to have TIM3 counter clock equal to 38 kHz */
-	uint8_t prescalervalue = 20;
-
-	/* Set TIM3 instance */
-	tim_pwm_handle.Instance = TIM3;
+	tim2_pwm_handle.Instance = TIM2;
 
 	/* Initialize TIMx peripheral as follows:
 	   + Prescaler = (SystemCoreClock / 380000) - 1
@@ -125,29 +68,69 @@ void pwm_init()
 	   + ClockDivision = 0
 	   + Counter direction = Up
 	*/
-	tim_pwm_handle.Init.Prescaler         = prescalervalue;
-	tim_pwm_handle.Init.Period            = PWM_PERIOD_VALUE;
-	tim_pwm_handle.Init.ClockDivision     = 0;
-	tim_pwm_handle.Init.CounterMode       = TIM_COUNTERMODE_UP;
-	tim_pwm_handle.Init.RepetitionCounter = 0;
+	tim2_pwm_handle.Init.Period            = PWM_PERIOD_VALUE;
+	tim2_pwm_handle.Init.Prescaler         = prescalervalue;
+	tim2_pwm_handle.Init.ClockDivision     = 0;
+	tim2_pwm_handle.Init.CounterMode       = TIM_COUNTERMODE_UP;
+	tim2_pwm_handle.Init.RepetitionCounter = 0;
 
-	if (HAL_TIM_PWM_Init(&tim_pwm_handle) != HAL_OK)
+	if (HAL_TIM_PWM_Init(&tim2_pwm_handle) != HAL_OK)
+	{
+		/* Initialization Error */
+		error_handling("TIM Base initialization has failed!", HAL_ERROR);
+	}
+
+	tim2_pwm_conf.OCFastMode = TIM_OCFAST_DISABLE;
+	tim2_pwm_conf.OCIdleState = TIM_OCIDLESTATE_RESET;
+	tim2_pwm_conf.OCMode = TIM_OCMODE_PWM1;
+	tim2_pwm_conf.OCPolarity = TIM_OCPOLARITY_HIGH;
+	tim2_pwm_conf.Pulse = PWM_PULSE_VALUE;
+
+	/* Set the pulse value for channel 1 */
+	if (HAL_TIM_PWM_ConfigChannel(&tim2_pwm_handle, &tim2_pwm_conf, TIM_CHANNEL_1) != HAL_OK)
+	{
+		/* Configuration Error */
+		error_handling("TIM2 PWM channel configuration has failed!", HAL_ERROR);
+	}
+}
+
+void tim3_pwm_init()
+{
+	/* Compute the prescaler value to have TIM3 counter clock equal to 38 kHz */
+	uint8_t prescalervalue = 20;
+
+	/* Set TIM3 instance */
+	tim3_pwm_handle.Instance = TIM3;
+
+	/* Initialize TIMx peripheral as follows:
+	   + Prescaler = (SystemCoreClock / 380000) - 1
+	   + Period = 100
+	   + ClockDivision = 0
+	   + Counter direction = Up
+	*/
+	tim3_pwm_handle.Init.Prescaler         = prescalervalue;
+	tim3_pwm_handle.Init.Period            = PWM_PERIOD_VALUE;
+	tim3_pwm_handle.Init.ClockDivision     = 0;
+	tim3_pwm_handle.Init.CounterMode       = TIM_COUNTERMODE_UP;
+	tim3_pwm_handle.Init.RepetitionCounter = 0;
+
+	if (HAL_TIM_PWM_Init(&tim3_pwm_handle) != HAL_OK)
 	{
 		/* Initialization Error */
 		error_handling("TIM PWM initialization has failed!", HAL_ERROR);
 	}
 
-	pwm_conf.OCFastMode = TIM_OCFAST_DISABLE;
-	pwm_conf.OCIdleState = TIM_OCIDLESTATE_RESET;
-	pwm_conf.OCMode = TIM_OCMODE_PWM1;
-	pwm_conf.OCPolarity = TIM_OCPOLARITY_HIGH;
-	pwm_conf.Pulse = PWM_PULSE_VALUE;
+	tim3_pwm_conf.OCFastMode = TIM_OCFAST_DISABLE;
+	tim3_pwm_conf.OCIdleState = TIM_OCIDLESTATE_RESET;
+	tim3_pwm_conf.OCMode = TIM_OCMODE_PWM1;
+	tim3_pwm_conf.OCPolarity = TIM_OCPOLARITY_HIGH;
+	tim3_pwm_conf.Pulse = PWM_PULSE_VALUE;
 
 	/* Set the pulse value for channel 1 */
-	if (HAL_TIM_PWM_ConfigChannel(&tim_pwm_handle, &pwm_conf, TIM_CHANNEL_1) != HAL_OK)
+	if (HAL_TIM_PWM_ConfigChannel(&tim3_pwm_handle, &tim3_pwm_conf, TIM_CHANNEL_1) != HAL_OK)
 	{
 		/* Configuration Error */
-		error_handling("TIM PWM channel configuration has failed!", HAL_ERROR);
+		error_handling("TIM PWM3 channel configuration has failed!", HAL_ERROR);
 	}
 }
 

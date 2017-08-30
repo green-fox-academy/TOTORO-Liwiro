@@ -1,5 +1,5 @@
 /* Includes ------------------------------------------------------------------*/
-#include "ps_control.h"
+#include "motor_control.h"
 #include "stm32l4xx_hal.h"
 #include "init.h"
 
@@ -48,92 +48,47 @@ void bit_zero()
 	delay(1);
 }
 
-void ctrl_up()
+void go_forward()
 {
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_up_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
+	HAL_TIM_PWM_Start(&tim2_pwm_handle, TIM_CHANNEL_1);
+	printf("PWM started\r\n");
+	while(1){
+		HAL_Delay(500);
+		tim2_pwm_handle.Instance->CCR1 = 10;
+		HAL_Delay(500);
+		tim2_pwm_handle.Instance->CCR1 = 80;
 	}
-	end_bit();
-	delay(31);
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_up_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
-	delay(31);
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_verification_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
+	HAL_TIM_PWM_Stop(&tim2_pwm_handle, TIM_CHANNEL_1);
 }
 
-void ctrl_down()
+void go_backward()
 {
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_down_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
+	HAL_TIM_PWM_Start(&tim3_pwm_handle, TIM_CHANNEL_1);
+	while(1){
+
 	}
-	end_bit();
-	delay(31);
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_down_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
+	HAL_TIM_PWM_Stop(&tim3_pwm_handle, TIM_CHANNEL_1);
+}
+
+void go_left()
+{
+	HAL_TIM_PWM_Start(&tim3_pwm_handle, TIM_CHANNEL_1);
+	while(1){
+
 	}
-	end_bit();
-	delay(31);
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_verification_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
+	HAL_TIM_PWM_Stop(&tim3_pwm_handle, TIM_CHANNEL_1);
+}
+
+void go_right()
+{
+	HAL_TIM_PWM_Start(&tim3_pwm_handle, TIM_CHANNEL_1);
+	while(1){
+
 	}
-	end_bit();
+	HAL_TIM_PWM_Stop(&tim3_pwm_handle, TIM_CHANNEL_1);
 }
 
 void ctrl_stop()
 {
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_stop_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
-	delay(31);
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_stop_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
-	delay(31);
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_verification_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
+
 }

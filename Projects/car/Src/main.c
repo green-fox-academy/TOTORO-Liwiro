@@ -62,12 +62,14 @@ int main(void) {
 	uart_init();
 
 	/* Initialize Timer for proper delay */
-	time_base_init();
+	tim2_pwm_init();
 
 	/* Initialize timer in PWM mode */
-	pwm_init();
-
-	send_ps_command();
+	tim3_pwm_init();
+	printf("timers initialized\r\n");
+//	go_backward();
+	go_forward();
+//	send_ps_command();
 
 }
 
