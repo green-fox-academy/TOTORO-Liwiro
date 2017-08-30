@@ -53,13 +53,73 @@ void connect_to_server(int *client_sock, unsigned int server_port, char *server_
 	printf("Connected to %s:%d\n", SERVER_IP, SERVER_PORT);
 }
 
-int send_message(void)
+int send_message_up(void)
+{
+	// Get the message from the user
+	char msg[1];
+	printf("\nEnter the message to send: ");
+//	msg[0] = (char)getch();
+        msg[0] = 'w';
+	// Send the message to the servers
+	int sent_bytes = send(client_socket, msg, strlen(msg), 0);
+	if (sent_bytes < 0)
+		handle_error("send() ");
+
+	return sent_bytes;
+}
+
+int send_message_down(void)
+{
+	// Get the message from the user
+	char msg[1];
+	printf("\nEnter the message to send: ");
+//	msg[0] = (char)getch();
+        msg[0] = 's';
+	// Send the message to the servers
+	int sent_bytes = send(client_socket, msg, strlen(msg), 0);
+	if (sent_bytes < 0)
+		handle_error("send() ");
+
+	return sent_bytes;
+}
+
+int send_message_left(void)
 {
 	// Get the message from the user
 	char msg[1];
 	printf("\nEnter the message to send: ");
 //	msg[0] = (char)getch();
         msg[0] = 'a';
+	// Send the message to the servers
+	int sent_bytes = send(client_socket, msg, strlen(msg), 0);
+	if (sent_bytes < 0)
+		handle_error("send() ");
+
+	return sent_bytes;
+}
+
+int send_message_right(void)
+{
+	// Get the message from the user
+	char msg[1];
+	printf("\nEnter the message to send: ");
+//	msg[0] = (char)getch();
+        msg[0] = 'd';
+	// Send the message to the servers
+	int sent_bytes = send(client_socket, msg, strlen(msg), 0);
+	if (sent_bytes < 0)
+		handle_error("send() ");
+
+	return sent_bytes;
+}
+
+int send_message_stop(void)
+{
+	// Get the message from the user
+	char msg[1];
+	printf("\nEnter the message to send: ");
+//	msg[0] = (char)getch();
+        msg[0] = 'x';
 	// Send the message to the servers
 	int sent_bytes = send(client_socket, msg, strlen(msg), 0);
 	if (sent_bytes < 0)
@@ -91,15 +151,15 @@ int main (int   argc, char *argv[])
     g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
 
     button = gtk_builder_get_object (builder, "button_up");
-    g_signal_connect (button, "clicked", G_CALLBACK (send_message), NULL);
+    g_signal_connect (button, "clicked", G_CALLBACK (send_message_up), NULL);
     button = gtk_builder_get_object (builder, "button_down");
-    g_signal_connect (button, "clicked", G_CALLBACK (send_message), NULL);
+    g_signal_connect (button, "clicked", G_CALLBACK (send_message_down), NULL);
     button = gtk_builder_get_object (builder, "button_left");
-    g_signal_connect (button, "clicked", G_CALLBACK (send_message), NULL);
+    g_signal_connect (button, "clicked", G_CALLBACK (send_message_left), NULL);
     button = gtk_builder_get_object (builder, "button_right");
-    g_signal_connect (button, "clicked", G_CALLBACK (send_message), NULL);
+    g_signal_connect (button, "clicked", G_CALLBACK (send_message_right), NULL);
     button = gtk_builder_get_object (builder, "button_stop");
-    g_signal_connect (button, "clicked", G_CALLBACK (send_message), NULL);
+    g_signal_connect (button, "clicked", G_CALLBACK (send_message_stop), NULL);
     button = gtk_builder_get_object (builder, "quit");
     g_signal_connect (button, "clicked", G_CALLBACK (gtk_main_quit), NULL);
 
