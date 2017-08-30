@@ -60,10 +60,10 @@ void send_ps_command()
 			/*trying to connect to server and sending data when connected in every 10 seconds */
 			do {
 				if(datalen > 0) {
-					printf("Received message  from Akos\r\n");
+					printf("Received message from Controller\r\n");
 					if (command == 'a') {
 						ctrl_up();
-						printf("going ahead\r\n");
+						printf("going forward\r\n");
 					} else if (command == 'b') {
 						ctrl_down();
 						printf("going backwards\r\n");
