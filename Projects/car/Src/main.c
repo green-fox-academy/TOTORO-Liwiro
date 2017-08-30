@@ -60,13 +60,13 @@ int main(void) {
 
 	/* Initialize UART */
 	uart_init();
-	printf("UART initialized \n\r");
+
 	/* Initialize Timer for proper delay */
 	time_base_init();
-	printf("timabase initialized \n\r");
+
 	/* Initialize timer in PWM mode */
 	pwm_init();
-	printf("pwm initialized \n\r");
+
 	send_ps_command();
 
 }

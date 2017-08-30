@@ -18,7 +18,7 @@ uint8_t ip[] = {10, 27, 99, 161};
 uint8_t firm_ip[] = {10, 27, 99, 161};
 int32_t socket;
 uint16_t datalen;
-uint8_t connentions = 0;
+uint8_t connections = 0;
 uint8_t command;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -28,11 +28,12 @@ void send_ps_command()
 {
     /*Initialize  WIFI */
     wifi_init();
+    connections = 0;
     while (1) {
 
 
     	/*Waiting for connection with WIFI AP */
-    	printf("> Trying to connect to %s.\n", SSID);
+    	printf("> Connecting to %s.\n", SSID);
         while (WIFI_Connect(SSID, PASSWORD, WIFI_ECN_WPA2_PSK) != WIFI_STATUS_OK);
 		printf("> Connected to %s!\n", SSID);
 
@@ -43,6 +44,7 @@ void send_ps_command()
 					ip_addr[1],
 					ip_addr[2],
 					ip_addr[3]);
+			printf("\n\r\n IP address assigned \n\r\n");
 		} else {
 			error_handling("> ERROR : es-wifi module CANNOT get IP address\n", WIFI_STATUS_ERROR);
 		}
@@ -50,26 +52,33 @@ void send_ps_command()
 		do {
 			int8_t socket = 0;
 			printf("Start TCP Server...\n");
-			while(WIFI_StartServer(socket, WIFI_TCP_PROTOCOL, "asd", SERVER_PORT) != WIFI_STATUS_OK);
-			connentions++;
+			while(WIFI_StartServer(socket, WIFI_TCP_PROTOCOL, "LIWIRO SERVER", SERVER_PORT) != WIFI_STATUS_OK);
+			connections++;
 			printf("----------------------------------------- \n");
 			printf("TCP Server Started \n");
 			printf("receiving data...\n");
 			/*trying to connect to server and sending data when connected in every 10 seconds */
 			do {
-				char send_buff[10];
 				if(datalen > 0) {
-					printf("Received message  from Akos\n");
-					if (command == 1) {
+					printf("Received message  from Akos\r\n");
+					if (command == 'a') {
 						ctrl_up();
-						sprintf(send_buff, "going ahead\n");
-						WIFI_SendData(socket, (uint8_t *)send_buff, sizeof(send_buff), &datalen, 0);
-					} else if (command == 3) {
+						printf("going ahead\r\n");
+					} else if (command == 'b') {
 						ctrl_down();
-						printf("going down\n");
-					} else if (command == 2) {
+						printf("going backwards\r\n");
+					} else if (command == 'c') {
+						ctrl_stop();
+						printf("left\r\n");
+					} else if (command == 'd') {
+						ctrl_stop();
+						printf("right\n");
+					} else if (command == 'e') {
 						ctrl_stop();
 						printf("stop\n");
+					} else if (command == 'f') {
+						ctrl_stop();
+						printf("quit\n");
 					} else {
 						printf("wrong command!\n");
 						printf("%d\n", command);
@@ -81,9 +90,9 @@ void send_ps_command()
 			printf("Closing the socket...\n");
 			WIFI_CloseClientConnection(socket);
 			WIFI_StopServer(socket);
-		} while (wifi_isconnected() == 1 && connentions < 4); //do-while
+		} while (wifi_isconnected() == 1 && connections < 4); //do-while
 		/*If there might be a problem with pinging, disconnect from WIFI AP anyway */
-		connentions = 0;
+		connections = 0;
 		printf("> Disconnected from WIFI!\n");
 		WIFI_Disconnect();
     }	//while (1)
