@@ -6,10 +6,18 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <termios.h>
 
 #define SERVER_IP           "10.27.6.40"
 #define SERVER_PORT         54545
 #define DATA_BUFFER_SIZE    1024
+
+static struct termios old, new;
+
+char getch(void);
+char getch_(int echo);
+char getch_(int echo);
+void initTermios(int echo);
 
 void handle_error(const char *error_string)
 {
@@ -52,9 +60,9 @@ void connect_to_server(int *client_sock, unsigned int server_port, char *server_
 int send_message(int *socket)
 {
 	// Get the message from the user
-	char msg[DATA_BUFFER_SIZE];
+	char msg[1];
 	printf("\nEnter the message to send: ");
-	gets(msg);
+	msg[0] = (char)getch();
 	// Send the message to the servers
 	int sent_bytes = send(*socket, msg, strlen(msg), 0);
 	if (sent_bytes < 0)
@@ -100,4 +108,34 @@ int main()
 	}
 	return 0;
 
+}
+
+/* Initialize new terminal i/o settings */
+void initTermios(int echo)
+{
+  tcgetattr(0, &old); /* grab old terminal i/o settings */
+  new = old; /* make new settings same as old settings */
+  new.c_lflag &= ~ICANON; /* disable buffered i/o */
+  new.c_lflag &= echo ? ECHO : ~ECHO; /* set echo mode */
+  tcsetattr(0, TCSANOW, &new); /* use these new terminal i/o settings now */
+}
+
+/* Restore old terminal i/o settings */
+void resetTermios(void)
+{
+  tcsetattr(0, TCSANOW, &old);
+}
+char getch_(int echo)
+{
+  char ch;
+  initTermios(echo);
+  ch = getchar();
+  resetTermios();
+  return ch;
+}
+
+/* Read 1 character without echo */
+char getch(void)
+{
+  return getch_(0);
 }
