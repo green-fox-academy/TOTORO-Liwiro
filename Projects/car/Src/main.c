@@ -58,11 +58,16 @@ int main(void) {
 	/* Configure LED2 */
 	BSP_LED_Init(LED2);
 
-	/* Initialize Timer for for proper delay */
+	/* Initialize UART */
+	uart_init();
+	printf("UART initialized \n\r");
+	/* Initialize Timer for proper delay */
 	time_base_init();
-
+	printf("timabase initialized \n\r");
 	/* Initialize timer in PWM mode */
 	pwm_init();
+	printf("pwm initialized \n\r");
+	send_ps_command();
 
 }
 

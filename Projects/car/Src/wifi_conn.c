@@ -7,7 +7,7 @@
 /* Private define ------------------------------------------------------------*/
 #define SSID     				"A66 Guest"
 #define PASSWORD 				"Hello123"
-#define SERVER_PORT 			8003
+#define SERVER_PORT 			13003
 #define WIFI_READ_TIMEOUT 		1000
 #define CONNECTION_TRIAL_MAX    10
 /* Private macro -------------------------------------------------------------*/
@@ -57,11 +57,13 @@ void send_ps_command()
 			printf("receiving data...\n");
 			/*trying to connect to server and sending data when connected in every 10 seconds */
 			do {
-				if(datalen >0) {
+				char send_buff[10];
+				if(datalen > 0) {
+					printf("Received message  from Akos\n");
 					if (command == 1) {
 						ctrl_up();
-						printf("going up\n");
-
+						sprintf(send_buff, "going ahead\n");
+						WIFI_SendData(socket, (uint8_t *)send_buff, sizeof(send_buff), &datalen, 0);
 					} else if (command == 3) {
 						ctrl_down();
 						printf("going down\n");
