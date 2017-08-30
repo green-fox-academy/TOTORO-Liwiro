@@ -1,3 +1,4 @@
+#include <gtk/gtk.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -13,6 +14,7 @@
 #define DATA_BUFFER_SIZE    1024
 
 static struct termios old, new;
+int client_socket;
 
 char getch(void);
 char getch_(int echo);
@@ -21,20 +23,13 @@ void initTermios(int echo);
 
 void handle_error(const char *error_string)
 {
-	//printf("Error: %s\nError code: %d\n", error_string, WSAGetLastError());
-	//WSACleanup();
 	printf("Press any key to exit from the program...");
-	//while (!kbhit());
-	//exit(EXIT_FAILURE);
 }
 
-/*void wsa_init()
+static void print_hello (GtkWidget *widget, gpointer   data)
 {
-	WSADATA wsaData;
-	int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
-	if (iResult != NO_ERROR)
-		handle_error("WSAStartup() ");
-}*/
+    g_print ("Hello World\n");
+}
 
 void connect_to_server(int *client_sock, unsigned int server_port, char *server_ip)
 {
@@ -47,8 +42,8 @@ void connect_to_server(int *client_sock, unsigned int server_port, char *server_
 	struct sockaddr_in addr_in;
 	addr_in.sin_family = AF_INET;
 	addr_in.sin_port = htons(server_port);
-	addr_in.sin_addr.s_addr = inet_addr(server_ip);
-	printf("%x\n", inet_addr(server_ip));
+//	addr_in.sin_addr.s_addr = inet_addr(server_ip);
+        addr_in.sin_addr.s_addr = 0xd8631b0a;
 
 	// Connecting the client socket to the server
 	int connect_retval = connect(*client_sock, (struct sockaddr *)&addr_in, sizeof(addr_in));
@@ -58,61 +53,66 @@ void connect_to_server(int *client_sock, unsigned int server_port, char *server_
 	printf("Connected to %s:%d\n", SERVER_IP, SERVER_PORT);
 }
 
-int send_message(int *socket)
+int send_message(void)
 {
 	// Get the message from the user
-	int msg[1];
+	char msg[1];
 	printf("\nEnter the message to send: ");
-	msg[0] = getch();
+//	msg[0] = (char)getch();
+        msg[0] = 'a';
 	// Send the message to the servers
-	int sent_bytes = send(*socket, msg, strlen(msg), 0);
+	int sent_bytes = send(client_socket, msg, strlen(msg), 0);
 	if (sent_bytes < 0)
 		handle_error("send() ");
 
 	return sent_bytes;
 }
 
-int main()
+int main (int   argc, char *argv[])
 {
-	// Initialize the WSA
-	//wsa_init();
-
-	// Connect to server
-	int client_socket;
     // Local variables used in the do-while loop
     int sent_bytes;
     int received_bytes;
     char recv_buff[DATA_BUFFER_SIZE];
-	while(1){
-        connect_to_server(&client_socket, SERVER_PORT, SERVER_IP);
-        do {
-            // Send data to the server
-            sent_bytes = send_message(&client_socket);
-            printf("%d\n", client_socket);
-            // Receive the answer if message was sent
-            /*if (sent_bytes > 0) {
-                received_bytes = recv(client_socket, recv_buff, DATA_BUFFER_SIZE, 0);
-                // Error handling
-                if (received_bytes < 0) {
-                    handle_error("recv() ");
-                } else {
-                    // Printing out received string
-                    recv_buff[received_bytes] = '\0';
-                    printf("Received string: %s\n", recv_buff);
-                }
-            }*/
-        } while (sent_bytes > 0);
+    connect_to_server(&client_socket, SERVER_PORT, SERVER_IP);
+    
+    GtkBuilder *builder;
+    GObject *window;
+    GObject *button;
 
-        printf("Closing the socket...\n");
-        close(client_socket);
-        printf("Cleaning up memory...\n");
-        //WSACleanup();
-	}
-	return 0;
+    gtk_init (&argc, &argv);
 
+    /* Construct a GtkBuilder instance and load our UI description */
+    builder = gtk_builder_new ();
+    gtk_builder_add_from_file (builder, "builder.ui", NULL);
+
+    /* Connect signal handlers to the constructed widgets. */
+    window = gtk_builder_get_object (builder, "window");
+    g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
+
+    button = gtk_builder_get_object (builder, "button_up");
+    g_signal_connect (button, "clicked", G_CALLBACK (send_message), NULL);
+    button = gtk_builder_get_object (builder, "button_down");
+    g_signal_connect (button, "clicked", G_CALLBACK (send_message), NULL);
+    button = gtk_builder_get_object (builder, "button_left");
+    g_signal_connect (button, "clicked", G_CALLBACK (send_message), NULL);
+    button = gtk_builder_get_object (builder, "button_right");
+    g_signal_connect (button, "clicked", G_CALLBACK (send_message), NULL);
+    button = gtk_builder_get_object (builder, "button_stop");
+    g_signal_connect (button, "clicked", G_CALLBACK (send_message), NULL);
+    button = gtk_builder_get_object (builder, "quit");
+    g_signal_connect (button, "clicked", G_CALLBACK (gtk_main_quit), NULL);
+
+    gtk_main ();    
+
+//    sent_bytes = send_message(&client_socket);
+    printf("Closing the socket...\n");
+    close(client_socket);
+    printf("Cleaning up memory...\n");
+
+    return 0;
 }
 
-/* Initialize new terminal i/o settings */
 void initTermios(int echo)
 {
   tcgetattr(0, &old); /* grab old terminal i/o settings */
