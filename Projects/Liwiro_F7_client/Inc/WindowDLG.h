@@ -7,7 +7,7 @@
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
-static void _cbDialog(WM_MESSAGE * pMsg);
+//void _cbDialog(WM_MESSAGE * pMsg);
 WM_HWIN CreateWindow(void);
 void MainTask(void);
 

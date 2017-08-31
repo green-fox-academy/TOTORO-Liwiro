@@ -46,11 +46,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Src/WindowDLG.c</locationURI>
 		</link>
 		<link>
-			<name>Application/User/ac_client.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/ac_client.c</locationURI>
-		</link>
-		<link>
 			<name>Application/User/app_ethernet.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/app_ethernet.c</locationURI>
@@ -66,11 +61,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Src/gui_setup.c</locationURI>
 		</link>
 		<link>
-			<name>Application/User/httpserver-netconn.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/httpserver-netconn.c</locationURI>
-		</link>
-		<link>
 			<name>Application/User/k_bsp.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/k_bsp.c</locationURI>
@@ -84,16 +74,6 @@
 			<name>Application/User/projector_client.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/projector_client.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/socket_client.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/socket_client.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/socket_server.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/socket_server.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/stm32f7xx_hal_timebase_tim.c</name>

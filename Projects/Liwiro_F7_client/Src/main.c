@@ -55,18 +55,12 @@
 #include "lwip/tcpip.h"
 #include "app_ethernet.h"
 #include "lcd_log.h"
-#include "socket_server.h"
-#include "socket_client.h"
 #include "stm32746g_discovery_lcd.h"
 #include "httpserver-netconn.h"
 #include "projector_client.h"
 #include "gui_setup.h"
 #include "WindowDLG.h"
 #include "k_bsp.h"
-#include "ac_client.h"
-
-
-
 
 
 /* Private typedef -----------------------------------------------------------*/
@@ -104,7 +98,7 @@ int main(void)
 	MPU_Config();
 
 	/* Enable the CPU Cache */
-	CPU_CACHE_Enable();							//TODO: SD will need it...
+	CPU_CACHE_Enable();
 
 	/* STM32F7xx HAL library initialization:
 	   - Configure the Flash ART accelerator on ITCM interface
@@ -200,10 +194,6 @@ static void StartThread(void const * argument)
 	osThreadDef(GUI_Thread, GUIThread,   osPriorityBelowNormal, 0, configMINIMAL_STACK_SIZE * 2);
 	osThreadCreate (osThread(GUI_Thread), NULL);
 #endif
-
-	//Define and start the weather server thread
-	osThreadDef(SOCKET_SERVER, socket_server_thread, osPriorityNormal, 0, configMINIMAL_STACK_SIZE * 10);
-	osThreadCreate (osThread(SOCKET_SERVER), NULL);
 
 	while (1) {
 		/* Delete the Init Thread */
@@ -316,7 +306,6 @@ static void SystemClock_Config(void)
 {
 	RCC_ClkInitTypeDef RCC_ClkInitStruct;
 	RCC_OscInitTypeDef RCC_OscInitStruct;
-	 HAL_StatusTypeDef ret = HAL_OK;
 
 	/* Enable HSE Oscillator and activate PLL with HSE as source */
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
