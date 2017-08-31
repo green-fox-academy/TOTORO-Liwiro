@@ -38,42 +38,12 @@
 */
 #define ID_WINDOW_0 (GUI_ID_USER + 0x03)
 #define ID_BUTTON_0 (GUI_ID_USER + 0x04)
-#define ID_BUTTON_1 (GUI_ID_USER + 0x06)
-#define ID_BUTTON_2 (GUI_ID_USER + 0x07)
-#define ID_TEXT_0 (GUI_ID_USER + 0x08)
-#define ID_TEXT_1 (GUI_ID_USER + 0x09)
-#define ID_TEXT_2 (GUI_ID_USER + 0x0A)
-#define ID_TEXT_3 (GUI_ID_USER + 0x0B)
-#define ID_TEXT_4 (GUI_ID_USER + 0x0C)
-#define ID_TEXT_5 (GUI_ID_USER + 0x0D)
-#define ID_TEXT_6 (GUI_ID_USER + 0x0E)
-#define ID_BUTTON_3 (GUI_ID_USER + 0x0F)
-#define ID_BUTTON_4 (GUI_ID_USER + 0x10)
-#define ID_SPINBOX_0 (GUI_ID_USER + 0x11)
-#define ID_BUTTON_5 (GUI_ID_USER + 0x12)
-#define ID_TEXT_7 (GUI_ID_USER + 0x1B)
-#define ID_TEXT_8 (GUI_ID_USER + 0x1A)
+
 
 /* Sent value defines */
 #define PROJECTOR_UP		1
 #define PROJECTOR_STOP		2
 #define PROJECTOR_DOWN		3
-#define AC_STATE_CHANGE		1
-#define AC_STATE_NOCHANGE	0
-#define AC_SWING_ON			1
-#define AC_SWING_OFF		0
-#define AC_MIN_VALUE		16
-#define AC_MAX_VALUE		30
-#define AC_BLADE_0			0
-#define AC_BLADE_1			1
-#define AC_BLADE_2			2
-#define AC_BLADE_3			3
-#define AC_BLADE_4			4
-#define AC_BLADE_5			5
-
-
-#define AC_IS_OFF			0
-#define AC_IS_ON			1
 
 osThreadDef(PROJECTOR, projector_client_thread, osPriorityNormal, 0, configMINIMAL_STACK_SIZE * 2);
 
@@ -110,9 +80,11 @@ void _cbDialog(WM_MESSAGE * pMsg)
 	WM_HWIN hItem;
 	int     NCode;
 	int     Id;
+
 	switch (pMsg->MsgId) {
 	case WM_INIT_DIALOG:
 		hItem = pMsg->hWin;
+	    WINDOW_SetBkColor(hItem, GUI_MAKE_COLOR(0x7F00FFFF));
 		break;
 	case WM_NOTIFY_PARENT:
 		Id    = WM_GetId(pMsg->hWinSrc);
@@ -122,7 +94,7 @@ void _cbDialog(WM_MESSAGE * pMsg)
 			switch(NCode) {
 			case WM_NOTIFICATION_CLICKED:
 				proj_control = PROJECTOR_UP;
-				osThreadCreate (osThread(PROJECTOR), proj_control);
+				osThreadCreate (osThread(PROJECTOR), &proj_control);
 				break;
 			case WM_NOTIFICATION_RELEASED:
 				break;
