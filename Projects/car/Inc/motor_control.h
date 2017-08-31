@@ -16,6 +16,8 @@ void go_backward();
 void go_left();
 void go_right();
 void ctrl_stop();
+void gpio_m1_p1_on();
+void gpio_m1_p1_off();
 
 #endif /* __MOTOR_CONTROL_H */
 

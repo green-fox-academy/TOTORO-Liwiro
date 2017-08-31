@@ -5,48 +5,15 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define COMMAND_SIZE	24
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables --------------------------------------------------------*/
-/* Command arrays */
-const uint8_t ctrl_up_arr[COMMAND_SIZE] = {1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0,
-									 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0};
 
-const uint8_t ctrl_down_arr[COMMAND_SIZE]= {1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0,
-									  1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1};
-
-const uint8_t ctrl_stop_arr[COMMAND_SIZE]= {1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0,
-		   	   	   	   	   	   	   	  1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1};
-
-const uint8_t ctrl_verification_arr[COMMAND_SIZE]= {1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0,
-		   	   	   	   	   	   	   	  	  	  1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1};
 /* PWM variables */
-extern TIM_HandleTypeDef tim_pwm_handle;
+extern TIM_HandleTypeDef tim2_pwm_handle;
+extern TIM_HandleTypeDef tim3_pwm_handle;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
-
-void end_bit()
-{
-	HAL_TIM_PWM_Start(&tim_pwm_handle, TIM_CHANNEL_1);
-	delay(1);
-	HAL_TIM_PWM_Stop(&tim_pwm_handle, TIM_CHANNEL_1);
-}
-
-void bit_one()
-{
-	HAL_TIM_PWM_Start(&tim_pwm_handle, TIM_CHANNEL_1);
-	delay(1);
-	HAL_TIM_PWM_Stop(&tim_pwm_handle, TIM_CHANNEL_1);
-	delay(3);
-}
-
-void bit_zero()
-{
-	HAL_TIM_PWM_Start(&tim_pwm_handle, TIM_CHANNEL_1);
-	delay(3);
-	HAL_TIM_PWM_Stop(&tim_pwm_handle, TIM_CHANNEL_1);
-	delay(1);
-}
 
 void go_forward()
 {
@@ -55,7 +22,9 @@ void go_forward()
 	while(1){
 		HAL_Delay(500);
 		tim2_pwm_handle.Instance->CCR1 = 10;
+		gpio_m1_p1_on();
 		HAL_Delay(500);
+		gpio_m1_p1_off();
 		tim2_pwm_handle.Instance->CCR1 = 80;
 	}
 	HAL_TIM_PWM_Stop(&tim2_pwm_handle, TIM_CHANNEL_1);
@@ -91,4 +60,44 @@ void go_right()
 void ctrl_stop()
 {
 
+}
+
+void gpio_m1_p1_on()
+{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+}
+
+void gpio_m1_p1_off()
+{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+}
+
+void gpio_m1_p2_on()
+{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
+}
+
+void gpio_m1_p2_off()
+{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
+}
+
+void gpio_m2_p1_on()
+{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+}
+
+void gpio_m2_p1_off()
+{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+}
+
+void gpio_m2_p2_on()
+{
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);
+}
+
+void gpio_m2_p2_off()
+{
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
 }

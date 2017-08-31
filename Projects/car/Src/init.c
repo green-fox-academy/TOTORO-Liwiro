@@ -14,6 +14,12 @@
 /* UART variables */
 UART_HandleTypeDef uart_handle;
 
+/* PWM variables */
+TIM_HandleTypeDef tim2_pwm_handle;
+TIM_HandleTypeDef tim3_pwm_handle;
+TIM_OC_InitTypeDef tim2_pwm_conf;
+TIM_OC_InitTypeDef tim3_pwm_conf;
+
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 #ifdef __GNUC__
@@ -132,6 +138,52 @@ void tim3_pwm_init()
 		/* Configuration Error */
 		error_handling("TIM PWM3 channel configuration has failed!", HAL_ERROR);
 	}
+}
+
+void direction_ctrl_pin_init()
+{
+//	Clocks already enabled for PWM
+//	__HAL_RCC_GPIOA_CLK_ENABLE();
+//	__HAL_RCC_GPIOB_CLK_ENABLE();
+
+	/* CONFIGURE MOTOR1 PINS
+	 * M1_P1: D12 = PA6
+	 * M2_P2: D11 = PA7
+	 */
+	GPIO_InitTypeDef  gpio_init_m1_p1;
+	GPIO_InitTypeDef  gpio_init_m1_p2;
+
+	gpio_init_m1_p1.Pin = GPIO_PIN_6;
+	gpio_init_m1_p1.Mode = GPIO_MODE_OUTPUT_PP;
+	gpio_init_m1_p1.Pull = GPIO_NOPULL;
+	gpio_init_m1_p1.Speed = GPIO_SPEED_FREQ_HIGH;
+
+	gpio_init_m1_p2.Pin = GPIO_PIN_7;
+	gpio_init_m1_p2.Mode = GPIO_MODE_OUTPUT_PP;
+	gpio_init_m1_p2.Pull = GPIO_NOPULL;
+	gpio_init_m1_p2.Speed = GPIO_SPEED_FREQ_HIGH;
+
+	/* CONFIGURE MOTOR2 PINS
+	 * D7 = PA4
+	 * D8 = PB2
+	 */
+	GPIO_InitTypeDef  gpio_init_m2_p1;
+	GPIO_InitTypeDef  gpio_init_m2_p2;
+
+	gpio_init_m2_p1.Pin = GPIO_PIN_4;
+	gpio_init_m2_p1.Mode = GPIO_MODE_OUTPUT_PP;
+	gpio_init_m2_p1.Pull = GPIO_NOPULL;
+	gpio_init_m2_p1.Speed = GPIO_SPEED_FREQ_HIGH;
+
+	gpio_init_m2_p2.Pin = GPIO_PIN_2;
+	gpio_init_m2_p2.Mode = GPIO_MODE_OUTPUT_PP;
+	gpio_init_m2_p2.Pull = GPIO_NOPULL;
+	gpio_init_m2_p2.Speed = GPIO_SPEED_FREQ_HIGH;
+
+	HAL_GPIO_Init(GPIOA, &gpio_init_m1_p1);
+	HAL_GPIO_Init(GPIOA, &gpio_init_m1_p2);
+	HAL_GPIO_Init(GPIOA, &gpio_init_m2_p1);
+	HAL_GPIO_Init(GPIOB, &gpio_init_m2_p2);
 }
 
 void error_handling(const char *error_string, uint8_t error_code)

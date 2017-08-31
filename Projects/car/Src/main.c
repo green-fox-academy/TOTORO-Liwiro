@@ -61,12 +61,13 @@ int main(void) {
 	/* Initialize UART */
 	uart_init();
 
-	/* Initialize Timer for proper delay */
-	tim2_pwm_init();
-
-	/* Initialize timer in PWM mode */
+	/* Initialize timers in PWM mode */
 	tim3_pwm_init();
+	tim2_pwm_init();
 	printf("timers initialized\r\n");
+
+	/* Initialize GPIO */
+	direction_ctrl_pin_init();
 //	go_backward();
 	go_forward();
 //	send_ps_command();
