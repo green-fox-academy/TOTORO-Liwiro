@@ -47,7 +47,7 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 extern ETH_HandleTypeDef EthHandle;
-extern TIM_HandleTypeDef TimHandle;
+extern LTDC_HandleTypeDef hltdc;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -142,6 +142,18 @@ void SysTick_Handler(void)
 /*  file (startup_stm32f7xx.s).                                               */
 /******************************************************************************/
 
+
+/**
+  * @brief  This function handles LTDC global interrupt request.
+  * @param  None
+  * @retval None
+  */
+void LTDC_IRQHandler(void)
+{
+  HAL_LTDC_IRQHandler(&hltdc);
+}
+
+
 /**
   * @brief  This function handles Ethernet interrupt request.
   * @param  None
@@ -150,31 +162,6 @@ void SysTick_Handler(void)
 void ETH_IRQHandler(void)
 {
   HAL_ETH_IRQHandler(&EthHandle);
-}
-
-
-/**
-  * @brief  This function handles TIM interrupt request.
-  * @param  None
-  * @retval None
-  */
-void TIM6_DAC_IRQHandler(void)
-{
-  HAL_TIM_IRQHandler(&TimHandle);
-}
-
-/**
-  * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM6 interrupt took place, inside
-  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-  * a global variable "uwTick" used as application time base.
-  * @param  htim : TIM handle
-  * @retval None
-  */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-	if (htim == &TimHandle)
-		HAL_IncTick();
 }
 
 /**

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>oscilloscope</name>
+	<name>Liwiro_F7_client</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -41,6 +41,16 @@
 			<locationURI>PARENT-1-PROJECT_LOC/syscalls.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/WindowDLG.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/WindowDLG.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/ac_client.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/ac_client.c</locationURI>
+		</link>
+		<link>
 			<name>Application/User/app_ethernet.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/app_ethernet.c</locationURI>
@@ -51,9 +61,39 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Src/ethernetif.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/gui_setup.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/gui_setup.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/httpserver-netconn.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/httpserver-netconn.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/k_bsp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/k_bsp.c</locationURI>
+		</link>
+		<link>
 			<name>Application/User/main.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/main.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/projector_client.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/projector_client.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/socket_client.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/socket_client.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/socket_server.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/socket_server.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/stm32f7xx_hal_timebase_tim.c</name>
@@ -199,6 +239,21 @@
 			<name>Middlewares/FreeRTOS/timers.c</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/timers.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/STemWin/GUIConf.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/GUIConf.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/STemWin/GUI_X_OS.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/ST/STemWin/OS/GUI_X_OS.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/STemWin/LCDConf.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/LCDConf.c</locationURI>
 		</link>
 		<link>
 			<name>Drivers/BSP/Components/ft5336</name>
@@ -425,5 +480,21 @@
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/ipv4/ip4_frag.c</locationURI>
 		</link>
+		<link>
+			<name>Middlewares/LwIP/apps/httpd/fs.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/apps/httpd/fs.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/apps/httpd/httpd.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/apps/httpd/httpd.c</locationURI>
+		</link>
 	</linkedResources>
+	<variableList>
+		<variable>
+			<name>copy_PARENT</name>
+			<value>$%7BPARENT-6-PROJECT_LOC%7D/Documents/GFA/Week_14/en.stm32cubef7/STM32Cube_FW_F7_V1.7.0/Projects/STM32746G-Discovery/Applications/LwIP/LwIP_HTTP_Server_Netconn_RTOS</value>
+		</variable>
+	</variableList>
 </projectDescription>

@@ -94,6 +94,7 @@ void User_notification(struct netif *netif)
     uint8_t iptxt[20];
     sprintf((char *)iptxt, "%s", ip4addr_ntoa((const ip4_addr_t *)&netif->ip_addr));
     LCD_UsrLog ("Static IP address: %s\n", iptxt);
+
 #endif /* USE_DHCP */
   }
   else
@@ -103,6 +104,7 @@ void User_notification(struct netif *netif)
     DHCP_state = DHCP_LINK_DOWN;
 #endif  /* USE_DHCP */
     LCD_UsrLog ("Notification - The network cable is not connected \n");
+
   } 
 }
 
@@ -165,7 +167,7 @@ void DHCP_thread(void const * argument)
             
             sprintf((char *)iptxt, "%s", ip4addr_ntoa((const ip4_addr_t *)&netif->ip_addr));
             LCD_UsrLog ("DHCP client - DHCP Timeout !! \n");
-            LCD_UsrLog ("DHCP client - Static IP address: %s\n", iptxt);
+
           }
         }
       }

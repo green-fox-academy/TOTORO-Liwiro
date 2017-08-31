@@ -15,6 +15,8 @@
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
+// TODO:
+// Implement this function!
 void socket_client_thread(void const *argument)
 {
 
