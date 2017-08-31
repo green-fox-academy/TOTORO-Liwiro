@@ -25,7 +25,6 @@ void go_forward()
 
 	tim2_pwm_handle.Instance->CCR1 = 100;
 	tim3_pwm_handle.Instance->CCR1 = 100;
-
 	HAL_Delay(10000);
 }
 
@@ -39,8 +38,7 @@ void go_backward()
 
 	tim2_pwm_handle.Instance->CCR1 = 100;
 	tim3_pwm_handle.Instance->CCR1 = 100;
-
-	HAL_Delay(20000);
+	HAL_Delay(10000);
 }
 
 void go_left()
@@ -53,9 +51,7 @@ void go_left()
 
 	tim2_pwm_handle.Instance->CCR1 = 100;
 	tim3_pwm_handle.Instance->CCR1 = 80;
-
 	HAL_Delay(10000);
-
 }
 
 void go_right()
@@ -68,9 +64,7 @@ void go_right()
 
 	tim2_pwm_handle.Instance->CCR1 = 80;
 	tim3_pwm_handle.Instance->CCR1 = 100;
-
-	HAL_Delay(10000);
-
+	HAL_Delay(1000);
 }
 
 void ctrl_stop()
