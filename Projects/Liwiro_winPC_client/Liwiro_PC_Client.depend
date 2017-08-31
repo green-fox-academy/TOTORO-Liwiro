@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1504196493 source:d:\gf_project\totoro-liwiro\projects\liwiro_pc_client\main.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<string.h>
+	<winsock.h>
+	<conio.h>
+
+1504199036 source:d:\c_codes\winpc_client_liwiro\main.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<string.h>
+	<winsock.h>
+	<conio.h>
+
+1504199036 source:d:\gf_project\totoro-liwiro\projects\liwiro_winpc_client\main.c
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<string.h>
+	<winsock.h>
+	<conio.h>
+
