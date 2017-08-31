@@ -148,7 +148,7 @@ void direction_ctrl_pin_init()
 
 	/* CONFIGURE MOTOR1 PINS
 	 * M1_P1: D12 = PA6
-	 * M2_P2: D11 = PA7
+	 * M1_P2: D11 = PA7
 	 */
 	GPIO_InitTypeDef  gpio_init_m1_p1;
 	GPIO_InitTypeDef  gpio_init_m1_p2;

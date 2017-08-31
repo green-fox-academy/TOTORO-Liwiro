@@ -19,12 +19,19 @@ void go_forward()
 {
 	HAL_TIM_PWM_Start(&tim2_pwm_handle, TIM_CHANNEL_1);
 	printf("PWM started\r\n");
+	gpio_m1_p1_on();
+	gpio_m1_p2_off();
 	while(1){
 		HAL_Delay(500);
 		tim2_pwm_handle.Instance->CCR1 = 10;
-		gpio_m1_p1_on();
+		gpio_m1_p2_on();
+		gpio_m2_p2_on();
+		gpio_m2_p1_on();
 		HAL_Delay(500);
-		gpio_m1_p1_off();
+		gpio_m1_p2_off();
+		gpio_m2_p2_off();
+		printf("Toggle pins\r\n");
+		gpio_m2_p1_off();
 		tim2_pwm_handle.Instance->CCR1 = 80;
 	}
 	HAL_TIM_PWM_Stop(&tim2_pwm_handle, TIM_CHANNEL_1);
