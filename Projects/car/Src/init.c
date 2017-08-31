@@ -5,9 +5,9 @@
 #include "stm32l4xx_hal_tim.h"
 
 /* Private typedef -----------------------------------------------------------*/
-#define PWM_PERIOD_VALUE	100
+#define PWM_PERIOD_VALUE	50
 /* Private define ------------------------------------------------------------*/
-#define PWM_PULSE_VALUE    (PWM_PERIOD_VALUE/2)	/* Duty cycle 50%  */
+#define PWM_PULSE_VALUE    PWM_PERIOD_VALUE	/* Duty cycle 100%  */
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables --------------------------------------------------------*/

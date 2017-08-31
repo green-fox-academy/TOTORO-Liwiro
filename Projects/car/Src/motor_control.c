@@ -17,22 +17,26 @@ extern TIM_HandleTypeDef tim3_pwm_handle;
 
 void go_forward()
 {
-	HAL_TIM_PWM_Start(&tim2_pwm_handle, TIM_CHANNEL_1);
-	printf("PWM started\r\n");
 	gpio_m1_p1_on();
 	gpio_m1_p2_off();
+	tim2_pwm_handle.Instance->CCR1 = 50;
+	HAL_TIM_PWM_Start(&tim2_pwm_handle, TIM_CHANNEL_1);
+//	HAL_TIM_PWM_Start(&tim3_pwm_handle, TIM_CHANNEL_1);
+	printf("PWM started\r\n");
 	while(1){
-		HAL_Delay(500);
-		tim2_pwm_handle.Instance->CCR1 = 10;
-		gpio_m1_p2_on();
-		gpio_m2_p2_on();
-		gpio_m2_p1_on();
-		HAL_Delay(500);
-		gpio_m1_p2_off();
-		gpio_m2_p2_off();
-		printf("Toggle pins\r\n");
-		gpio_m2_p1_off();
-		tim2_pwm_handle.Instance->CCR1 = 80;
+		HAL_Delay(10000);
+		tim2_pwm_handle.Instance->CCR1 = 50;
+		printf("100\r\n");
+		printf("PWM started\r\n");
+		HAL_Delay(10000);
+		tim2_pwm_handle.Instance->CCR1 = 40;
+		printf("80\r\n");
+		HAL_Delay(10000);
+		tim2_pwm_handle.Instance->CCR1 = 35;
+		printf("70\r\n");
+		HAL_Delay(10000);
+		tim2_pwm_handle.Instance->CCR1 = 20;
+		printf("40\r\n");
 	}
 	HAL_TIM_PWM_Stop(&tim2_pwm_handle, TIM_CHANNEL_1);
 }
