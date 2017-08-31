@@ -19,58 +19,67 @@ void go_forward()
 {
 	gpio_m1_p1_on();
 	gpio_m1_p2_off();
-	tim2_pwm_handle.Instance->CCR1 = 50;
-	HAL_TIM_PWM_Start(&tim2_pwm_handle, TIM_CHANNEL_1);
-//	HAL_TIM_PWM_Start(&tim3_pwm_handle, TIM_CHANNEL_1);
-	printf("PWM started\r\n");
-	while(1){
-		HAL_Delay(10000);
-		tim2_pwm_handle.Instance->CCR1 = 50;
-		printf("100\r\n");
-		printf("PWM started\r\n");
-		HAL_Delay(10000);
-		tim2_pwm_handle.Instance->CCR1 = 40;
-		printf("80\r\n");
-		HAL_Delay(10000);
-		tim2_pwm_handle.Instance->CCR1 = 35;
-		printf("70\r\n");
-		HAL_Delay(10000);
-		tim2_pwm_handle.Instance->CCR1 = 20;
-		printf("40\r\n");
-	}
-	HAL_TIM_PWM_Stop(&tim2_pwm_handle, TIM_CHANNEL_1);
+
+	gpio_m2_p1_on();
+	gpio_m2_p2_off();
+
+	tim2_pwm_handle.Instance->CCR1 = 100;
+	tim3_pwm_handle.Instance->CCR1 = 100;
+
+	HAL_Delay(10000);
 }
 
 void go_backward()
 {
-	HAL_TIM_PWM_Start(&tim3_pwm_handle, TIM_CHANNEL_1);
-	while(1){
+	gpio_m1_p1_off();
+	gpio_m1_p2_on();
 
-	}
-	HAL_TIM_PWM_Stop(&tim3_pwm_handle, TIM_CHANNEL_1);
+	gpio_m2_p1_off();
+	gpio_m2_p2_on();
+
+	tim2_pwm_handle.Instance->CCR1 = 100;
+	tim3_pwm_handle.Instance->CCR1 = 100;
+
+	HAL_Delay(20000);
 }
 
 void go_left()
 {
-	HAL_TIM_PWM_Start(&tim3_pwm_handle, TIM_CHANNEL_1);
-	while(1){
+	gpio_m1_p1_on();
+	gpio_m1_p2_off();
 
-	}
-	HAL_TIM_PWM_Stop(&tim3_pwm_handle, TIM_CHANNEL_1);
+	gpio_m2_p1_on();
+	gpio_m2_p2_off();
+
+	tim2_pwm_handle.Instance->CCR1 = 100;
+	tim3_pwm_handle.Instance->CCR1 = 80;
+
+	HAL_Delay(10000);
+
 }
 
 void go_right()
 {
-	HAL_TIM_PWM_Start(&tim3_pwm_handle, TIM_CHANNEL_1);
-	while(1){
+	gpio_m1_p1_on();
+	gpio_m1_p2_off();
 
-	}
-	HAL_TIM_PWM_Stop(&tim3_pwm_handle, TIM_CHANNEL_1);
+	gpio_m2_p1_on();
+	gpio_m2_p2_off();
+
+	tim2_pwm_handle.Instance->CCR1 = 80;
+	tim3_pwm_handle.Instance->CCR1 = 100;
+
+	HAL_Delay(10000);
+
 }
 
 void ctrl_stop()
 {
+	gpio_m1_p1_off();
+	gpio_m1_p2_off();
 
+	gpio_m2_p1_off();
+	gpio_m2_p2_off();
 }
 
 void gpio_m1_p1_on()

@@ -38,10 +38,13 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables --------------------------------------------------------*/
+extern TIM_HandleTypeDef tim2_pwm_handle;
+extern TIM_HandleTypeDef tim3_pwm_handle;
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 
@@ -68,9 +71,10 @@ int main(void) {
 
 	/* Initialize GPIO */
 	direction_ctrl_pin_init();
-//	go_backward();
-	go_forward();
-//	send_ps_command();
+	HAL_TIM_PWM_Start(&tim3_pwm_handle, TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&tim2_pwm_handle, TIM_CHANNEL_1);
+
+	send_ps_command();
 
 }
 

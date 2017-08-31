@@ -8,8 +8,6 @@
 #include "stm32l475e_iot01.h"
 #include "stm32l4xx_hal_tim.h"
 
-
-
 void uart_init();
 void tim3_pwm_init();
 void tim2_pwm_init();

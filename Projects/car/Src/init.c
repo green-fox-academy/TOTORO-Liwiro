@@ -5,7 +5,7 @@
 #include "stm32l4xx_hal_tim.h"
 
 /* Private typedef -----------------------------------------------------------*/
-#define PWM_PERIOD_VALUE	50
+#define PWM_PERIOD_VALUE	100
 /* Private define ------------------------------------------------------------*/
 #define PWM_PULSE_VALUE    PWM_PERIOD_VALUE	/* Duty cycle 100%  */
 
@@ -90,7 +90,7 @@ void tim2_pwm_init()
 	tim2_pwm_conf.OCIdleState = TIM_OCIDLESTATE_RESET;
 	tim2_pwm_conf.OCMode = TIM_OCMODE_PWM1;
 	tim2_pwm_conf.OCPolarity = TIM_OCPOLARITY_HIGH;
-	tim2_pwm_conf.Pulse = PWM_PULSE_VALUE;
+	tim2_pwm_conf.Pulse = 0;
 
 	/* Set the pulse value for channel 1 */
 	if (HAL_TIM_PWM_ConfigChannel(&tim2_pwm_handle, &tim2_pwm_conf, TIM_CHANNEL_1) != HAL_OK)

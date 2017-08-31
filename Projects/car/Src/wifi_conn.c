@@ -65,16 +65,16 @@ void send_ps_command()
 						go_forward();
 						printf("going forward\r\n");
 					} else if (command == 's') {
-						go_forward();;
+						go_backward();
 						printf("going backwards\r\n");
 					} else if (command == 'a') {
-						//ctrl_stop();
+						go_left();
 						printf("left\r\n");
 					} else if (command == 'd') {
-						//ctrl_stop();
+						go_right();
 						printf("right\n");
 					} else if (command == 'x') {
-						//ctrl_stop();
+						ctrl_stop();
 						printf("stop\n");
 					} else {
 						printf("wrong command!\n");
