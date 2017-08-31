@@ -14,6 +14,8 @@
 #include "GUI.h"
 #include "WM.h"
 
+//#define LCD_USERLOG			/*LCD userlog needed for IP address check */
+
 struct netif gnetif; /* network interface structure */
 osTimerId lcd_timer;
 
@@ -34,27 +36,32 @@ int main(void)
 	HAL_Init();
 	SystemClock_Config();
 	BSP_Config();
+//	HAL_Delay(2000);
 
 //#ifndef LCD_USERLOG
 	GUI_Init();
 	/* Activate the use of memory device feature */
 	WM_SetCreateFlags(WM_CF_MEMDEV);
 	WM_MULTIBUF_Enable(1);
+
 	GUI_SetLayerVisEx (1, 0);
 	GUI_SelectLayer(0);
+	MainTask();
 
 //#endif
-	/* Create Touch screen Timer */
-	osTimerDef(TS_Timer, TimerCallback);
-	lcd_timer =  osTimerCreate(osTimer(TS_Timer), osTimerPeriodic, (void *)0);
-	/* Start the TS Timer */
-	osTimerStart(lcd_timer, 100);
-	/*Init thread */
-	osThreadDef(Start, StartThread, osPriorityHigh, 0, configMINIMAL_STACK_SIZE * 1);
-	osThreadCreate (osThread(Start), NULL);
-	osKernelStart();
+//	/* Create Touch screen Timer */
+//	osTimerDef(TS_Timer, TimerCallback);
+//	lcd_timer =  osTimerCreate(osTimer(TS_Timer), osTimerPeriodic, (void *)0);
+//	/* Start the TS Timer */
+//	osTimerStart(lcd_timer, 100);
+//	/*Init thread */
+//	osThreadDef(Start, StartThread, osPriorityHigh, 0, configMINIMAL_STACK_SIZE * 1);
+//	osThreadCreate (osThread(Start), NULL);
+//	osKernelStart();
 	while(1) {
+//		GUI_Exec();
 	}
+
 }
 
 static void GUIThread(void const * argument)
@@ -82,18 +89,18 @@ osThreadId id;
   */
 static void StartThread(void const * argument)
 { 
-//	/* Create tcp_ip stack thread */
-//	tcpip_init(NULL, NULL);
-//
-//	/* Initialize the LwIP stack */
-//	Netif_Config();
-//
-//	/* Notify user about the network interface config */
-//	User_notification(&gnetif);
-//
-//	/* Start DHCPClient */
-//	osThreadDef(DHCP, DHCP_thread, osPriorityNormal, 0, configMINIMAL_STACK_SIZE * 2);
-//	osThreadCreate (osThread(DHCP), &gnetif);
+	/* Create tcp_ip stack thread */
+	tcpip_init(NULL, NULL);
+
+	/* Initialize the LwIP stack */
+	Netif_Config();
+
+	/* Notify user about the network interface config */
+	User_notification(&gnetif);
+
+	/* Start DHCPClient */
+	osThreadDef(DHCP, DHCP_thread, osPriorityNormal, 0, configMINIMAL_STACK_SIZE * 2);
+	osThreadCreate (osThread(DHCP), &gnetif);
 
 //#ifndef LCD_USERLOG
 	/* Create GUI task */

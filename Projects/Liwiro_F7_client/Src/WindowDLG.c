@@ -31,7 +31,7 @@ uint8_t ac_controls[5] = {6, 1, 0, 3, 0};
 uint8_t proj_control;
 
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
-  { WINDOW_CreateIndirect, "Window", ID_WINDOW_0, 0, 0, 480, 272, 1, 0x0, 0 },
+  { WINDOW_CreateIndirect, "Window", ID_WINDOW_0, 0, 0, 480, 272, 0, 0x0, 0 },
   { BUTTON_CreateIndirect, "UP", ID_BUTTON_0, 410, 27, 50, 50, 0, 0x0, 0 },
 };
 
