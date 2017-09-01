@@ -1,8 +1,10 @@
-/*
+/**
+  ******************************************************************************
+  * @file    LwIP/LwIP_HTTP_Server_Netconn_RTOS/Inc/app_ethernet.h 
   * @author  MCD Application Team
   * @version V1.2.0
   * @date    30-December-2016
-  * @brief   This file provides main program functions
+  * @brief   Header for app_ethernet.c module
   ******************************************************************************
   * @attention
   *
@@ -43,50 +45,41 @@
   ******************************************************************************
   */
 
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __APP_ETHERNET_H
+#define __APP_ETHERNET_H
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+#include "lwip/netif.h"
 
-#include "stm32f7xx_hal.h"
-#include "stm32f7xx_hal_adc.h"
-#include "stm32f7xx_hal_sd.h"
-#include "stm32f7xx_hal_sdram.h"
-#include "stm32746g_discovery.h"
-#include "stm32746g_discovery_ts.h"
-#include "stm32746g_discovery_lcd.h"
-#include "stm32746g_discovery_sd.h"
-#include "stm32746g_discovery_sdram.h"
+/* Exported types ------------------------------------------------------------*/
+/* Exported constants --------------------------------------------------------*/
+/* DHCP process states */
+#define DHCP_OFF                   (uint8_t) 0
+#define DHCP_START                 (uint8_t) 1
+#define DHCP_WAIT_ADDRESS          (uint8_t) 2
+#define DHCP_ADDRESS_ASSIGNED      (uint8_t) 3
+#define DHCP_TIMEOUT               (uint8_t) 4
+#define DHCP_LINK_DOWN             (uint8_t) 5
+   
+/* Exported macro ------------------------------------------------------------*/
+/* Exported functions ------------------------------------------------------- */
+uint8_t is_ip_ok();
+void User_notification(struct netif *netif);
+#ifdef USE_DHCP
+void DHCP_thread(void const * argument);
+#endif
 
-#include "program_gui.h"
-#include "WM.h"
-#include "GUI.h"
-#include "DIALOG.h"
-#include "cmsis_os.h"
-
-#include "data.h"
-#include "adc.h"
-#include "init_program.h"
-#include "lcd_log.h"
-#include "comm.h"
-#include "ffconf.h"
-#include "print_screen.h"
-
-/* Private typedef -----------------------------------------------------------*/
-/* Private define ------------------------------------------------------------*/
-/* Private macro -------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-/* Private function prototypes -----------------------------------------------*/
-/* Private functions ---------------------------------------------------------*/
-
-/**
-  * @brief  Main program
-  * @param  None
-  * @retval None
-  */
-int main(void)
-{
-	system_init();
-	gui_task();
-	while(1){
-		GUI_Delay(5);
-	}
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* __APP_ETHERNET_H */
+
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

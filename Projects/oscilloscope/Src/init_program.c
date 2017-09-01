@@ -12,7 +12,6 @@
 #include "cmsis_os.h"
 #include "ffconf.h"
 #include "timers.h"
-#include "sd_diskio.h"
 
 #include "program_gui.h"
 #include "WM.h"

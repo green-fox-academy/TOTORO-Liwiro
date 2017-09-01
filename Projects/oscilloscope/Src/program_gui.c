@@ -67,9 +67,9 @@ void gui_task(void) {
 *       GUI CALLBACK
 */
 void wincallback(WM_MESSAGE * pMsg) {
-  const void * pData;
+//  const void * pData;
   WM_HWIN      hItem;
-  U32          FileSize;
+//  U32          FileSize;
   int          NCode;
   int          Id;
 

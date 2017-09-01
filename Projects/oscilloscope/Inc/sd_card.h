@@ -10,10 +10,6 @@
 #include <string.h>
 #include <stdint.h>
 
-/* FatFs includes component */
-#include "ff_gen_drv.h"
-#include "sd_diskio.h"
-
 FATFS SDFatFs;  /* File system object for SD card logical drive */
 FIL MyFile;     /* File object */
 char SDPath[4]; /* SD card logical drive path */

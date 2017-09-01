@@ -42,17 +42,18 @@
 									<listOptionValue builtIn="false" value="../../../../../Drivers/BSP/STM32746G-Discovery"/>
 									<listOptionValue builtIn="false" value="../../../../../Drivers/BSP/Components/Common"/>
 									<listOptionValue builtIn="false" value="../../../../../Drivers/BSP/Components"/>
-									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/FatFs/src"/>
-									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/FatFs/src/drivers"/>
+									<listOptionValue builtIn="false" value="../../../../../Drivers/STM32F7xx_HAL_Driver/Inc"/>
 									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/LwIP/src/include/"/>
+									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/LwIP/src/apps/httpd/"/>
 									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/LwIP/system"/>
+									<listOptionValue builtIn="false" value="../../../../../Utilities"/>
+									<listOptionValue builtIn="false" value="../../../../../Utilities/Log"/>
+                                    <listOptionValue builtIn="false" value="../../../../../Utilities/CPU"/>
+									<listOptionValue builtIn="false" value="../../../../../Drivers/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1"/>
 									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/FreeRTOS/Source/"/>
 									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS"/>
 									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/FreeRTOS/Source/include"/>
-									<listOptionValue builtIn="false" value="../../../../../Utilities"/>
-									<listOptionValue builtIn="false" value="../../../../../Utilities/Log"/>
-									<listOptionValue builtIn="false" value="../../../../../Drivers/CMSIS/Include"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1100071681" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
