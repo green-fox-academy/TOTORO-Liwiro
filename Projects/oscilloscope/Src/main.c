@@ -63,12 +63,10 @@
 #include "cmsis_os.h"
 
 #include "data.h"
-#include "adc.h"
 #include "init_program.h"
 #include "lcd_log.h"
 #include "comm.h"
-#include "ffconf.h"
-#include "print_screen.h"
+#include "client.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -86,6 +84,7 @@ int main(void)
 {
 	system_init();
 	gui_task();
+	socket_client_thread();
 	while(1){
 		GUI_Delay(5);
 	}
