@@ -84,7 +84,7 @@ int main(void)
 {
 	system_init();
 	gui_task();
-	socket_client_thread();
+
 	while(1){
 		GUI_Delay(5);
 	}
