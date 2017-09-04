@@ -7,7 +7,9 @@
 /* Private typedef -----------------------------------------------------------*/
 #define PWM_PERIOD_VALUE	100
 /* Private define ------------------------------------------------------------*/
-#define PWM_PULSE_VALUE    PWM_PERIOD_VALUE	/* Duty cycle 100%  */
+#define PWM_PULSE_VALUE    	PWM_PERIOD_VALUE	/* Duty cycle 100%  */
+#define TIM2_PRESCALER		2
+#define TIM3_PRESCALER		2
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables --------------------------------------------------------*/
@@ -63,7 +65,7 @@ PUTCHAR_PROTOTYPE
 
 void tim2_pwm_init()
 {
-	uint32_t prescalervalue = 20;
+	uint32_t prescalervalue = TIM2_PRESCALER;
 
 	/* Set TIM2 instance */
 	tim2_pwm_handle.Instance = TIM2;
@@ -103,7 +105,7 @@ void tim2_pwm_init()
 void tim3_pwm_init()
 {
 	/* Compute the prescaler value to have TIM3 counter clock equal to 38 kHz */
-	uint8_t prescalervalue = 20;
+	uint8_t prescalervalue = TIM3_PRESCALER;
 
 	/* Set TIM3 instance */
 	tim3_pwm_handle.Instance = TIM3;

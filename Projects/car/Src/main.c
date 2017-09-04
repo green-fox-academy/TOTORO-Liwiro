@@ -74,7 +74,8 @@ int main(void) {
 	HAL_TIM_PWM_Start(&tim3_pwm_handle, TIM_CHANNEL_1);
 	HAL_TIM_PWM_Start(&tim2_pwm_handle, TIM_CHANNEL_1);
 
-	send_ps_command();
+//	send_ps_command();
+	go_forward();
 
 }
 

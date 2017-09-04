@@ -23,8 +23,8 @@ void go_forward()
 	gpio_m2_p1_on();
 	gpio_m2_p2_off();
 
-	tim2_pwm_handle.Instance->CCR1 = 100;
-	tim3_pwm_handle.Instance->CCR1 = 100;
+	tim2_pwm_handle.Instance->CCR1 = 50;
+	tim3_pwm_handle.Instance->CCR1 = 50;
 	HAL_Delay(10000);
 }
 
