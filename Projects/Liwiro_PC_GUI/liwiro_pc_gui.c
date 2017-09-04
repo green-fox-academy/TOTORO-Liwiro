@@ -51,13 +51,14 @@ void connect_to_server(int *client_sock, unsigned int server_port, char *server_
 int send_message_up(void)
 {
 	// Get the message from the user
-	uint8_t msg[3];
+	uint8_t msg[4];
 	printf("Enter the message to send: \n");
         msg[0] = 0;
 		msg[1] = 1;
 		msg[2] = 3;
+		msg[3] = 1;
 	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, 3, 0);
+	int sent_bytes = send(client_socket, msg, 4, 0);
 	if (sent_bytes < 0)
 		handle_error("send() ");
 
@@ -67,13 +68,14 @@ int send_message_up(void)
 int send_message_down(void)
 {
 	// Get the message from the user
-	uint8_t msg[3];
+	uint8_t msg[4];
 	printf("Enter the message to send: \n");
         msg[0] = 0;
 		msg[1] = 2;
 		msg[2] = 3;
+		msg[3] = 1;
 	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, 3, 0);
+	int sent_bytes = send(client_socket, msg, 4, 0);
 	if (sent_bytes < 0)
 		handle_error("send() ");
 
@@ -83,13 +85,14 @@ int send_message_down(void)
 int send_message_left(void)
 {
 	// Get the message from the user
-	uint8_t msg[3];
+	uint8_t msg[4];
 	printf("Enter the message to send: \n");
         msg[0] = 0;
 		msg[1] = 3;
 		msg[2] = 3;
+		msg[3] = 1;
 	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, 3, 0);
+	int sent_bytes = send(client_socket, msg, 4, 0);
 	if (sent_bytes < 0)
 		handle_error("send() ");
 
@@ -99,13 +102,14 @@ int send_message_left(void)
 int send_message_right(void)
 {
 	// Get the message from the user
-	uint8_t msg[3];
+	uint8_t msg[4];
 	printf("Enter the message to send: \n");
         msg[0] = 0;
 		msg[1] = 4;
 		msg[2] = 3;
+		msg[3] = 1;
 	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, 3, 0);
+	int sent_bytes = send(client_socket, msg, 4, 0);
 	if (sent_bytes < 0)
 		handle_error("send() ");
 
@@ -115,13 +119,14 @@ int send_message_right(void)
 int send_message_stop(void)
 {
 	// Get the message from the user
-	uint8_t msg[3];
+	uint8_t msg[4];
 	printf("Enter the message to send: \n");
         msg[0] = 0;
 		msg[1] = 5;
 		msg[2] = 3;
+		msg[3] = 0;
 	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, 3, 0);
+	int sent_bytes = send(client_socket, msg, 4, 0);
 	if (sent_bytes < 0)
 		handle_error("send() ");
 
