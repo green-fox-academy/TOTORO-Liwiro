@@ -74,17 +74,7 @@ int main(void) {
 	HAL_TIM_PWM_Start(&tim3_pwm_handle, TIM_CHANNEL_1);
 	HAL_TIM_PWM_Start(&tim2_pwm_handle, TIM_CHANNEL_1);
 
-	gpio_m1_p1_on();
-	gpio_m1_p2_off();
-
-	gpio_m2_p1_on();
-	gpio_m2_p2_off();
-//	send_ps_command();
-//	go_forward();
-	while(1) {
-
-	}
-
+	send_ps_command();
 }
 
 /**
