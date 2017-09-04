@@ -4,14 +4,6 @@
 #include "stm32l475e_iot01.h"
 #include "stm32l4xx_hal_tim.h"
 
-/* Private typedef -----------------------------------------------------------*/
-#define PWM_PERIOD_VALUE				100
-/* Private define ------------------------------------------------------------*/
-#define MAX_PWM_PULSE_VALUE    			PWM_PERIOD_VALUE	/* Duty cycle 100%  */
-#define MIN_PWM_PULSE_VALUE				60
-#define TIM2_PRESCALER					800
-#define TIM3_PRESCALER					800
-
 /* Private macro -------------------------------------------------------------*/
 /* Private variables --------------------------------------------------------*/
 /* UART variables */
@@ -166,7 +158,7 @@ void direction_ctrl_pin_init()
 	gpio_init_m1_p2.Pull = GPIO_NOPULL;
 	gpio_init_m1_p2.Speed = GPIO_SPEED_FREQ_HIGH;
 
-	/* CONFIGURE MOTOR2 PINS
+	/* CONFIGURE MOTOR2 PINS - LEFT MOTOR - TIM 2 PWM
 	 * D7 = PA4
 	 * D8 = PB2
 	 */

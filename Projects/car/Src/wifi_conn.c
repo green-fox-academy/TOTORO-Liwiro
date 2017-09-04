@@ -10,8 +10,15 @@
 #define SERVER_PORT 			13003
 #define WIFI_READ_TIMEOUT 		1000
 #define CONNECTION_TRIAL_MAX    10
+
+#define MOTOR_CONTROL_PANEL_X_ORIGO	100
+#define MOTOR_CONTROL_PANEL_Y_ORIGO	100
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables --------------------------------------------------------*/
+extern TIM_HandleTypeDef tim2_pwm_handle;
+extern TIM_HandleTypeDef tim3_pwm_handle;
+
 uint8_t mac_addr[6];
 uint8_t ip_addr[4];
 uint8_t ip[] = {10, 27, 99, 161};
@@ -19,7 +26,7 @@ uint8_t firm_ip[] = {10, 27, 99, 161};
 int32_t socket;
 uint16_t datalen;
 uint8_t connections = 0;
-uint8_t command[3];
+uint8_t command[4];
 
 /* Private function prototypes -----------------------------------------------*/
 void error_handling(const char *error_string, uint8_t error_code);
@@ -89,11 +96,64 @@ void send_ps_command()
 							break;
 						}
 					} else if (command[0] == 1) {
+						float pwm_pulse_1;
+						float pwm_pulse_2;
 						printf("Coordinates from F7: ");
 						printf("x: %d\t", command[1]);
 						printf("y: %d\n", command[2]);
 
-						go_backward();
+						typedef struct {
+							uint8_t side_a;
+							uint8_t side_b;
+							uint8_t side_c;
+							uint8_t direction_control;
+						} motor_control_parameters;
+
+						motor_control_parameters F7_command_interpreter;
+
+						F7_command_interpreter.side_c = command[3];
+						pwm_pulse_1 = (float)F7_command_interpreter.side_b / 2;
+						pwm_pulse_2 = (float)F7_command_interpreter.side_c / 2;
+
+						if (command[2] > MOTOR_CONTROL_PANEL_Y_ORIGO) { //forward or backward
+							F7_command_interpreter.side_b = command[2] - MOTOR_CONTROL_PANEL_Y_ORIGO;
+							gpio_m1_p1_on();
+							gpio_m1_p2_off();
+
+							gpio_m2_p1_on();
+							gpio_m2_p2_off();
+
+							if (command[1] > MOTOR_CONTROL_PANEL_X_ORIGO) {//left of right
+								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1;
+								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2;
+							} else if (command[1] < MOTOR_CONTROL_PANEL_X_ORIGO) {
+								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2;
+								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1;
+							} else if (command[1] == MOTOR_CONTROL_PANEL_X_ORIGO) {
+								gpio_m2_p1_on();
+								gpio_m2_p2_on();
+							}
+						} else if (command[2] < MOTOR_CONTROL_PANEL_Y_ORIGO) { //forward or backward
+							F7_command_interpreter.side_b = MOTOR_CONTROL_PANEL_Y_ORIGO - command[2];
+							gpio_m1_p1_off();
+							gpio_m1_p2_on();
+
+							gpio_m2_p1_off();
+							gpio_m2_p2_on();
+
+							if (command[1] > MOTOR_CONTROL_PANEL_X_ORIGO) {//left of right
+								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1;
+								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2;
+							} else if (command[1] < MOTOR_CONTROL_PANEL_X_ORIGO) {
+								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2;
+								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1;
+							} else if (command[1] == MOTOR_CONTROL_PANEL_X_ORIGO) {
+								gpio_m2_p1_on();
+								gpio_m2_p2_on();
+							}
+						}
+
+
 					} else {
 						printf("Controller not recognized!\n");
 						printf("%d\n", command[0]);
