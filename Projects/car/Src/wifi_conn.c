@@ -96,39 +96,46 @@ void send_ps_command()
 							break;
 						}
 					} else if (command[0] == 1) {
-						float pwm_pulse_1;
-						float pwm_pulse_2;
+						uint32_t pwm_pulse_1;
+						uint32_t pwm_pulse_2;
 						printf("Coordinates from F7: ");
 						printf("x: %d\t", command[1]);
 						printf("y: %d\n", command[2]);
 
-						typedef struct {
-							uint8_t side_a;
-							uint8_t side_b;
-							uint8_t side_c;
-							uint8_t direction_control;
-						} motor_control_parameters;
+						uint8_t side_b;
+						uint8_t side_c;
 
-						motor_control_parameters F7_command_interpreter;
-
-						F7_command_interpreter.side_c = command[3];
-						pwm_pulse_1 = (float)F7_command_interpreter.side_b / 2;
-						pwm_pulse_2 = (float)F7_command_interpreter.side_c / 2;
+						side_c = command[3];
 
 						if (command[2] > MOTOR_CONTROL_PANEL_Y_ORIGO) { //forward or backward
-							F7_command_interpreter.side_b = command[2] - MOTOR_CONTROL_PANEL_Y_ORIGO;
+							printf("go forward\n");
+							side_b = command[2] - MOTOR_CONTROL_PANEL_Y_ORIGO;
 							dir_forward();
 
+							pwm_pulse_1 = (uint32_t)side_b >> 1;
+							pwm_pulse_2 = (uint32_t)side_c >> 1;
+
+							printf("pulse width 1: %u + 50\n", pwm_pulse_1);
+							printf("pulse width 2: %u + 50\n", pwm_pulse_2);
+
 							if (command[1] > MOTOR_CONTROL_PANEL_X_ORIGO) {//left of right
-								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1;
-								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2;
+								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
+								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2 + MIN_PWM_PULSE_VALUE;
 							} else if (command[1] < MOTOR_CONTROL_PANEL_X_ORIGO) {
-								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2;
-								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1;
+								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2 + MIN_PWM_PULSE_VALUE;
+								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
 							}
+
 						} else if (command[2] < MOTOR_CONTROL_PANEL_Y_ORIGO) { //forward or backward
-							F7_command_interpreter.side_b = MOTOR_CONTROL_PANEL_Y_ORIGO - command[2];
+							printf("go backward\n");
+							side_b = MOTOR_CONTROL_PANEL_Y_ORIGO - command[2];
 							dir_backward();
+
+							pwm_pulse_1 = (uint32_t)side_b >> 1;
+							pwm_pulse_2 = (uint32_t)side_c >> 1;
+
+							printf("pulse width 1: %lu + 50\n", pwm_pulse_1);
+							printf("pulse width 2: %lu + 50\n", pwm_pulse_2);
 
 							if (command[1] > MOTOR_CONTROL_PANEL_X_ORIGO) {//left of right
 								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
@@ -137,14 +144,16 @@ void send_ps_command()
 								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2 + MIN_PWM_PULSE_VALUE;
 								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
 							}
+
 						} else if (command[2] == MOTOR_CONTROL_PANEL_Y_ORIGO) {
+							pwm_pulse_2 = (uint32_t)side_c / 2;
 							if (command[1] > MOTOR_CONTROL_PANEL_X_ORIGO) {//left of right
 								gpio_m1_p1_on();
 								gpio_m1_p2_off();
 
 								gpio_m2_p1_on();
 								gpio_m2_p2_on();
-								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
+
 								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2 + MIN_PWM_PULSE_VALUE;
 							} else if (command[1] <= MOTOR_CONTROL_PANEL_X_ORIGO) {
 								gpio_m1_p1_on();
@@ -153,9 +162,10 @@ void send_ps_command()
 								gpio_m2_p1_on();
 								gpio_m2_p2_off();
 								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2 + MIN_PWM_PULSE_VALUE;
-								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
 							}
 						}
+
+
 
 					} else {
 						printf("Controller not recognized!\n");
