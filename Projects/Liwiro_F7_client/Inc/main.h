@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    LwIP/LwIP_HTTP_Server_Netconn_RTOS/Inc/main.h 
+  * @file    STemWin/STemWin_HelloWorld/Inc/main.h
   * @author  MCD Application Team
   * @version V1.2.0
   * @date    30-December-2016
@@ -49,57 +49,22 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
-#ifdef __cplusplus
- extern "C" {
-#endif
-
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f7xx_hal.h"
-#include "stm32746g_discovery.h"
-#include "stm32746g_discovery_lcd.h"
-#include "stm32746g_discovery_ts.h"
+#include "GUI.h"
 
- /* GUI includes components */
- #include "GUI.h"
- #include "DIALOG.h"
+/* FatFs includes component */
+#include "ff_gen_drv.h"
+#include "sd_diskio.h"
+
+/* EVAL includes component */
+#include "stm32746g_discovery.h"
+#include "stm32746g_discovery_sdram.h"
+#include "stm32746g_discovery_ts.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
-#define USE_DHCP       /* enable DHCP, if disabled static address is used*/
-
- 
-
-/*Static IP ADDRESS*/
-#define IP_ADDR0   192
-#define IP_ADDR1   168
-#define IP_ADDR2   0
-#define IP_ADDR3   10
-   
-/*NETMASK*/
-#define NETMASK_ADDR0   255
-#define NETMASK_ADDR1   255
-#define NETMASK_ADDR2   255
-#define NETMASK_ADDR3   0
-
-/*Gateway Address*/
-#define GW_ADDR0   192
-#define GW_ADDR1   168
-#define GW_ADDR2   0
-#define GW_ADDR3   1 
-
-
-
-
-/* Exported macro ------------------------------------------------------------*/
-/* Exported functions ------------------------------------------------------- */  
-
-
-#ifdef __cplusplus
-}
-#endif
-
 #endif /* __MAIN_H */
-
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

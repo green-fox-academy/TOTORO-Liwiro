@@ -1,5 +1,6 @@
 /*********************************************************************
-*                SEGGER Microcontroller GmbH & Co. KG                *
+*          Portions COPYRIGHT 2016 STMicroelectronics                *
+*          Portions SEGGER Microcontroller GmbH & Co. KG             *
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
@@ -31,6 +32,25 @@ Purpose     : Configures emWins abilities, fonts etc.
 ----------------------------------------------------------------------
 */
 
+/**
+  ******************************************************************************
+  * @attention
+  *
+  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+  * You may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at:
+  *
+  *        http://www.st.com/software_license_agreement_liberty_v2
+  *
+  * Unless required by applicable law or agreed to in writing, software 
+  * distributed under the License is distributed on an "AS IS" BASIS, 
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  *
+  ******************************************************************************
+  */
+ 
 #ifndef GUICONF_H
 #define GUICONF_H
 
@@ -38,26 +58,24 @@ Purpose     : Configures emWins abilities, fonts etc.
 *
 *       Multi layer/display support
 */
-#define GUI_NUM_LAYERS            2    /* Maximum number of available layers */
-#define OS_SUPPORT
+#define GUI_NUM_LAYERS            2    // Maximum number of available layers
+
 /*********************************************************************
 *
 *       Multi tasking support
 */
 #ifdef OS_SUPPORT
- #define GUI_OS                    (1)  /* Compile with multitasking support */
+ #define GUI_OS                    (1)  // Compile with multitasking support
 #else
  #define GUI_OS                    (0)
 #endif
 
-
-#define GUI_MAXTASK 10
 /*********************************************************************
 *
 *       Configuration of touch support
 */
 #ifndef   GUI_SUPPORT_TOUCH
-  #define GUI_SUPPORT_TOUCH       (1)  /* Support touchscreen */
+  #define GUI_SUPPORT_TOUCH       (1)  // Support touchscreen
 #endif
 
 /*********************************************************************
@@ -74,12 +92,5 @@ Purpose     : Configures emWins abilities, fonts etc.
 #define GUI_WINSUPPORT                (1)    /* Use window manager */
 #define GUI_SUPPORT_MEMDEV            (1)    /* Memory device package available */
 #define GUI_SUPPORT_DEVICES           (1)    /* Enable use of device pointers */
-
-
-//void GUI_X_Config(void)
-//{
-//  GUI_ALLOC_AssignMemory(aMemory, GUI_NUMBYTES);
-//}
-//
 
 #endif  /* Avoid multiple inclusion */

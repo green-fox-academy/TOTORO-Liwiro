@@ -10,8 +10,12 @@
 #include "init_program.h"
 #include "lcd_log.h"
 #include "cmsis_os.h"
+#include "adc.h"
+#include "comm.h"
+#include "data.h"
 #include "ffconf.h"
 #include "timers.h"
+#include "sd_diskio.h"
 
 #include "program_gui.h"
 #include "WM.h"
@@ -46,9 +50,22 @@ void system_init(void)
 	/* Configure BSP */
 	BSP_Config();
 
+	dma_init();
+	adc_init();
+	init_spi();
+	trigger_value = 1000 / 12.89;
+	trigger_position = 100;
+	mode_selected = 4;
+	edge_direction = RISING_EDGE;
+	amplifier = 1;
+	average_num = 2;
+	zoomed = 1;
+	timebase = TRIGGER_MODE_PERIOD;
+	timebase_constant = TIMEBASE_CONSTANT * 0.9;
 	tim2_init();
 	GUI_Initialized = 0;
 	program_gui_init();
+	spi_transmit();
 }
 
 

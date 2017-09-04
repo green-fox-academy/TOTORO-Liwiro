@@ -16,9 +16,9 @@
 /* Exported macro ------------------------------------------------------------*/
 /* Exported variables --------------------------------------------------------*/
 GRAPH_DATA_Handle htrigData;
-uint8_t trigger_value; //trigger erteke
-uint16_t trigger_point; //a tombben hol van a trigger pont
-uint16_t trigger_position; //hova huzza a vonalat az lcd-n
+uint8_t trigger_value;
+uint16_t trigger_point;
+uint16_t trigger_position;
 int8_t edge_direction;
 uint8_t average_num;
 uint8_t drawing_ready;

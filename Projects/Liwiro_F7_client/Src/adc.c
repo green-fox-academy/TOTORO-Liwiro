@@ -17,7 +17,7 @@
 /* Private functions ---------------------------------------------------------*/
 void adc_init()
 {
-	buffer_mem_address = BUFFER_ADDRESS;
+	buffer_mem_address = (int16_t *)BUFFER_ADDRESS;
 	buffer_index = 0;
 	/* Init ADC3*/
 	__HAL_RCC_ADC3_CLK_ENABLE();

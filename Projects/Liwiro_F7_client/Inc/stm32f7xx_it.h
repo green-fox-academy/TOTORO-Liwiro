@@ -44,6 +44,7 @@
 #endif 
 
 /* Includes ------------------------------------------------------------------*/
+#include "main.h"
 #include "stm32f7xx.h"
 
 /* Exported types ------------------------------------------------------------*/
@@ -56,11 +57,19 @@ void HardFault_Handler(void);
 void MemManage_Handler(void);
 void BusFault_Handler(void);
 void UsageFault_Handler(void);
-void SVC_Handler(void);
 void DebugMon_Handler(void);
-void PendSV_Handler(void);
 void SysTick_Handler(void);
-void ETH_IRQHandler(void);
+void TIM3_IRQHandler(void);
+void TIM2_IRQHandler(void);
+void LTDC_IRQHandler(void);
+void ADC3_DMA_IRQHandler(void);
+void DMA2_Stream0_IRQHandler(void);
+void SVC_Handler(void);
+void SPI2_IRQHandler(void);
+void PendSV_Handler(void);
+void BSP_SDMMC_IRQHandler(void);
+void BSP_SDMMC_DMA_Tx_IRQHandler(void);
+void BSP_SDMMC_DMA_Rx_IRQHandler(void);
 #ifdef __cplusplus
 }
 #endif

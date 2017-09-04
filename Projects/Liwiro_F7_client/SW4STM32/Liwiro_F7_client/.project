@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>oscilloscope</name>
+	<name>Liwiro_F7_client</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -31,6 +31,11 @@
 			<locationURI>PARENT-2-PROJECT_LOC/readme.txt</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/FatFs</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/STemWin</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -44,6 +49,16 @@
 			<name>Application/SW4STM32/syscalls.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/syscalls.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/adc.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/adc.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/comm.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/comm.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/data.c</name>
@@ -216,6 +231,41 @@
 			<locationURI>PARENT-4-PROJECT_LOC/Drivers/STM32F7xx_HAL_Driver/Src/stm32f7xx_ll_sdmmc.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/FatFs/Core</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/FatFs/Drivers</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/FreeRTOS/croutine.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/croutine.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/FreeRTOS/list.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/list.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/FreeRTOS/queue.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/queue.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/FreeRTOS/tasks.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/tasks.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/FreeRTOS/timers.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/timers.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/STemWin/Config</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -249,6 +299,41 @@
 			<name>Drivers/BSP/STM32746G_Discovery/stm32746g_discovery_ts.c</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/Drivers/BSP/STM32746G-Discovery/stm32746g_discovery_ts.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/FatFs/Core/diskio.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/diskio.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/FatFs/Core/ff.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/ff.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/FatFs/Core/ff_gen_drv.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/ff_gen_drv.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/FatFs/Drivers/sd_diskio.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FatFs/src/drivers/sd_diskio.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/FreeRTOS/portable/cmsis_os.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/FreeRTOS/portable/heap_4.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/FreeRTOS/portable/port.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/STemWin/Config/GUIConf.c</name>

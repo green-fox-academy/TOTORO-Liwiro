@@ -3,7 +3,13 @@
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.2010213088">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.2010213088" moduleId="org.eclipse.cdt.core.settings" name="Debug">
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/Liwiro_F7_client"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/Liwiro_F7_client/Debug"/>
+						<entry flags="RESOLVED" kind="libraryFile" name="Liwiro_F7_client" srcPrefixMapping="" srcRootPath=""/>
+					</externalSetting>
+				</externalSettings>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
 					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
@@ -14,7 +20,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="elf" artifactName="oscilloscope" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.2010213088" name="Debug" parent="fr.ac6.managedbuild.config.gnu.cross.exe.debug" postannouncebuildStep="Generating binary and Printing size information:" postbuildStep="arm-none-eabi-objcopy -O binary &quot;${BuildArtifactFileBaseName}.elf&quot; &quot;${BuildArtifactFileBaseName}.bin&quot; &amp;&amp; arm-none-eabi-size &quot;${BuildArtifactFileName}&quot;">
+				<configuration artifactExtension="elf" artifactName="Liwiro_F7_client" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.2010213088" name="Debug" parent="fr.ac6.managedbuild.config.gnu.cross.exe.debug" postannouncebuildStep="Generating binary and Printing size information:" postbuildStep="arm-none-eabi-objcopy -O binary &quot;${BuildArtifactFileBaseName}.elf&quot; &quot;${BuildArtifactFileBaseName}.bin&quot; &amp;&amp; arm-none-eabi-size &quot;${BuildArtifactFileName}&quot;">
 					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.2010213088." name="/" resourcePath="">
 						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug.1720948014" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug">
 							<option id="fr.ac6.managedbuild.option.gnu.cross.prefix.1096904150" name="Prefix" superClass="fr.ac6.managedbuild.option.gnu.cross.prefix" useByScannerDiscovery="false" value="arm-none-eabi-" valueType="string"/>
@@ -24,7 +30,7 @@
 							<option id="fr.ac6.managedbuild.option.gnu.cross.fpu.2026297664" name="Floating point hardware" superClass="fr.ac6.managedbuild.option.gnu.cross.fpu" useByScannerDiscovery="false" value="fr.ac6.managedbuild.option.gnu.cross.fpu.fpv5-sp-d16" valueType="enumerated"/>
 							<option id="fr.ac6.managedbuild.option.gnu.cross.floatabi.752291319" name="Floating-point ABI" superClass="fr.ac6.managedbuild.option.gnu.cross.floatabi" useByScannerDiscovery="false" value="fr.ac6.managedbuild.option.gnu.cross.floatabi.hard" valueType="enumerated"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="fr.ac6.managedbuild.targetPlatform.gnu.cross.820211540" isAbstract="false" osList="all" superClass="fr.ac6.managedbuild.targetPlatform.gnu.cross"/>
-							<builder buildPath="${workspace_loc:/oscilloscope}/Debug" id="fr.ac6.managedbuild.builder.gnu.cross.1261492971" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="fr.ac6.managedbuild.builder.gnu.cross">
+							<builder buildPath="${workspace_loc:/Liwiro_F7_client}/Debug" id="fr.ac6.managedbuild.builder.gnu.cross.1261492971" incrementalBuildTarget="all" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="fr.ac6.managedbuild.builder.gnu.cross">
 								<outputEntries>
 									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Debug"/>
 								</outputEntries>
@@ -42,18 +48,17 @@
 									<listOptionValue builtIn="false" value="../../../../../Drivers/BSP/STM32746G-Discovery"/>
 									<listOptionValue builtIn="false" value="../../../../../Drivers/BSP/Components/Common"/>
 									<listOptionValue builtIn="false" value="../../../../../Drivers/BSP/Components"/>
-									<listOptionValue builtIn="false" value="../../../../../Drivers/STM32F7xx_HAL_Driver/Inc"/>
+									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/FatFs/src"/>
+									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/FatFs/src/drivers"/>
 									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/LwIP/src/include/"/>
-									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/LwIP/src/apps/httpd/"/>
 									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/LwIP/system"/>
-									<listOptionValue builtIn="false" value="../../../../../Utilities"/>
-									<listOptionValue builtIn="false" value="../../../../../Utilities/Log"/>
-                                    <listOptionValue builtIn="false" value="../../../../../Utilities/CPU"/>
-									<listOptionValue builtIn="false" value="../../../../../Drivers/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1"/>
 									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/FreeRTOS/Source/"/>
 									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS"/>
 									<listOptionValue builtIn="false" value="../../../../../Middlewares/Third_Party/FreeRTOS/Source/include"/>
+									<listOptionValue builtIn="false" value="../../../../../Utilities"/>
+									<listOptionValue builtIn="false" value="../../../../../Utilities/Log"/>
+									<listOptionValue builtIn="false" value="../../../../../Drivers/CMSIS/Include"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1100071681" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="USE_HAL_DRIVER"/>
@@ -78,13 +83,16 @@
 									<listOptionValue builtIn="false" value="../../../../../Middlewares/ST/STemWin/Lib"/>
 								</option>
 								<option id="gnu.c.link.option.ldflags.1932556796" name="Linker flags" superClass="gnu.c.link.option.ldflags" useByScannerDiscovery="false" value="-specs=nosys.specs -specs=nano.specs  -u _printf_float" valueType="string"/>
-								<option id="gnu.c.link.option.other.724574091" name="Other options (-Xlinker [option])" superClass="gnu.c.link.option.other" useByScannerDiscovery="false" valueType="stringList"/>
+								<option id="gnu.c.link.option.other.724574091" name="Other options (-Xlinker [option])" superClass="gnu.c.link.option.other" useByScannerDiscovery="false"/>
+								<option defaultValue="true" id="gnu.c.link.option.shared.2045886970" superClass="gnu.c.link.option.shared" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.204295619" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
 								</inputType>
 							</tool>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.1081125650" name="MCU G++ Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.1081125650" name="MCU G++ Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker">
+								<option defaultValue="true" id="gnu.cpp.link.option.shared.1551269232" superClass="gnu.cpp.link.option.shared" valueType="boolean"/>
+							</tool>
 							<tool id="fr.ac6.managedbuild.tool.gnu.archiver.2084654017" name="MCU GCC Archiver" superClass="fr.ac6.managedbuild.tool.gnu.archiver"/>
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.assembler.13961374" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler">
 								<option id="gnu.both.asm.option.include.paths.179954167" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" useByScannerDiscovery="false"/>
@@ -102,7 +110,7 @@
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="oscilloscope.fr.ac6.managedbuild.target.gnu.cross.exe.750546389" name="Executable" projectType="fr.ac6.managedbuild.target.gnu.cross.exe"/>
+		<project id="Liwiro_F7_client.fr.ac6.managedbuild.target.gnu.cross.exe.750546389" name="Executable" projectType="fr.ac6.managedbuild.target.gnu.cross.exe"/>
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
@@ -116,7 +124,7 @@
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Debug">
-			<resource resourceType="PROJECT" workspacePath="/oscilloscope"/>
+			<resource resourceType="PROJECT" workspacePath="/Liwiro_F7_client"/>
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>

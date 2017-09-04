@@ -1,12 +1,10 @@
 /**
   ******************************************************************************
-  * @file    LwIP/LwIP_HTTP_Server_Netconn_RTOS/Src/stm32f7xx_it.c 
+  * @file    oscilloscope/Src/stm32f7xx_it.c
   * @author  MCD Application Team
   * @version V1.2.0
   * @date    30-December-2016
   * @brief   Main Interrupt Service Routines.
-  *          This file provides template for all exceptions handler and 
-  *          peripherals interrupt service routine.
   ******************************************************************************
   * @attention
   *
@@ -38,22 +36,19 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f7xx_it.h"
+#include "stm32f7xx_hal.h"
 #include "main.h"
-#include "cmsis_os.h"
+#include "stm32f7xx_it.h"
+#include "adc.h"
+#include "timers.h"
+#include "GUI.h"
 
-/* Private typedef -----------------------------------------------------------*/
-/* Private define ------------------------------------------------------------*/
-/* Private macro -------------------------------------------------------------*/
-/* Private variables ---------------------------------------------------------*/
-extern ETH_HandleTypeDef EthHandle;
+/* Variables ---------------------------------------------------------*/
+extern volatile GUI_TIMER_TIME OS_TimeMS;
 extern LTDC_HandleTypeDef hltdc;
-/* Private function prototypes -----------------------------------------------*/
-/* Private functions ---------------------------------------------------------*/
-
-/******************************************************************************/
-/*            Cortex-M7 Processor Exceptions Handlers                         */
-/******************************************************************************/
+extern TIM_HandleTypeDef TimHandle;
+extern ADC_HandleTypeDef adc_handle;
+extern SD_HandleTypeDef uSdHandle;
 
 /**
   * @brief  This function handles NMI exception.
@@ -71,23 +66,23 @@ void NMI_Handler(void)
   */
 void HardFault_Handler(void)
 {
-  /* Go to infinite loop when Hard Fault exception occurs */
-  while (1)
-  {
-  }
+	/* Go to infinite loop when Hard Fault exception occurs */
+	while (1)
+	{
+	}
 }
 
 /**
-  * @brief  This function handles Memory Manage exception.
-  * @param  None
-  * @retval None
-  */
+* @brief  This function handles Memory Manage exception.
+* @param  None
+* @retval None
+*/
 void MemManage_Handler(void)
 {
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
+	/* Go to infinite loop when Memory Manage exception occurs */
+	while (1)
+	{
+	}
 }
 
 /**
@@ -97,10 +92,10 @@ void MemManage_Handler(void)
   */
 void BusFault_Handler(void)
 {
-  /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
-  }
+	/* Go to infinite loop when Bus Fault exception occurs */
+	while (1)
+	{
+	}
 }
 
 /**
@@ -110,10 +105,10 @@ void BusFault_Handler(void)
   */
 void UsageFault_Handler(void)
 {
-  /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
-  }
+	/* Go to infinite loop when Usage Fault exception occurs */
+	while (1)
+	{
+	}
 }
 
 /**
@@ -132,7 +127,10 @@ void DebugMon_Handler(void)
   */
 void SysTick_Handler(void)
 {
-  osSystickHandler();
+	/* Update the LocalTime by adding 1 ms each SysTick interrupt */
+	HAL_IncTick();
+
+	OS_TimeMS++;
 }
 
 /******************************************************************************/
@@ -142,35 +140,43 @@ void SysTick_Handler(void)
 /*  file (startup_stm32f7xx.s).                                               */
 /******************************************************************************/
 
+void TIM3_IRQHandler(void)
+{
+	HAL_TIM_IRQHandler(&TimHandle); //timer 3
+}
 
-/**
-  * @brief  This function handles LTDC global interrupt request.
-  * @param  None
-  * @retval None
-  */
+void TIM2_IRQHandler(void)
+{
+	HAL_TIM_IRQHandler(&tim2_handle);
+}
+
 void LTDC_IRQHandler(void)
 {
-  HAL_LTDC_IRQHandler(&hltdc);
+	HAL_LTDC_IRQHandler(&hltdc);
 }
 
-
-/**
-  * @brief  This function handles Ethernet interrupt request.
-  * @param  None
-  * @retval None
-  */
-void ETH_IRQHandler(void)
+void ADC3_DMA_IRQHandler(void)
 {
-  HAL_ETH_IRQHandler(&EthHandle);
+	HAL_DMA_IRQHandler(adc_handle.DMA_Handle);
 }
 
-/**
-  * @brief  This function handles PPP interrupt request.
-  * @param  None
-  * @retval None
-  */
-/*void PPP_IRQHandler(void)
+void DMA2_Stream0_IRQHandler(void)
 {
-}*/
+	HAL_DMA_IRQHandler(adc_handle.DMA_Handle);
+}
 
+void BSP_SDMMC_IRQHandler(void)
+{
+	HAL_SD_IRQHandler(&uSdHandle);
+}
+
+void BSP_SDMMC_DMA_Tx_IRQHandler(void)
+{
+	HAL_DMA_IRQHandler(uSdHandle.hdmatx);
+}
+
+void BSP_SDMMC_DMA_Rx_IRQHandler(void)
+{
+	HAL_DMA_IRQHandler(uSdHandle.hdmarx);
+}
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

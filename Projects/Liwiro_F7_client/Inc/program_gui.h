@@ -14,17 +14,14 @@
 /* Exported macro ------------------------------------------------------------*/
 #define ID_WINDOW_0 (GUI_ID_USER + 0x00)
 #define ID_BUTTON_0 (GUI_ID_USER + 0x01)
-#define ID_TEXT_0 (GUI_ID_USER + 0x03)
-#define ID_TEXT_1 (GUI_ID_USER + 0x04)
-#define ID_TEXT_2 (GUI_ID_USER + 0x05)
-#define ID_TEXT_3 (GUI_ID_USER + 0x06)
-#define ID_TEXT_4 (GUI_ID_USER + 0x07)
-#define ID_IMAGE_0 (GUI_ID_USER + 0x08)
-#define ID_IMAGE_1 (GUI_ID_USER + 0x09)
-#define ID_TEXT_5 (GUI_ID_USER + 0x0A)
+#define ID_IMAGE_0 (GUI_ID_USER + 0x07)
+#define ID_IMAGE_1 (GUI_ID_USER + 0x08)
+#define ID_TEXT_0 (GUI_ID_USER + 0x09)
+#define ID_IMAGE_2 (GUI_ID_USER + 0x0A)
 
 #define ID_IMAGE_0_IMAGE_0 0x00
 #define ID_IMAGE_1_IMAGE_0 0x01
+#define ID_IMAGE_2_IMAGE_0 0x02
 /* Exported variables --------------------------------------------------------*/
 uint8_t GUI_Initialized;
 int measurement_index;

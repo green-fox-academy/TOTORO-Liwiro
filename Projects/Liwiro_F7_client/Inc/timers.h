@@ -20,8 +20,6 @@ uint32_t timebase;
 
 /* Exported functions ------------------------------------------------------- */
 void tim2_init();
-void tim2_set_autoreload_reg();
-void tim2_set_prescaler();
 void tim3_init(void);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim);

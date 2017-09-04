@@ -4,6 +4,7 @@
 #include "stm32f7xx_hal_adc.h"
 #include "stm32746g_discovery.h"
 #include "stm32746g_discovery_ts.h"
+#include "string.h"
 
 #include "init_program.h"
 #include "lcd_log.h"
@@ -36,14 +37,6 @@ void tim2_init()
 	HAL_NVIC_SetPriority(TIM2_IRQn, 2, 2);
 }
 
-void tim2_set_autoreload_reg()
-{
-}
-
-void tim2_set_prescaler()
-{
-}
-
 void tim3_init(void)
 {
 	uwPrescalerValue = 0;
@@ -68,6 +61,18 @@ void tim3_init(void)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
+	if (htim->Instance == TIM2) {
+		adc_handle.Instance->CR2 |= (uint32_t)ADC_CR2_SWSTART;
+		if (buffer_index < BUFFER_LEN - 1) {
+			buffer_index++;
+		} else {
+			buffer_index = 0;
+		}
+		if(buffer_index >= (BUFFER_LEN - 383))
+			memcpy((buffer_mem_address + buffer_index - BUFFER_LEN), (buffer_mem_address + buffer_index), sizeof(uint16_t));
+	} else {
+		BSP_Background();
+	}
 }
 
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)

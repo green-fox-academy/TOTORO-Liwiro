@@ -31,8 +31,8 @@ void init_spi(void)
 	spi_handle.Init.NSS               = SPI_NSS_HARD_OUTPUT;
 	spi_handle.Init.Mode 			  = SPI_MODE_MASTER;
 	spi_handle.Instance               = SPI2;
-	spi_handle.Init.CRCLength = SPI_CRC_LENGTH_DATASIZE;
-	spi_handle.Init.NSSPMode = SPI_NSS_PULSE_ENABLE;
+	spi_handle.Init.CRCLength		  = SPI_CRC_LENGTH_DATASIZE;
+	spi_handle.Init.NSSPMode		  = SPI_NSS_PULSE_ENABLE;
 
 	HAL_SPI_Init(&spi_handle);
 }
