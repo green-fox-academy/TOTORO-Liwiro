@@ -5,11 +5,12 @@
 #include "stm32l4xx_hal_tim.h"
 
 /* Private typedef -----------------------------------------------------------*/
-#define PWM_PERIOD_VALUE	100
+#define PWM_PERIOD_VALUE				100
 /* Private define ------------------------------------------------------------*/
-#define PWM_PULSE_VALUE    	PWM_PERIOD_VALUE	/* Duty cycle 100%  */
-#define TIM2_PRESCALER		2
-#define TIM3_PRESCALER		2
+#define MAX_PWM_PULSE_VALUE    			PWM_PERIOD_VALUE	/* Duty cycle 100%  */
+#define MIN_PWM_PULSE_VALUE				60
+#define TIM2_PRESCALER					800
+#define TIM3_PRESCALER					800
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables --------------------------------------------------------*/
@@ -92,7 +93,7 @@ void tim2_pwm_init()
 	tim2_pwm_conf.OCIdleState = TIM_OCIDLESTATE_RESET;
 	tim2_pwm_conf.OCMode = TIM_OCMODE_PWM1;
 	tim2_pwm_conf.OCPolarity = TIM_OCPOLARITY_HIGH;
-	tim2_pwm_conf.Pulse = 0;
+	tim2_pwm_conf.Pulse = MIN_PWM_PULSE_VALUE;
 
 	/* Set the pulse value for channel 1 */
 	if (HAL_TIM_PWM_ConfigChannel(&tim2_pwm_handle, &tim2_pwm_conf, TIM_CHANNEL_1) != HAL_OK)
@@ -105,7 +106,7 @@ void tim2_pwm_init()
 void tim3_pwm_init()
 {
 	/* Compute the prescaler value to have TIM3 counter clock equal to 38 kHz */
-	uint8_t prescalervalue = TIM3_PRESCALER;
+	uint32_t prescalervalue = TIM3_PRESCALER;
 
 	/* Set TIM3 instance */
 	tim3_pwm_handle.Instance = TIM3;
@@ -132,7 +133,7 @@ void tim3_pwm_init()
 	tim3_pwm_conf.OCIdleState = TIM_OCIDLESTATE_RESET;
 	tim3_pwm_conf.OCMode = TIM_OCMODE_PWM1;
 	tim3_pwm_conf.OCPolarity = TIM_OCPOLARITY_HIGH;
-	tim3_pwm_conf.Pulse = PWM_PULSE_VALUE;
+	tim3_pwm_conf.Pulse = MAX_PWM_PULSE_VALUE;
 
 	/* Set the pulse value for channel 1 */
 	if (HAL_TIM_PWM_ConfigChannel(&tim3_pwm_handle, &tim3_pwm_conf, TIM_CHANNEL_1) != HAL_OK)

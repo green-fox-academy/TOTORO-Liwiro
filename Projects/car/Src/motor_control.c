@@ -23,9 +23,9 @@ void go_forward()
 	gpio_m2_p1_on();
 	gpio_m2_p2_off();
 
-	tim2_pwm_handle.Instance->CCR1 = 50;
-	tim3_pwm_handle.Instance->CCR1 = 50;
-	HAL_Delay(10000);
+	tim2_pwm_handle.Instance->CCR1 = 100;
+	tim3_pwm_handle.Instance->CCR1 = 100;
+	HAL_Delay(5000);
 }
 
 void go_backward()
@@ -38,7 +38,7 @@ void go_backward()
 
 	tim2_pwm_handle.Instance->CCR1 = 100;
 	tim3_pwm_handle.Instance->CCR1 = 100;
-	HAL_Delay(10000);
+	HAL_Delay(5000);
 }
 
 void go_left()
@@ -51,7 +51,7 @@ void go_left()
 
 	tim2_pwm_handle.Instance->CCR1 = 100;
 	tim3_pwm_handle.Instance->CCR1 = 80;
-	HAL_Delay(10000);
+	HAL_Delay(5000);
 }
 
 void go_right()
@@ -64,7 +64,7 @@ void go_right()
 
 	tim2_pwm_handle.Instance->CCR1 = 80;
 	tim3_pwm_handle.Instance->CCR1 = 100;
-	HAL_Delay(1000);
+	HAL_Delay(5000);
 }
 
 void ctrl_stop()
