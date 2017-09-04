@@ -10,6 +10,8 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables --------------------------------------------------------*/
+/* UART variables */
+UART_HandleTypeDef uart_handle;
 
 /* PWM variables */
 TIM_HandleTypeDef tim_pwm_handle;
@@ -32,6 +34,36 @@ uint16_t tickstart;
 #endif /* __GNUC__ */
 void error_handling(const char *error_string, uint8_t error_code);
 
+void uart_init()
+{
+	/* Initialize UART: COM1 port, Baudrate 115200, 8bit buffer length, 1 stop bit, no parity mode */
+	uart_handle.Instance = DISCOVERY_COM1;
+	uart_handle.Init.BaudRate = 115200;
+	uart_handle.Init.WordLength = UART_WORDLENGTH_8B;
+	uart_handle.Init.StopBits = UART_STOPBITS_1;
+	uart_handle.Init.Parity = UART_PARITY_NONE;
+	uart_handle.Init.Mode = UART_MODE_TX_RX;
+	uart_handle.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+	uart_handle.Init.OverSampling = UART_OVERSAMPLING_16;
+	uart_handle.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+	uart_handle.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+
+	BSP_COM_Init(COM1, &uart_handle);
+}
+
+/**
+  * @brief  Retargets the C library printf function to the USART.
+  * @param  None
+  * @retval None
+  */
+PUTCHAR_PROTOTYPE
+{
+	/* e.g. write a character to the USART1 and Loop until the end of transmission */
+	HAL_UART_Transmit(&uart_handle, (uint8_t *)&ch, 1, 0xFFFF);
+
+	return ch;
+}
+
 void time_base_init()
 {
 	/* Compute the prescaler value to have TIM2 counter clock equal to 1742 Hz, period Time 574 micro sec */
@@ -52,10 +84,17 @@ void time_base_init()
 	tim_base_handle.Init.CounterMode       = TIM_COUNTERMODE_UP;
 	tim_base_handle.Init.RepetitionCounter = 0;
 
-	if (HAL_TIM_Base_Init(&tim_base_handle) != HAL_OK) {
+	if (HAL_TIM_Base_Init(&tim_base_handle) != HAL_OK)
+	{
+		/* Initialization Error */
 		error_handling("TIM Base initialization has failed!", HAL_ERROR);
 	}
-	if (HAL_TIM_Base_Start(&tim_base_handle) != HAL_OK)	{
+
+	/*##-2- Start the TIM Base generation in normal mode ####################*/
+	/* Start Channel1 */
+	if (HAL_TIM_Base_Start(&tim_base_handle) != HAL_OK)
+	{
+		/* Starting Error */
 		error_handling("Starting TIM Base has failed!", HAL_ERROR);
 	}
 }
@@ -77,6 +116,7 @@ void pwm_init()
 	/* Compute the prescaler value to have TIM3 counter clock equal to 38 kHz */
 	uint8_t prescalervalue = 20;
 
+	/* Set TIM3 instance */
 	tim_pwm_handle.Instance = TIM3;
 
 	/* Initialize TIMx peripheral as follows:
@@ -91,16 +131,22 @@ void pwm_init()
 	tim_pwm_handle.Init.CounterMode       = TIM_COUNTERMODE_UP;
 	tim_pwm_handle.Init.RepetitionCounter = 0;
 
-	if (HAL_TIM_PWM_Init(&tim_pwm_handle) != HAL_OK) {
+	if (HAL_TIM_PWM_Init(&tim_pwm_handle) != HAL_OK)
+	{
+		/* Initialization Error */
 		error_handling("TIM PWM initialization has failed!", HAL_ERROR);
 	}
+
 	pwm_conf.OCFastMode = TIM_OCFAST_DISABLE;
 	pwm_conf.OCIdleState = TIM_OCIDLESTATE_RESET;
 	pwm_conf.OCMode = TIM_OCMODE_PWM1;
 	pwm_conf.OCPolarity = TIM_OCPOLARITY_HIGH;
 	pwm_conf.Pulse = PWM_PULSE_VALUE;
 
-	if (HAL_TIM_PWM_ConfigChannel(&tim_pwm_handle, &pwm_conf, TIM_CHANNEL_1) != HAL_OK)	{
+	/* Set the pulse value for channel 1 */
+	if (HAL_TIM_PWM_ConfigChannel(&tim_pwm_handle, &pwm_conf, TIM_CHANNEL_1) != HAL_OK)
+	{
+		/* Configuration Error */
 		error_handling("TIM PWM channel configuration has failed!", HAL_ERROR);
 	}
 }

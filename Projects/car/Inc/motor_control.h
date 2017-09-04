@@ -9,11 +9,10 @@
 /* Exported macro ------------------------------------------------------------*/
 
 /* Exported functions ------------------------------------------------------- */
-void end_bit();
-void bit_one();
-void bit_zero();
-void ctrl_up();
-void ctrl_down();
+void ctrl_go_forward();
+void ctrl_go_backward();
+void ctrl_go_left();
+void ctrl_go_right();
 void ctrl_stop();
 
 #endif /* __PS_CONTROL_H */
