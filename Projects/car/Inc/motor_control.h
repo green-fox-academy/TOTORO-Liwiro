@@ -9,8 +9,6 @@
 /* Exported macro ------------------------------------------------------------*/
 
 /* Exported functions ------------------------------------------------------- */
-void bit_zero();
-void bit_one();
 void go_forward();
 void go_backward();
 void go_left();

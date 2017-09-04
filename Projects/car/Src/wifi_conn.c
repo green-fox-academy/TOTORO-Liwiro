@@ -19,7 +19,7 @@ uint8_t firm_ip[] = {10, 27, 99, 161};
 int32_t socket;
 uint16_t datalen;
 uint8_t connections = 0;
-uint8_t command;
+uint8_t command[3];
 
 /* Private function prototypes -----------------------------------------------*/
 void error_handling(const char *error_string, uint8_t error_code);
@@ -61,28 +61,46 @@ void send_ps_command()
 			do {
 				if(datalen > 0) {
 					printf("Received message from Controller\r\n");
-					if (command == 'w') {
-						go_forward();
-						printf("going forward\r\n");
-					} else if (command == 's') {
+					if (command[0] == 0) {
+						printf("command from PC: \n");
+						switch(command[1]) {
+						case 1:
+							printf("%d - go forward\r\n", command[1]);
+							go_forward();
+							break;
+						case 2:
+							printf("%d - go backwards\r\n", command[1]);
+							go_backward();
+							break;
+						case 3:
+							printf("%d - go left\r\n", command[1]);
+							go_left();
+							break;
+						case 4:
+							printf("%d - go right\r\n", command[1]);
+							go_right();
+							break;
+						case 5:
+							printf("%d - stop\r\n", command[1]);
+							ctrl_stop();
+							break;
+						default:
+							printf("%d - command not recognized\r\n", command[1]);
+							break;
+						}
+					} else if (command[0] == 1) {
+						printf("Coordinates from F7: ");
+						printf("x: %d\t", command[1]);
+						printf("y: %d\n", command[2]);
+
 						go_backward();
-						printf("going backwards\r\n");
-					} else if (command == 'a') {
-						go_left();
-						printf("left\r\n");
-					} else if (command == 'd') {
-						go_right();
-						printf("right\n");
-					} else if (command == 'x') {
-						ctrl_stop();
-						printf("stop\n");
 					} else {
-						printf("wrong command!\n");
-						printf("%d\n", command);
+						printf("Controller not recognized!\n");
+						printf("%d\n", command[0]);
 					}
 					datalen = 0;
 				}
-			} while (WIFI_ReceiveData(socket, &command, sizeof(command), &datalen, 0) == WIFI_STATUS_OK);
+			} while (WIFI_ReceiveData(socket, command, sizeof(command), &datalen, 0) == WIFI_STATUS_OK);
 			/*Closing socket when connection is lost or could'not connect */
 			printf("Closing the socket...\n");
 			WIFI_CloseClientConnection(socket);
