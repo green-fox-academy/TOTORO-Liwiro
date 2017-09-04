@@ -5,7 +5,7 @@
 #include <winsock.h>
 #include <conio.h>
 
-#define SERVER_IP           "10.27.99.212"
+#define SERVER_IP           "10.27.99.89"
 #define SERVER_PORT         13003
 #define DATA_BUFFER_SIZE    1024
 
@@ -51,11 +51,15 @@ void connect_to_server(int *client_sock, unsigned int server_port, char *server_
 int send_message(int *socket)
 {
 	// Get the message from the user
-	int msg[1];
-	printf("\nEnter the message to send: ");
-	msg[0] = getch();
+	uint8_t msg[4];
+
+	for (int i = 0; i < 4; i++) {
+        printf("\nEnter command %d: ", i);
+        scanf("%d", &msg[i]);
+	}
+
 	// Send the message to the servers
-	int sent_bytes = send(*socket, msg, strlen(msg), 0);
+	int sent_bytes = send(*socket, msg, sizeof(msg), 0);
 	if (sent_bytes < 0)
 		handle_error("send() ");
 
