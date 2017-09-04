@@ -10,7 +10,7 @@
 #include <arpa/inet.h>
 #include <termios.h>
 
-#define SERVER_IP           "10.27.99.212"
+#define SERVER_IP           "10.27.99.89"
 #define SERVER_PORT         13003
 #define DATA_BUFFER_SIZE    1024
 
@@ -51,11 +51,13 @@ void connect_to_server(int *client_sock, unsigned int server_port, char *server_
 int send_message_up(void)
 {
 	// Get the message from the user
-	char msg[1];
+	uint8_t msg[3];
 	printf("Enter the message to send: \n");
-        msg[0] = 'w';
+        msg[0] = 0;
+		msg[1] = 1;
+		msg[2] = 3;
 	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, strlen(msg), 0);
+	int sent_bytes = send(client_socket, msg, 3, 0);
 	if (sent_bytes < 0)
 		handle_error("send() ");
 
@@ -65,11 +67,13 @@ int send_message_up(void)
 int send_message_down(void)
 {
 	// Get the message from the user
-	char msg[1];
+	uint8_t msg[3];
 	printf("Enter the message to send: \n");
-        msg[0] = 's';
+        msg[0] = 0;
+		msg[1] = 2;
+		msg[2] = 3;
 	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, strlen(msg), 0);
+	int sent_bytes = send(client_socket, msg, 3, 0);
 	if (sent_bytes < 0)
 		handle_error("send() ");
 
@@ -79,11 +83,13 @@ int send_message_down(void)
 int send_message_left(void)
 {
 	// Get the message from the user
-	char msg[1];
+	uint8_t msg[3];
 	printf("Enter the message to send: \n");
-        msg[0] = 'a';
+        msg[0] = 0;
+		msg[1] = 3;
+		msg[2] = 3;
 	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, strlen(msg), 0);
+	int sent_bytes = send(client_socket, msg, 3, 0);
 	if (sent_bytes < 0)
 		handle_error("send() ");
 
@@ -93,11 +99,13 @@ int send_message_left(void)
 int send_message_right(void)
 {
 	// Get the message from the user
-	char msg[1];
+	uint8_t msg[3];
 	printf("Enter the message to send: \n");
-        msg[0] = 'd';
+        msg[0] = 0;
+		msg[1] = 4;
+		msg[2] = 3;
 	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, strlen(msg), 0);
+	int sent_bytes = send(client_socket, msg, 3, 0);
 	if (sent_bytes < 0)
 		handle_error("send() ");
 
@@ -107,11 +115,13 @@ int send_message_right(void)
 int send_message_stop(void)
 {
 	// Get the message from the user
-	char msg[1];
+	uint8_t msg[3];
 	printf("Enter the message to send: \n");
-        msg[0] = 'x';
+        msg[0] = 0;
+		msg[1] = 5;
+		msg[2] = 3;
 	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, strlen(msg), 0);
+	int sent_bytes = send(client_socket, msg, 3, 0);
 	if (sent_bytes < 0)
 		handle_error("send() ");
 
