@@ -11,8 +11,8 @@
 #define WIFI_READ_TIMEOUT 		1000
 #define CONNECTION_TRIAL_MAX    10
 
-#define MOTOR_CONTROL_PANEL_X_ORIGO	100
-#define MOTOR_CONTROL_PANEL_Y_ORIGO	100
+#define MOTOR_CONTROL_PANEL_X_ORIGO	136
+#define MOTOR_CONTROL_PANEL_Y_ORIGO	136
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables --------------------------------------------------------*/
@@ -117,11 +117,7 @@ void send_ps_command()
 
 						if (command[2] > MOTOR_CONTROL_PANEL_Y_ORIGO) { //forward or backward
 							F7_command_interpreter.side_b = command[2] - MOTOR_CONTROL_PANEL_Y_ORIGO;
-							gpio_m1_p1_on();
-							gpio_m1_p2_off();
-
-							gpio_m2_p1_on();
-							gpio_m2_p2_off();
+							dir_forward();
 
 							if (command[1] > MOTOR_CONTROL_PANEL_X_ORIGO) {//left of right
 								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1;
@@ -129,30 +125,37 @@ void send_ps_command()
 							} else if (command[1] < MOTOR_CONTROL_PANEL_X_ORIGO) {
 								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2;
 								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1;
-							} else if (command[1] == MOTOR_CONTROL_PANEL_X_ORIGO) {
-								gpio_m2_p1_on();
-								gpio_m2_p2_on();
 							}
 						} else if (command[2] < MOTOR_CONTROL_PANEL_Y_ORIGO) { //forward or backward
 							F7_command_interpreter.side_b = MOTOR_CONTROL_PANEL_Y_ORIGO - command[2];
-							gpio_m1_p1_off();
-							gpio_m1_p2_on();
-
-							gpio_m2_p1_off();
-							gpio_m2_p2_on();
+							dir_backward();
 
 							if (command[1] > MOTOR_CONTROL_PANEL_X_ORIGO) {//left of right
-								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1;
-								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2;
-							} else if (command[1] < MOTOR_CONTROL_PANEL_X_ORIGO) {
-								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2;
-								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1;
-							} else if (command[1] == MOTOR_CONTROL_PANEL_X_ORIGO) {
+								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
+								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2 + MIN_PWM_PULSE_VALUE;
+							} else if (command[1] <= MOTOR_CONTROL_PANEL_X_ORIGO) {
+								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2 + MIN_PWM_PULSE_VALUE;
+								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
+							}
+						} else if (command[2] == MOTOR_CONTROL_PANEL_Y_ORIGO) {
+							if (command[1] > MOTOR_CONTROL_PANEL_X_ORIGO) {//left of right
+								gpio_m1_p1_on();
+								gpio_m1_p2_off();
+
 								gpio_m2_p1_on();
 								gpio_m2_p2_on();
+								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
+								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2 + MIN_PWM_PULSE_VALUE;
+							} else if (command[1] <= MOTOR_CONTROL_PANEL_X_ORIGO) {
+								gpio_m1_p1_on();
+								gpio_m1_p2_on();
+
+								gpio_m2_p1_on();
+								gpio_m2_p2_off();
+								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2 + MIN_PWM_PULSE_VALUE;
+								tim3_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
 							}
 						}
-
 
 					} else {
 						printf("Controller not recognized!\n");

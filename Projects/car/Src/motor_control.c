@@ -76,6 +76,24 @@ void ctrl_stop()
 	gpio_m2_p2_off();
 }
 
+void dir_forward()
+{
+	gpio_m1_p1_on();
+	gpio_m1_p2_off();
+
+	gpio_m2_p1_on();
+	gpio_m2_p2_off();
+}
+
+void dir_backward()
+{
+	gpio_m1_p1_off();
+	gpio_m1_p2_on();
+
+	gpio_m2_p1_off();
+	gpio_m2_p2_on();
+}
+
 void gpio_m1_p1_on()
 {
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
