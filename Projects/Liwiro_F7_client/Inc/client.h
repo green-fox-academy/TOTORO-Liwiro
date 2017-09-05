@@ -2,8 +2,13 @@
 #ifndef __SOCKET_CLIENT_H
 #define __SOCKET_CLIENT_H
 
-#define SERVER_IP "10.27.6.40"
-#define SERVER_PORT 54545
+#define SERVER_IP           "10.27.99.89"
+#define SERVER_PORT         13003
+#define DATA_BUFFER_SIZE    1024
+
+#define CIRCLE_X 			136
+#define CIRCLE_Y			136
+#define CIRCLE_R			100
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32746g_discovery_ts.h"
@@ -12,7 +17,11 @@
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
-void socket_client_thread(void const *argument);
+void connect_to_server(int *client_sock, unsigned int server_port, char *server_ip);
+int send_message(int32_t length);
+int send_message_stop(void);
+uint8_t clicked_circle(void);
+int32_t sqrt_measure(int32_t x);
 
 #endif /* __SOCKET_CLIENT_H */
 

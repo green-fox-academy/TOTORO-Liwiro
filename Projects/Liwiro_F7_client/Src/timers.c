@@ -58,18 +58,7 @@ void tim3_init(void)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-//	if (htim->Instance == TIM2) {
-//		adc_handle.Instance->CR2 |= (uint32_t)ADC_CR2_SWSTART;
-//		if (buffer_index < BUFFER_LEN - 1) {
-//			buffer_index++;
-//		} else {
-//			buffer_index = 0;
-//		}
-//		if(buffer_index >= (BUFFER_LEN - 383))
-//			memcpy((buffer_mem_address + buffer_index - BUFFER_LEN), (buffer_mem_address + buffer_index), sizeof(uint16_t));
-//	} else {
-//		BSP_Background();
-//	}
+
 }
 
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)

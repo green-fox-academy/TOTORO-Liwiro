@@ -9,6 +9,7 @@
 #include "GUI.h"
 #include "DIALOG.h"
 #include "stm32746g_discovery_ts.h"
+#include "client.h"
 #include "timers.h"
 
 /* Private typedef -----------------------------------------------------------*/
@@ -4144,6 +4145,17 @@ void wincallback(WM_MESSAGE * pMsg) {
     Id    = WM_GetId(pMsg->hWinSrc);
     NCode = pMsg->Data.v;
     switch(Id) {
+    case ID_IMAGE_2: // Notifications sent by 'Image'
+		switch(NCode) {
+		case WM_NOTIFICATION_CLICKED:
+			int32_t length = clicked_circle();
+			if(length <= CIRCLE_R){
+				send_message(length);
+				//rajzolj kort!!
+			}
+			break;
+		}
+		break;
     case ID_BUTTON_0: // Notifications sent by 'Button'
       switch(NCode) {
       case WM_NOTIFICATION_CLICKED:
@@ -4186,8 +4198,6 @@ void user_draw(WM_HWIN hWin, int Stage)
 		break;
 	case GRAPH_DRAW_LAST:
 		if(26 < ts.touchX[0] && ts.touchX[0] < 410 && ts.touchY[0] < 244) {
-//			trigger_position = ts.touchX[0] - 26;
-//			trigger_value = 256 - ts.touchY[0];
 			//Trigger level line drawer
 			last_x = ts.touchX[0];
 			last_y = ts.touchY[0];

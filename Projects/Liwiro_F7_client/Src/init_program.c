@@ -2,7 +2,6 @@
 #include "main.h"
 
 #include "stm32f7xx_hal.h"
-#include "stm32f7xx_hal_adc.h"
 #include "stm32746g_discovery.h"
 #include "stm32746g_discovery_ts.h"
 #include "stm32746g_discovery_lcd.h"
@@ -10,9 +9,7 @@
 #include "init_program.h"
 #include "lcd_log.h"
 #include "cmsis_os.h"
-#include "ffconf.h"
 #include "timers.h"
-#include "sd_diskio.h"
 
 #include "program_gui.h"
 #include "WM.h"

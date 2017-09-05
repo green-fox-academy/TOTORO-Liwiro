@@ -47,14 +47,9 @@
 #include "main.h"
 
 #include "stm32f7xx_hal.h"
-#include "stm32f7xx_hal_adc.h"
-#include "stm32f7xx_hal_sd.h"
-#include "stm32f7xx_hal_sdram.h"
 #include "stm32746g_discovery.h"
 #include "stm32746g_discovery_ts.h"
 #include "stm32746g_discovery_lcd.h"
-#include "stm32746g_discovery_sd.h"
-#include "stm32746g_discovery_sdram.h"
 
 #include "cmsis_os.h"
 #include "lwip/netif.h"
@@ -66,12 +61,8 @@
 #include "WM.h"
 #include "GUI.h"
 #include "DIALOG.h"
-#include "cmsis_os.h"
 
 #include "init_program.h"
-#include "lcd_log.h"
-#include "ffconf.h"
-#include "sd_diskio.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -90,7 +81,10 @@ int main(void)
 	system_init();
 	gui_task();
 	HAL_TIM_Base_Start_IT(&tim2_handle);
+
+	connect_to_server(&client_socket, SERVER_PORT, SERVER_IP);
+
 	while(1){
-		GUI_Delay(5);
+
 	}
 }
