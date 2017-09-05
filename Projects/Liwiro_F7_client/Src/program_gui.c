@@ -4089,7 +4089,6 @@ void gui_task(void) {
 	CreateWindow();
 }
 
-
 /*********************************************************************
 *
 *       _cbDialog
@@ -4174,17 +4173,12 @@ void wincallback(WM_MESSAGE * pMsg) {
   }
 }
 
-
 WM_HWIN CreateWindow(void) {
   WM_HWIN hWin;
 
   hWin = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), wincallback, WM_HBKWIN, 0, 0);
-  GUI_SetColor(GUI_WHITE);
-  GUI_DrawCircle(136, 136, 100);
   return hWin;
 }
-
-
 
 void user_draw(WM_HWIN hWin, int Stage)
 {

@@ -88,8 +88,6 @@ int main(void)
 	gui_task();
 	HAL_TIM_Base_Start_IT(&tim2_handle);
 	while(1){
-		GRAPH_SetUserDraw(hGraph, user_draw);
-		if (BSP_PB_GetState(BUTTON_KEY) == 1)
 			GUI_Delay(5);
 	}
 }
