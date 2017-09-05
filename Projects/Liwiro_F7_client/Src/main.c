@@ -56,6 +56,12 @@
 #include "stm32746g_discovery_sd.h"
 #include "stm32746g_discovery_sdram.h"
 
+#include "cmsis_os.h"
+#include "lwip/netif.h"
+#include "lwip/tcpip.h"
+#include "lcd_log.h"
+#include "client.h"
+
 #include "program_gui.h"
 #include "WM.h"
 #include "GUI.h"
