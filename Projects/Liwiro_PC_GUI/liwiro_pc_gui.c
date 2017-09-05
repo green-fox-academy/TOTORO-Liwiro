@@ -227,7 +227,7 @@ static void draw_brush (GtkWidget *widget, gdouble x, gdouble y)
 	/* Now invalidate the affected region of the drawing area. */
 	gtk_widget_queue_draw_area (widget, x - 3, y - 3, 6, 6);
 	printf("x=%lf\ty=%lf\n", x, y);
-	int32_t length2 = (int32_t)x*(int32_t)x + (int32_t)y*(int32_t)y;
+	int32_t length2 = ((int32_t)x-100)*((int32_t)x-100) + ((int32_t)y-100)*((int32_t)y-100);
 	int32_t length = sqrt_measure(length2);
 	if(length <= 100)
 		send_message((uint8_t)x, (uint8_t)y, (uint8_t)length);

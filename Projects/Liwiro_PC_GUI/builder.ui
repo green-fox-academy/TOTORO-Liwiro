@@ -106,12 +106,14 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="events">GDK_BUTTON_PRESS_MASK</property>
+            <property name="halign">end</property>
             <child>
               <object class="GtkImage" id="imageleft">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>			
                 <property name="icon_size">3</property>
                 <property name="stock">gtk-go-back</property>
+				<property name="halign">end</property>
               </object>
             </child>
             <accelerator key="KP_4" signal="composited-changed"/>
@@ -128,12 +130,14 @@
             <property name="receives_default">True</property>
             <property name="events">GDK_BUTTON_PRESS_MASK</property>
             <property name="margin_right">30</property>
+            <property name="halign">start</property>
             <child>
               <object class="GtkImage" id="imageright">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>			
                 <property name="icon_size">3</property>
                 <property name="stock">gtk-go-forward</property>
+				<property name="halign">start</property>
               </object>
             </child>
             <accelerator key="KP_6" signal="composited-changed"/>
