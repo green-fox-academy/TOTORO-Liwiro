@@ -26,7 +26,7 @@ uint8_t firm_ip[] = {10, 27, 99, 161};
 int32_t socket;
 uint16_t datalen;
 uint8_t connections = 0;
-uint8_t command[4];
+int command[4];
 
 /* Private function prototypes -----------------------------------------------*/
 void error_handling(const char *error_string, uint8_t error_code);
@@ -167,13 +167,15 @@ void send_ps_command()
 
 
 
+					} else if (command[0] == 'a') {
+						printf("Message from Android\n");
 					} else {
 						printf("Controller not recognized!\n");
 						printf("%d\n", command[0]);
 					}
 					datalen = 0;
 				}
-			} while (WIFI_ReceiveData(socket, command, sizeof(command), &datalen, 0) == WIFI_STATUS_OK);
+			} while (WIFI_ReceiveData(socket, (uint8_t *)command, sizeof(command), &datalen, 0) == WIFI_STATUS_OK);
 			/*Closing socket when connection is lost or could'not connect */
 			printf("Closing the socket...\n");
 			WIFI_CloseClientConnection(socket);
