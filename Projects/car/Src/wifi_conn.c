@@ -26,7 +26,7 @@ uint8_t firm_ip[] = {10, 27, 99, 161};
 int32_t socket;
 uint16_t datalen;
 uint8_t connections = 0;
-int command[4];
+char command[100];
 
 /* Private function prototypes -----------------------------------------------*/
 void error_handling(const char *error_string, uint8_t error_code);
@@ -68,7 +68,7 @@ void send_ps_command()
 			do {
 				if(datalen > 0) {
 					printf("Received message from Controller\r\n");
-					if (command[0] == 0) {
+					/*if (command[0] == 0) {
 						printf("command from PC: \n");
 						switch(command[1]) {
 						case 1:
@@ -165,13 +165,12 @@ void send_ps_command()
 							}
 						}
 
-
-
-					} else if (command[0] == 'a') {
+					} */
+					if (command[0] == 'a') {
 						printf("Message from Android\n");
 					} else {
 						printf("Controller not recognized!\n");
-						printf("%d\n", command[0]);
+						printf("%s\n", command);
 					}
 					datalen = 0;
 				}
