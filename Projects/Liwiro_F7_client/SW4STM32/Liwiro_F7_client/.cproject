@@ -84,7 +84,7 @@
 								</option>
 								<option id="gnu.c.link.option.ldflags.1932556796" name="Linker flags" superClass="gnu.c.link.option.ldflags" useByScannerDiscovery="false" value="-specs=nosys.specs -specs=nano.specs  -u _printf_float" valueType="string"/>
 								<option id="gnu.c.link.option.other.724574091" name="Other options (-Xlinker [option])" superClass="gnu.c.link.option.other" useByScannerDiscovery="false"/>
-								<option defaultValue="true" id="gnu.c.link.option.shared.2045886970" name="Shared (-shared)" superClass="gnu.c.link.option.shared" valueType="boolean"/>
+								<option defaultValue="true" id="gnu.c.link.option.shared.2045886970" name="Shared (-shared)" superClass="gnu.c.link.option.shared" useByScannerDiscovery="false" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.204295619" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
