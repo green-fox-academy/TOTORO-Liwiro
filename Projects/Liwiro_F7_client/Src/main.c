@@ -68,11 +68,8 @@
 #include "DIALOG.h"
 #include "cmsis_os.h"
 
-#include "data.h"
-#include "adc.h"
 #include "init_program.h"
 #include "lcd_log.h"
-#include "comm.h"
 #include "ffconf.h"
 #include "sd_diskio.h"
 
@@ -94,6 +91,6 @@ int main(void)
 	gui_task();
 	HAL_TIM_Base_Start_IT(&tim2_handle);
 	while(1){
-			GUI_Delay(5);
+		GUI_Delay(5);
 	}
 }

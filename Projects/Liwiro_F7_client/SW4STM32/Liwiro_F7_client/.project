@@ -51,24 +51,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/syscalls.c</locationURI>
 		</link>
 		<link>
-			<name>Application/User/adc.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/adc.c</locationURI>
-		</link>
-		<link>
 			<name>Application/User/client.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/client.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/comm.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/comm.c</locationURI>
-		</link>
-		<link>
-			<name>Application/User/data.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Src/data.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/init_program.c</name>

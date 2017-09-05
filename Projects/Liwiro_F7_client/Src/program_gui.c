@@ -9,9 +9,6 @@
 #include "GUI.h"
 #include "DIALOG.h"
 #include "stm32746g_discovery_ts.h"
-#include "adc.h"
-#include "data.h"
-#include "comm.h"
 #include "timers.h"
 
 /* Private typedef -----------------------------------------------------------*/
@@ -4189,8 +4186,8 @@ void user_draw(WM_HWIN hWin, int Stage)
 		break;
 	case GRAPH_DRAW_LAST:
 		if(26 < ts.touchX[0] && ts.touchX[0] < 410 && ts.touchY[0] < 244) {
-			trigger_position = ts.touchX[0] - 26;
-			trigger_value = 256 - ts.touchY[0];
+//			trigger_position = ts.touchX[0] - 26;
+//			trigger_value = 256 - ts.touchY[0];
 			//Trigger level line drawer
 			last_x = ts.touchX[0];
 			last_y = ts.touchY[0];

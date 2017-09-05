@@ -39,7 +39,6 @@
 #include "stm32f7xx_hal.h"
 #include "main.h"
 #include "stm32f7xx_it.h"
-#include "adc.h"
 #include "timers.h"
 #include "GUI.h"
 
@@ -162,7 +161,7 @@ void ADC3_DMA_IRQHandler(void)
 
 void DMA2_Stream0_IRQHandler(void)
 {
-	HAL_DMA_IRQHandler(adc_handle.DMA_Handle);
+//	HAL_DMA_IRQHandler(adc_handle.DMA_Handle);
 }
 
 void BSP_SDMMC_IRQHandler(void)
