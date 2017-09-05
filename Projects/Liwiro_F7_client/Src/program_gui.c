@@ -4144,14 +4144,18 @@ void wincallback(WM_MESSAGE * pMsg) {
   case WM_NOTIFY_PARENT:
     Id    = WM_GetId(pMsg->hWinSrc);
     NCode = pMsg->Data.v;
+
+	int length;
+
     switch(Id) {
-    case ID_IMAGE_2: // Notifications sent by 'Image'
+    case ID_IMAGE_2:// Notifications sent by 'Image'
 		switch(NCode) {
 		case WM_NOTIFICATION_CLICKED:
-			int32_t length = clicked_circle();
+			length = clicked_circle();
 			if(length <= CIRCLE_R){
 				send_message(length);
-				//rajzolj kort!!
+				GUI_SetColor(GUI_WHITE);
+				GUI_DrawCircle(ts.touchX[0], ts.touchY[0], 10);
 			}
 			break;
 		}

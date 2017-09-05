@@ -1,4 +1,5 @@
 /* Includes ------------------------------------------------------------------*/
+#include "main.h"
 #include "client.h"
 #include "lcd_log.h"
 #include "cmsis_os.h"
@@ -16,11 +17,8 @@
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
-int client_socket;
+//int client_socket;
 int connection_on;
-//uint16_t circle_x;
-//uint16_t circle_y;
-//uint16_t circle_r;
 
 void connect_to_server(int *client_sock, unsigned int server_port, char *server_ip)
 {
