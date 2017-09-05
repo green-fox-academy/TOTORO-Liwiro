@@ -22,6 +22,16 @@ char getch_(int echo);
 char getch_(int echo);
 void initTermios(int echo);
 
+static void information_win (GtkWidget *wid, GtkWidget *win)
+{
+  GtkWidget *dialog = NULL;
+
+  dialog = gtk_message_dialog_new (GTK_WINDOW (win), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, "Team Liwiro - car project");
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+  gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
+}
+
 void handle_error(const char *error_string)
 {
 	printf("Press any key to exit from the program...\n");
@@ -138,11 +148,12 @@ int main (int   argc, char *argv[])
 	int sent_bytes;
 	int received_bytes;
 	char recv_buff[DATA_BUFFER_SIZE];
-	connect_to_server(&client_socket, SERVER_PORT, SERVER_IP);
+//	connect_to_server(&client_socket, SERVER_PORT, SERVER_IP);
 
 	GtkBuilder *builder;
 	GObject *window;
 	GObject *button;
+	GObject *event_box;
 
 	gtk_init (&argc, &argv);
 
@@ -154,18 +165,25 @@ int main (int   argc, char *argv[])
 	window = gtk_builder_get_object (builder, "window");
 	g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
 
-	button = gtk_builder_get_object (builder, "button_up");
-	g_signal_connect (button, "clicked", G_CALLBACK (send_message_up), NULL);
-	button = gtk_builder_get_object (builder, "button_down");
-	g_signal_connect (button, "clicked", G_CALLBACK (send_message_down), NULL);
-	button = gtk_builder_get_object (builder, "button_left");
-	g_signal_connect (button, "clicked", G_CALLBACK (send_message_left), NULL);
-	button = gtk_builder_get_object (builder, "button_right");
-	g_signal_connect (button, "clicked", G_CALLBACK (send_message_right), NULL);
-	button = gtk_builder_get_object (builder, "button_stop");
-	g_signal_connect (button, "clicked", G_CALLBACK (send_message_stop), NULL);
+	event_box = gtk_builder_get_object (builder, "eventboxup");
+	g_signal_connect (event_box, "button_press_event", G_CALLBACK (send_message_up), NULL);
+	g_signal_connect (event_box, "composited-changed", G_CALLBACK (send_message_up), NULL);
+	event_box = gtk_builder_get_object (builder, "eventboxdown");
+	g_signal_connect (event_box, "button_press_event", G_CALLBACK (send_message_down), NULL);
+	g_signal_connect (event_box, "composited-changed", G_CALLBACK (send_message_down), NULL);
+	event_box = gtk_builder_get_object (builder, "eventboxleft");
+	g_signal_connect (event_box, "button_press_event", G_CALLBACK (send_message_left), NULL);
+	g_signal_connect (event_box, "composited-changed", G_CALLBACK (send_message_left), NULL);
+	event_box = gtk_builder_get_object (builder, "eventboxright");
+	g_signal_connect (event_box, "button_press_event", G_CALLBACK (send_message_right), NULL);
+	g_signal_connect (event_box, "composited-changed", G_CALLBACK (send_message_right), NULL);
+	event_box = gtk_builder_get_object (builder, "eventboxstop");
+	g_signal_connect (event_box, "button_press_event", G_CALLBACK (send_message_stop), NULL);
+	g_signal_connect (event_box, "composited-changed", G_CALLBACK (send_message_stop), NULL);
 	button = gtk_builder_get_object (builder, "quit");
 	g_signal_connect (button, "clicked", G_CALLBACK (gtk_main_quit), NULL);
+	button = gtk_builder_get_object (builder, "information");
+	g_signal_connect (button, "clicked", G_CALLBACK (information_win), NULL);
 
 	gtk_main ();    
 
