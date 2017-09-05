@@ -271,6 +271,21 @@
 			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/timers.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/LwIP/api</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/netif</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/STemWin/Config</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -341,6 +356,146 @@
 			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/LwIP/api/api_lib.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/api/api_lib.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/api/api_msg.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/api/api_msg.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/api/err.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/api/err.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/api/netbuf.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/api/netbuf.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/api/netdb.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/api/netdb.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/api/netifapi.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/api/netifapi.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/api/sockets.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/api/sockets.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/api/tcpip.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/api/tcpip.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/def.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/def.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/dns.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/dns.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/inet_chksum.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/inet_chksum.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/init.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/init.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/ip.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/ip.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/ipv4</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/mem.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/mem.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/memp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/memp.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/netif.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/netif.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/pbuf.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/pbuf.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/raw.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/raw.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/stats.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/stats.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/sys.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/sys.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/tcp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/tcp.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/tcp_in.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/tcp_in.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/tcp_out.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/tcp_out.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/timeouts.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/timeouts.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/udp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/udp.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/netif/ethernet.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/netif/ethernet.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/netif/sys_arch.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/system/OS/sys_arch.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/STemWin/Config/GUIConf.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/GUIConf.c</locationURI>
@@ -359,6 +514,46 @@
 			<name>Drivers/BSP/Components/ft5336/ft5336.c</name>
 			<type>1</type>
 			<locationURI>PARENT-4-PROJECT_LOC/Drivers/BSP/Components/ft5336/ft5336.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/ipv4/autoip.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/ipv4/autoip.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/ipv4/dhcp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/ipv4/dhcp.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/ipv4/etharp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/ipv4/etharp.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/ipv4/icmp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/ipv4/icmp.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/ipv4/igmp.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/ipv4/igmp.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/ipv4/ip4.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/ipv4/ip4.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/ipv4/ip4_addr.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/ipv4/ip4_addr.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/LwIP/core/ipv4/ip4_frag.c</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/Middlewares/Third_Party/LwIP/src/core/ipv4/ip4_frag.c</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
