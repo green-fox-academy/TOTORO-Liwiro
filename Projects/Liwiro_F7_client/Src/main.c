@@ -86,7 +86,7 @@ int main(void)
 	gui_task();
 
 	while(1){
-		GUI_Delay(500);
+		GUI_Delay(10);
 		BSP_LED_Toggle(LED1);
 	}
 }

@@ -17,7 +17,7 @@
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
-void connect_to_server(int *client_sock, unsigned int server_port, char *server_ip);
+void connect_to_server();
 int send_message(int32_t length);
 int send_message_stop(void);
 uint8_t clicked_circle(void);

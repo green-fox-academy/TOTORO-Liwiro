@@ -4166,10 +4166,10 @@ void wincallback(WM_MESSAGE * pMsg) {
       switch(NCode) {
       case WM_NOTIFICATION_CLICKED:
 
-    	  sprintf(str, "connect");
-    	  TEXT_SetText(logo_text, (const char*)str);
-
-//    	  connect_to_server(&client_socket, SERVER_PORT, SERVER_IP);
+//    	  sprintf(str, "connect");
+    	  TEXT_SetText(logo_text, "connect");
+    	  GUI_Delay(50);
+    	  connect_to_server();
 
         // USER START (Optionally insert code for reacting on notification message)
         // USER END

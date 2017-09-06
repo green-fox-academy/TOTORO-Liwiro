@@ -58,7 +58,7 @@ void tim3_init(void)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-
+	BSP_Background();
 }
 
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)
