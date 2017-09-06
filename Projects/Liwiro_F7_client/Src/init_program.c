@@ -41,6 +41,13 @@ void system_init(void)
 	/* Configure the system clock to 200 MHz */
 	SystemClock_Config();
 
+	/* Init thread */
+	osThreadDef(Start, StartThread, osPriorityNormal, 0, configMINIMAL_STACK_SIZE * 5);
+	osThreadCreate (osThread(Start), NULL);
+
+	/* Start scheduler */
+	osKernelStart();
+
 	/* Configure BSP */
 	BSP_Config();
 

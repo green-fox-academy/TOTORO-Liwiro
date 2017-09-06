@@ -26,7 +26,7 @@ void connect_to_server(int *client_sock, unsigned int server_port, char *server_
 	  GUI_Delay(50);
 
 	// Creating client socket
-	(*client_sock) = lwip_socket(PF_INET, SOCK_STREAM, IPPROTO_IP);
+	(*client_sock) = lwip_socket(PF_INET, SOCK_STREAM, 0);
 	  TEXT_SetText(logo_text, "02");
 	  GUI_Delay(50);
 
