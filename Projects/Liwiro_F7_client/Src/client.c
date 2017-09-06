@@ -34,9 +34,9 @@ void connect_to_server(int *client_sock, unsigned int server_port, char *server_
 	// Connecting the client socket to the server
 	lwip_connect(*client_sock, (struct sockaddr *)&addr_in, sizeof(addr_in));
 	connection_on = 1;
-//	while(connection_on){
-//		GUI_Delay(5);
-//	}
+	while(connection_on){
+		GUI_Delay(5);
+	}
 	lwip_close(client_socket);
 }
 
