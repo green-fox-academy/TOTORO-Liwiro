@@ -46,9 +46,19 @@
 			<locationURI>PARENT-1-PROJECT_LOC/syscalls.c</locationURI>
 		</link>
 		<link>
+			<name>Application/User/app_ethernet.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/app_ethernet.c</locationURI>
+		</link>
+		<link>
 			<name>Application/User/client.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Src/client.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/ethernetif.c</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Src/ethernetif.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/init_program.c</name>

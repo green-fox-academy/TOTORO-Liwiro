@@ -50,6 +50,8 @@
 #include "stm32746g_discovery.h"
 #include "stm32746g_discovery_ts.h"
 #include "stm32746g_discovery_lcd.h"
+#include "app_ethernet.h"
+#include "ethernetif.h"
 
 #include "cmsis_os.h"
 #include "lwip/netif.h"
