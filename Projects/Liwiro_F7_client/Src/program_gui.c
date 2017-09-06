@@ -4111,9 +4111,9 @@ void wincallback(WM_MESSAGE * pMsg) {
     //
     // Initialization of 'Button'
     //
-    hItem = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
-    BUTTON_SetText(hItem, "STOP");
-    BUTTON_SetFont(hItem, GUI_FONT_20B_1);
+    stop_butt = WM_GetDialogItem(pMsg->hWin, ID_BUTTON_0);
+    BUTTON_SetText(stop_butt, "STOP");
+    BUTTON_SetFont(stop_butt, GUI_FONT_20B_1);
     //
     // Initialization of 'Image'
     //
@@ -4129,10 +4129,10 @@ void wincallback(WM_MESSAGE * pMsg) {
     //
     // Initialization of 'Text'
     //
-    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_0);
-    TEXT_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);
-    TEXT_SetText(hItem, "Liwiro");
-    TEXT_SetFont(hItem, GUI_FONT_16B_1);
+    logo_text = WM_GetDialogItem(pMsg->hWin, ID_TEXT_0);
+    TEXT_SetTextAlign(logo_text, GUI_TA_HCENTER | GUI_TA_VCENTER);
+    TEXT_SetText(logo_text, "Liwiro");
+    TEXT_SetFont(logo_text, GUI_FONT_16B_1);
     //
     // Initialization of 'Image'
     //
@@ -4147,6 +4147,7 @@ void wincallback(WM_MESSAGE * pMsg) {
     NCode = pMsg->Data.v;
 
 	int length;
+	char str[50];
 
     switch(Id) {
     case ID_IMAGE_2:// Notifications sent by 'Image'
@@ -4164,6 +4165,9 @@ void wincallback(WM_MESSAGE * pMsg) {
     case ID_BUTTON_0: // Notifications sent by 'Button'
       switch(NCode) {
       case WM_NOTIFICATION_CLICKED:
+
+    	  sprintf(str, "connect");
+    	  TEXT_SetText(logo_text, (const char*)str);
 
 //    	  connect_to_server(&client_socket, SERVER_PORT, SERVER_IP);
 
@@ -4190,41 +4194,9 @@ void wincallback(WM_MESSAGE * pMsg) {
   }
 }
 
-WM_HWIN CreateWindow(void) {
+WM_HWIN CreateWindow(void)
+{
   WM_HWIN hWin;
-
   hWin = GUI_CreateDialogBox(_aDialogCreate, GUI_COUNTOF(_aDialogCreate), wincallback, WM_HBKWIN, 0, 0);
   return hWin;
-}
-
-void user_draw(WM_HWIN hWin, int Stage)
-{
-	switch (Stage) {
-	case GRAPH_DRAW_FIRST:
-		//Grid drawer
-		GRAPH_SetGridVis(hGraph, 1);
-		break;
-	case GRAPH_DRAW_LAST:
-		if(26 < ts.touchX[0] && ts.touchX[0] < 410 && ts.touchY[0] < 244) {
-			//Trigger level line drawer
-			last_x = ts.touchX[0];
-			last_y = ts.touchY[0];
-			if((mode_selected == 0) || (mode_selected == 2 || (mode_selected == 3))){
-				GUI_SetColor(GUI_WHITE);
-				GUI_DrawVLine(last_x, 0,  256);
-				GUI_SetColor(GUI_RED);
-				GUI_DrawHLine(last_y, 27,  410);
-			}
-			if(mode_selected == 0)
-			break;
-		} else {
-			if((mode_selected == 0) || (mode_selected == 2 || (mode_selected == 3))){
-				GUI_SetColor(GUI_WHITE);
-			GUI_DrawVLine(last_x, 0,  256);  		//Vertical
-				GUI_SetColor(GUI_RED);
-			GUI_DrawHLine(last_y, 27,  410);		//Horizontal
-			}
-			break;
-		}
-	}
 }

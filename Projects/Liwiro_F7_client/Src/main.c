@@ -84,9 +84,9 @@ int main(void)
 {
 	system_init();
 	gui_task();
-	HAL_TIM_Base_Start_IT(&tim2_handle);
 
 	while(1){
-		GUI_Delay(5);
+		GUI_Delay(500);
+		BSP_LED_Toggle(LED1);
 	}
 }
