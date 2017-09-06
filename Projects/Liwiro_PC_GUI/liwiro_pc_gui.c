@@ -9,6 +9,7 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <termios.h>
+#include <math.h>
 
 #define SERVER_IP           "10.27.99.111"
 #define SERVER_PORT         13003
@@ -180,13 +181,21 @@ int send_message_stop(void)
 	return sent_bytes;
 }
 
-static void clear_surface (void)
+static void clear_surface (GtkWidget *widget)
 {
 	cairo_t *cr;
 	cr = cairo_create (surface);
-	cairo_set_source_rgb (cr, 1, 1, 1);
+	cairo_set_source_rgb (cr, 0.1, 0.51, 0.41);
 	cairo_paint (cr);
+//	cairo_destroy (cr);
+	cairo_set_line_width(cr, 9);  
+	cairo_set_source_rgb(cr, 1, 1, 0);
+	cairo_translate(cr, 100, 100);
+	cairo_arc(cr, 0, 0, 95, 0, 2 * M_PI);
+	cairo_stroke_preserve(cr);
+	cairo_fill (cr);
 	cairo_destroy (cr);
+	gtk_widget_queue_draw_area (widget, 0, 0, 200, 200);
 }
 
 /* Create a new surface of the appropriate size to store our scribbles */
@@ -199,7 +208,7 @@ static gboolean configure_event_cb (GtkWidget *widget, GdkEventConfigure *event,
                                                gtk_widget_get_allocated_width (widget),
                                                gtk_widget_get_allocated_height (widget));
 	/* Initialize the surface to white */
-	clear_surface ();
+	clear_surface (widget);
 	/* We've handled the configure event, no need for further processing. */
 	return TRUE;
 }
@@ -218,19 +227,22 @@ static gboolean draw_cb (GtkWidget *widget, cairo_t *cr, gpointer data)
 /* Draw a rectangle on the surface at the given position */
 static void draw_brush (GtkWidget *widget, gdouble x, gdouble y)
 {
-	cairo_t *cr;
-	/* Paint to the surface, where we store our state */
-	cr = cairo_create (surface);
-	cairo_rectangle (cr, x - 3, y - 3, 6, 6);
-	cairo_fill (cr);
-	cairo_destroy (cr);
-	/* Now invalidate the affected region of the drawing area. */
-	gtk_widget_queue_draw_area (widget, x - 3, y - 3, 6, 6);
 	printf("x=%lf\ty=%lf\n", x, y);
 	int32_t length2 = ((int32_t)x-100)*((int32_t)x-100) + ((int32_t)y-100)*((int32_t)y-100);
-	int32_t length = sqrt_measure(length2);
-	if(length <= 100)
-		send_message((uint8_t)x, (uint8_t)y, (uint8_t)length);
+	int32_t length = sqrt_measure(length2);	
+	if(length <= 100){
+		send_message((uint8_t)x+36, (uint8_t)y+36, (uint8_t)length);	
+		clear_surface(widget);
+		cairo_t *cr;
+		/* Paint to the surface, where we store our state */
+		cr = cairo_create (surface);
+		cairo_set_source_rgb(cr, 0, 0, 0);
+		cairo_rectangle (cr, x - 3, y - 3, 6, 6);
+		cairo_fill (cr);
+		cairo_destroy (cr);
+		/* Now invalidate the affected region of the drawing area. */
+		gtk_widget_queue_draw_area (widget, x - 3, y - 3, 6, 6);
+	}
 }
 
 /* Handle button press events by either drawing a rectangle
@@ -246,7 +258,7 @@ static gboolean button_press_event_cb (GtkWidget *widget, GdkEventButton *event,
 	if (event->button == GDK_BUTTON_PRIMARY) {
 		draw_brush (widget, event->x, event->y);
 	} else if (event->button == GDK_BUTTON_SECONDARY) {
-		clear_surface ();
+		clear_surface (widget);
 		gtk_widget_queue_draw (widget);
     }
 	/* We've handled the event, stop processing */
