@@ -26,7 +26,7 @@ uint8_t firm_ip[] = {10, 27, 99, 161};
 int32_t socket;
 uint16_t datalen;
 uint8_t connections = 0;
-int command[4];
+uint8_t command[4];
 
 /* Private function prototypes -----------------------------------------------*/
 void error_handling(const char *error_string, uint8_t error_code);
@@ -40,36 +40,36 @@ void send_ps_command()
 
 
     	/*Waiting for connection with WIFI AP */
-    	printf("> Connecting to %s.\n", SSID);
+    	printf("> Connecting to %s.\r\n", SSID);
         while (WIFI_Connect(SSID, PASSWORD, WIFI_ECN_WPA2_PSK) != WIFI_STATUS_OK);
-		printf("> Connected to %s!\n", SSID);
+		printf("> Connected to %s!\r\n", SSID);
 
     	/*Getting IP Address */
 		if (WIFI_GetIP_Address(ip_addr) == WIFI_STATUS_OK) {
-			printf("> es-wifi module got IP Address : %d.%d.%d.%d\n",
+			printf("> es-wifi module got IP Address : %d.%d.%d.%d\r\n",
 					ip_addr[0],
 					ip_addr[1],
 					ip_addr[2],
 					ip_addr[3]);
 			printf("\n\r\n IP address assigned \n\r\n");
 		} else {
-			error_handling("> ERROR : es-wifi module CANNOT get IP address\n", WIFI_STATUS_ERROR);
+			error_handling("> ERROR : es-wifi module CANNOT get IP address\r\n", WIFI_STATUS_ERROR);
 		}
     	/*do-while connected to WIFI AP(checking connection by pinging own IP Address) */
 		do {
 			int8_t socket = 0;
-			printf("Start TCP Server...\n");
+			printf("Start TCP Server...\r\n");
 			while(WIFI_StartServer(socket, WIFI_TCP_PROTOCOL, "LIWIRO SERVER", SERVER_PORT) != WIFI_STATUS_OK);
 			connections++;
 			printf("----------------------------------------- \n");
-			printf("TCP Server Started \n");
-			printf("receiving data...\n");
+			printf("TCP Server Started \r\n");
+			printf("receiving data...\r\n");
 			/*trying to connect to server and sending data when connected in every 10 seconds */
 			do {
 				if(datalen > 0) {
 					printf("Received message from Controller\r\n");
 					if (command[0] == 0) {
-						printf("command from PC: \n");
+						printf("command from PC: \r\n");
 						switch(command[1]) {
 						case 1:
 							printf("%d - go forward\r\n", command[1]);
@@ -115,8 +115,8 @@ void send_ps_command()
 							pwm_pulse_1 = (uint32_t)side_b >> 1;
 							pwm_pulse_2 = (uint32_t)side_c >> 1;
 
-							printf("pulse width 1: %u + 50\n", pwm_pulse_1);
-							printf("pulse width 2: %u + 50\n", pwm_pulse_2);
+							printf("pulse width 1: %u + %d\n", pwm_pulse_1, MIN_PWM_PULSE_VALUE);
+							printf("pulse width 2: %u + %d\n", pwm_pulse_2, MIN_PWM_PULSE_VALUE);
 
 							if (command[1] > MOTOR_CONTROL_PANEL_X_ORIGO) {//left of right
 								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
@@ -134,8 +134,8 @@ void send_ps_command()
 							pwm_pulse_1 = (uint32_t)side_b >> 1;
 							pwm_pulse_2 = (uint32_t)side_c >> 1;
 
-							printf("pulse width 1: %lu + 50\n", pwm_pulse_1);
-							printf("pulse width 2: %lu + 50\n", pwm_pulse_2);
+							printf("pulse width 1: %u + %d\n", pwm_pulse_1, MIN_PWM_PULSE_VALUE);
+							printf("pulse width 2: %u + %d\n", pwm_pulse_2, MIN_PWM_PULSE_VALUE);
 
 							if (command[1] > MOTOR_CONTROL_PANEL_X_ORIGO) {//left of right
 								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
@@ -164,11 +164,6 @@ void send_ps_command()
 								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_2 + MIN_PWM_PULSE_VALUE;
 							}
 						}
-
-
-
-					} else if (command[0] == 'a') {
-						printf("Message from Android\n");
 					} else {
 						printf("Controller not recognized!\n");
 						printf("%d\n", command[0]);
@@ -192,13 +187,13 @@ void wifi_init()
 {
     /*Initialize  WIFI module */
 	if(WIFI_Init() ==  WIFI_STATUS_OK) {
-        printf("> WIFI Module Initialized.\n");
+        printf("> WIFI Module Initialized.\r\n");
 	} else {
-	    error_handling("> ERROR : WIFI Module cannot be initialized.\n", WIFI_STATUS_ERROR);
+	    error_handling("> ERROR : WIFI Module cannot be initialized.\r\n", WIFI_STATUS_ERROR);
 	}
 	/*Getting MAC address */
     if(WIFI_GetMAC_Address(mac_addr) == WIFI_STATUS_OK) {
-        printf("> es-wifi module MAC Address : %X:%X:%X:%X:%X:%X\n",
+        printf("> es-wifi module MAC Address : %X:%X:%X:%X:%X:%X\r\n",
                mac_addr[0],
                mac_addr[1],
                mac_addr[2],
@@ -206,6 +201,6 @@ void wifi_init()
                mac_addr[4],
                mac_addr[5]);
     } else {
-        error_handling("> ERROR : CANNOT get MAC address\n", WIFI_STATUS_ERROR);
+        error_handling("> ERROR : CANNOT get MAC address\r\n", WIFI_STATUS_ERROR);
     }
 }

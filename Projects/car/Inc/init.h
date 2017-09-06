@@ -12,7 +12,7 @@
 #define PWM_PERIOD_VALUE				100
 /* Private define ------------------------------------------------------------*/
 #define MAX_PWM_PULSE_VALUE    			PWM_PERIOD_VALUE	/* Duty cycle 100%  */
-#define MIN_PWM_PULSE_VALUE				60
+#define MIN_PWM_PULSE_VALUE				50
 #define TIM2_PRESCALER					800
 #define TIM3_PRESCALER					800
 
