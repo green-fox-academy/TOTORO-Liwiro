@@ -96,104 +96,37 @@ int send_message(uint8_t x, uint8_t y, uint8_t length)
 	return sent_bytes;
 }
 
-int send_message_up(void)
-{
-	// Get the message from the user
-	uint8_t msg[4];
-	printf("Enter the message to send: \n");
-        msg[0] = 0;
-		msg[1] = 1;
-		msg[2] = 3;
-		msg[3] = 1;
-	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, 4, 0);
-	if (sent_bytes < 0)
-		handle_error("send() ");
-
-	return sent_bytes;
-}
-
-int send_message_down(void)
-{
-	// Get the message from the user
-	uint8_t msg[4];
-	printf("Enter the message to send: \n");
-        msg[0] = 0;
-		msg[1] = 2;
-		msg[2] = 3;
-		msg[3] = 1;
-	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, 4, 0);
-	if (sent_bytes < 0)
-		handle_error("send() ");
-
-	return sent_bytes;
-}
-
-int send_message_left(void)
-{
-	// Get the message from the user
-	uint8_t msg[4];
-	printf("Enter the message to send: \n");
-        msg[0] = 0;
-		msg[1] = 3;
-		msg[2] = 3;
-		msg[3] = 1;
-	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, 4, 0);
-	if (sent_bytes < 0)
-		handle_error("send() ");
-
-	return sent_bytes;
-}
-
-int send_message_right(void)
-{
-	// Get the message from the user
-	uint8_t msg[4];
-	printf("Enter the message to send: \n");
-        msg[0] = 0;
-		msg[1] = 4;
-		msg[2] = 3;
-		msg[3] = 1;
-	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, 4, 0);
-	if (sent_bytes < 0)
-		handle_error("send() ");
-
-	return sent_bytes;
-}
-
-int send_message_stop(void)
-{
-	// Get the message from the user
-	uint8_t msg[4];
-	printf("Enter the message to send: \n");
-        msg[0] = 0;
-		msg[1] = 5;
-		msg[2] = 3;
-		msg[3] = 0;
-	// Send the message to the servers
-	int sent_bytes = send(client_socket, msg, 4, 0);
-	if (sent_bytes < 0)
-		handle_error("send() ");
-
-	return sent_bytes;
-}
-
 static void clear_surface (GtkWidget *widget)
 {
 	cairo_t *cr;
 	cr = cairo_create (surface);
 	cairo_set_source_rgb (cr, 0.1, 0.51, 0.41);
 	cairo_paint (cr);
-//	cairo_destroy (cr);
 	cairo_set_line_width(cr, 9);  
 	cairo_set_source_rgb(cr, 1, 1, 0);
 	cairo_translate(cr, 100, 100);
 	cairo_arc(cr, 0, 0, 95, 0, 2 * M_PI);
 	cairo_stroke_preserve(cr);
 	cairo_fill (cr);
+	
+	cairo_set_source_rgb(cr, 0, 0, 0);
+	cairo_set_line_width (cr, 1);
+	cairo_translate(cr, 0, 0);
+	int i, j;
+	for (i = -100; i <= 100 - 1; i++ ) {
+		for (j = -100; j <= 100 - 1; j++ ) {
+			cairo_move_to(cr, 0, i);
+			cairo_line_to(cr, 0, j);
+		}
+	}
+	for (i = -100; i <= 100 - 1; i++ ) {
+		for (j = -100; j <= 100 - 1; j++ ) {
+			cairo_move_to(cr, i, 0);
+			cairo_line_to(cr, j, 0);
+		}
+	}
+	cairo_stroke(cr);
+	
 	cairo_destroy (cr);
 	gtk_widget_queue_draw_area (widget, 0, 0, 200, 200);
 }
@@ -286,12 +219,97 @@ static void close_window (void)
 		cairo_surface_destroy (surface);
 }
 
+int send_message_up(void)
+{
+	// Get the message from the user
+	uint8_t msg[4];
+	printf("Enter the message to send: \n");
+        msg[0] = 0;
+		msg[1] = 1;
+		msg[2] = 3;
+		msg[3] = 1;
+	// Send the message to the servers
+	int sent_bytes = send(client_socket, msg, 4, 0);
+	if (sent_bytes < 0)
+		handle_error("send() ");
+
+	return sent_bytes;
+}
+
+int send_message_down(void)
+{
+	// Get the message from the user
+	uint8_t msg[4];
+	printf("Enter the message to send: \n");
+        msg[0] = 0;
+		msg[1] = 2;
+		msg[2] = 3;
+		msg[3] = 1;
+	// Send the message to the servers
+	int sent_bytes = send(client_socket, msg, 4, 0);
+	if (sent_bytes < 0)
+		handle_error("send() ");
+
+	return sent_bytes;
+}
+
+int send_message_left(void)
+{
+	// Get the message from the user
+	uint8_t msg[4];
+	printf("Enter the message to send: \n");
+        msg[0] = 0;
+		msg[1] = 3;
+		msg[2] = 3;
+		msg[3] = 1;
+	// Send the message to the servers
+	int sent_bytes = send(client_socket, msg, 4, 0);
+	if (sent_bytes < 0)
+		handle_error("send() ");
+
+	return sent_bytes;
+}
+
+int send_message_right(void)
+{
+	// Get the message from the user
+	uint8_t msg[4];
+	printf("Enter the message to send: \n");
+        msg[0] = 0;
+		msg[1] = 4;
+		msg[2] = 3;
+		msg[3] = 1;
+	// Send the message to the servers
+	int sent_bytes = send(client_socket, msg, 4, 0);
+	if (sent_bytes < 0)
+		handle_error("send() ");
+
+	return sent_bytes;
+}
+
+int send_message_stop(void)
+{
+	// Get the message from the user
+	uint8_t msg[4];
+	printf("Enter the message to send: \n");
+        msg[0] = 0;
+		msg[1] = 5;
+		msg[2] = 3;
+		msg[3] = 0;
+	// Send the message to the servers
+	int sent_bytes = send(client_socket, msg, 4, 0);
+	if (sent_bytes < 0)
+		handle_error("send() ");
+
+	return sent_bytes;
+}
+
 int main (int   argc, char *argv[])
 {
 	int sent_bytes;
 	int received_bytes;
 	char recv_buff[DATA_BUFFER_SIZE];
-//	connect_to_server(&client_socket, SERVER_PORT, SERVER_IP);
+	connect_to_server(&client_socket, SERVER_PORT, SERVER_IP);
 
 	GtkBuilder *builder;
 	GObject *window;
