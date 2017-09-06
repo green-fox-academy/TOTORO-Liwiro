@@ -4147,18 +4147,17 @@ void wincallback(WM_MESSAGE * pMsg) {
     NCode = pMsg->Data.v;
 
 	int length;
-	char str[50];
 
     switch(Id) {
     case ID_IMAGE_2:// Notifications sent by 'Image'
 		switch(NCode) {
 		case WM_NOTIFICATION_CLICKED:
-			length = clicked_circle();
-			if(length <= CIRCLE_R){
-				send_message(length);
-				GUI_SetColor(GUI_WHITE);
-				GUI_DrawCircle(ts.touchX[0], ts.touchY[0], 10);
-			}
+//			length = clicked_circle();
+//			if(length <= CIRCLE_R){
+//				send_message(length);
+//				GUI_SetColor(GUI_WHITE);
+//				GUI_DrawCircle(ts.touchX[0]+100, ts.touchY[0], 10);
+//			}
 			break;
 		}
 		break;
@@ -4166,10 +4165,9 @@ void wincallback(WM_MESSAGE * pMsg) {
       switch(NCode) {
       case WM_NOTIFICATION_CLICKED:
 
-//    	  sprintf(str, "connect");
     	  TEXT_SetText(logo_text, "connect");
     	  GUI_Delay(50);
-    	  connect_to_server();
+    	  connect_to_server(&client_socket, SERVER_PORT, SERVER_IP);
 
         // USER START (Optionally insert code for reacting on notification message)
         // USER END
