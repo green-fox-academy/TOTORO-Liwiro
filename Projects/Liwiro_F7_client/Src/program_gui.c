@@ -3,6 +3,7 @@
 #include "stm32f7xx_hal.h"
 #include "cmsis_os.h"
 #include "init_program.h"
+#include "client.h"
 
 #include "main.h"
 #include "WM.h"
@@ -4163,6 +4164,9 @@ void wincallback(WM_MESSAGE * pMsg) {
     case ID_BUTTON_0: // Notifications sent by 'Button'
       switch(NCode) {
       case WM_NOTIFICATION_CLICKED:
+
+//    	  connect_to_server(&client_socket, SERVER_PORT, SERVER_IP);
+
         // USER START (Optionally insert code for reacting on notification message)
         // USER END
         break;

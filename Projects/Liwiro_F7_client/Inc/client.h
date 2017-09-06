@@ -2,7 +2,7 @@
 #ifndef __SOCKET_CLIENT_H
 #define __SOCKET_CLIENT_H
 
-#define SERVER_IP           "10.27.99.89"
+#define SERVER_IP           "10.27.99.111"
 #define SERVER_PORT         13003
 #define DATA_BUFFER_SIZE    1024
 

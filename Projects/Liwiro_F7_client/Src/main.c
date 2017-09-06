@@ -86,8 +86,6 @@ int main(void)
 	gui_task();
 	HAL_TIM_Base_Start_IT(&tim2_handle);
 
-	connect_to_server(&client_socket, SERVER_PORT, SERVER_IP);
-
 	while(1){
 		GUI_Delay(5);
 	}
