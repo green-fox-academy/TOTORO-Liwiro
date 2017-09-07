@@ -69,7 +69,7 @@ void send_ps_command()
 				if(datalen > 0) {
 					printf("Received message from Controller\r\n");
 					if (command[0] == 0) {
-						printf("command from PC: \r\n");
+						printf("Command from PC: \r\n");
 						switch(command[1]) {
 						case 1:
 							printf("%d - go forward\r\n", command[1]);
@@ -98,7 +98,7 @@ void send_ps_command()
 					} else if (command[0] == 1) {
 						uint32_t pwm_pulse_1;
 						uint32_t pwm_pulse_2;
-						printf("Coordinates from F7: ");
+						printf("Coordinates from F7 or PC: ");
 						printf("x: %d\t", command[1]);
 						printf("y: %d\n", command[2]);
 
