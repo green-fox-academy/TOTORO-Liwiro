@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Liwiro Car Control</string>
+    <string name="button_forward">Forward</string>
+    <string name="button_right">Right</string>
+    <string name="button_backward">Backward</string>
+    <string name="button_left">Left</string>
+    <string name="button_stop">Stop</string>
+    <string name="title">Liwiro Car</string>
+</resources>
