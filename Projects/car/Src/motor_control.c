@@ -1,139 +1,135 @@
 /* Includes ------------------------------------------------------------------*/
-#include "ps_control.h"
+#include "motor_control.h"
 #include "stm32l4xx_hal.h"
 #include "init.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-#define COMMAND_SIZE	24
+
 /* Private macro -------------------------------------------------------------*/
 /* Private variables --------------------------------------------------------*/
-/* Command arrays */
-const uint8_t ctrl_up_arr[COMMAND_SIZE] = {1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0,
-									 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0};
 
-const uint8_t ctrl_down_arr[COMMAND_SIZE]= {1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0,
-									  1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1};
-
-const uint8_t ctrl_stop_arr[COMMAND_SIZE]= {1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0,
-		   	   	   	   	   	   	   	  1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1};
-
-const uint8_t ctrl_verification_arr[COMMAND_SIZE]= {1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0,
-		   	   	   	   	   	   	   	  	  	  1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1};
 /* PWM variables */
-extern TIM_HandleTypeDef tim_pwm_handle;
+extern TIM_HandleTypeDef tim2_pwm_handle;
+extern TIM_HandleTypeDef tim3_pwm_handle;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
-void end_bit()
+void go_forward()
 {
-	HAL_TIM_PWM_Start(&tim_pwm_handle, TIM_CHANNEL_1);
-	delay(1);
-	HAL_TIM_PWM_Stop(&tim_pwm_handle, TIM_CHANNEL_1);
+	gpio_m1_p1_on();
+	gpio_m1_p2_off();
+
+	gpio_m2_p1_on();
+	gpio_m2_p2_off();
+
+	tim2_pwm_handle.Instance->CCR1 = 100;
+	tim3_pwm_handle.Instance->CCR1 = 100;
+	HAL_Delay(5000);
 }
 
-void bit_one()
+void go_backward()
 {
-	HAL_TIM_PWM_Start(&tim_pwm_handle, TIM_CHANNEL_1);
-	delay(1);
-	HAL_TIM_PWM_Stop(&tim_pwm_handle, TIM_CHANNEL_1);
-	delay(3);
+	gpio_m1_p1_off();
+	gpio_m1_p2_on();
+
+	gpio_m2_p1_off();
+	gpio_m2_p2_on();
+
+	tim2_pwm_handle.Instance->CCR1 = 100;
+	tim3_pwm_handle.Instance->CCR1 = 100;
+	HAL_Delay(5000);
 }
 
-void bit_zero()
+void go_left()
 {
-	HAL_TIM_PWM_Start(&tim_pwm_handle, TIM_CHANNEL_1);
-	delay(3);
-	HAL_TIM_PWM_Stop(&tim_pwm_handle, TIM_CHANNEL_1);
-	delay(1);
+	gpio_m1_p1_on();
+	gpio_m1_p2_off();
+
+	gpio_m2_p1_on();
+	gpio_m2_p2_off();
+
+	tim2_pwm_handle.Instance->CCR1 = 100;
+	tim3_pwm_handle.Instance->CCR1 = 80;
+	HAL_Delay(5000);
 }
 
-void ctrl_up()
+void go_right()
 {
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_up_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
-	delay(31);
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_up_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
-	delay(31);
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_verification_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
-}
+	gpio_m1_p1_on();
+	gpio_m1_p2_off();
 
-void ctrl_down()
-{
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_down_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
-	delay(31);
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_down_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
-	delay(31);
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_verification_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
+	gpio_m2_p1_on();
+	gpio_m2_p2_off();
+
+	tim2_pwm_handle.Instance->CCR1 = 80;
+	tim3_pwm_handle.Instance->CCR1 = 100;
+	HAL_Delay(5000);
 }
 
 void ctrl_stop()
 {
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_stop_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
-	delay(31);
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_stop_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
-	delay(31);
-	for (int i = 0; i < COMMAND_SIZE; i++) {
-		if (ctrl_verification_arr[i] == 1) {
-			bit_one();
-		} else {
-			bit_zero();
-		}
-	}
-	end_bit();
+	gpio_m1_p1_off();
+	gpio_m1_p2_off();
+
+	gpio_m2_p1_off();
+	gpio_m2_p2_off();
+}
+
+void dir_forward()
+{
+	gpio_m1_p1_on();
+	gpio_m1_p2_off();
+
+	gpio_m2_p1_on();
+	gpio_m2_p2_off();
+}
+
+void dir_backward()
+{
+	gpio_m1_p1_off();
+	gpio_m1_p2_on();
+
+	gpio_m2_p1_off();
+	gpio_m2_p2_on();
+}
+
+void gpio_m1_p1_on()
+{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET);
+}
+
+void gpio_m1_p1_off()
+{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET);
+}
+
+void gpio_m1_p2_on()
+{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_SET);
+}
+
+void gpio_m1_p2_off()
+{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
+}
+
+void gpio_m2_p1_on()
+{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+}
+
+void gpio_m2_p1_off()
+{
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+}
+
+void gpio_m2_p2_on()
+{
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);
+}
+
+void gpio_m2_p2_off()
+{
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_RESET);
 }

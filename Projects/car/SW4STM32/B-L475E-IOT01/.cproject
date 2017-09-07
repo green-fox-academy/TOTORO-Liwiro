@@ -77,6 +77,9 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.346288834.119719900" name="init.c" rcbsApplicability="disable" resourcePath="Application/User/init.c" toolsToInvoke="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.620975842.231423843">
+						<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.620975842.231423843" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.620975842"/>
+					</fileInfo>
 					<sourceEntries>
 						<entry excluding="Drivers/BSP/B-L475E-IOT01/stm32l475e_iot01_audio.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>

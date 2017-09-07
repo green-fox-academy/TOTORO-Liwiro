@@ -38,10 +38,13 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables --------------------------------------------------------*/
+extern TIM_HandleTypeDef tim2_pwm_handle;
+extern TIM_HandleTypeDef tim3_pwm_handle;
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 
@@ -61,14 +64,17 @@ int main(void) {
 	/* Initialize UART */
 	uart_init();
 
-	/* Initialize Timer for proper delay */
-	time_base_init();
+	/* Initialize timers in PWM mode */
+	tim3_pwm_init();
+	tim2_pwm_init();
+	printf("timers initialized\r\n");
 
-	/* Initialize timer in PWM mode */
-	pwm_init();
+	/* Initialize GPIO */
+	direction_ctrl_pin_init();
+	HAL_TIM_PWM_Start(&tim3_pwm_handle, TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&tim2_pwm_handle, TIM_CHANNEL_1);
 
 	send_ps_command();
-
 }
 
 /**
