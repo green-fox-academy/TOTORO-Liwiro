@@ -26,7 +26,7 @@ uint8_t firm_ip[] = {10, 27, 99, 161};
 int32_t socket;
 uint16_t datalen;
 uint8_t connections = 0;
-char command[100];
+uint8_t command[4];
 
 /* Private function prototypes -----------------------------------------------*/
 void error_handling(const char *error_string, uint8_t error_code);
@@ -68,7 +68,7 @@ void send_ps_command()
 			do {
 				if(datalen > 0) {
 					printf("Received message from Controller\r\n");
-					/*if (command[0] == 0) {
+					if (command[0] == 0) {
 						printf("command from PC: \n");
 						switch(command[1]) {
 						case 1:
@@ -115,8 +115,8 @@ void send_ps_command()
 							pwm_pulse_1 = (uint32_t)side_b >> 1;
 							pwm_pulse_2 = (uint32_t)side_c >> 1;
 
-							printf("pulse width 1: %u + 50\n", pwm_pulse_1);
-							printf("pulse width 2: %u + 50\n", pwm_pulse_2);
+							printf("pulse width 1: %u + %d\n", pwm_pulse_1, MIN_PWM_PULSE_VALUE);
+							printf("pulse width 2: %u + %d\n", pwm_pulse_2, MIN_PWM_PULSE_VALUE);
 
 							if (command[1] > MOTOR_CONTROL_PANEL_X_ORIGO) {//left of right
 								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
@@ -134,8 +134,8 @@ void send_ps_command()
 							pwm_pulse_1 = (uint32_t)side_b >> 1;
 							pwm_pulse_2 = (uint32_t)side_c >> 1;
 
-							printf("pulse width 1: %lu + 50\n", pwm_pulse_1);
-							printf("pulse width 2: %lu + 50\n", pwm_pulse_2);
+							printf("pulse width 1: %lu + %d\n", pwm_pulse_1, MIN_PWM_PULSE_VALUE);
+							printf("pulse width 2: %lu + %d\n", pwm_pulse_2, MIN_PWM_PULSE_VALUE);
 
 							if (command[1] > MOTOR_CONTROL_PANEL_X_ORIGO) {//left of right
 								tim2_pwm_handle.Instance->CCR1 = (uint32_t)pwm_pulse_1 + MIN_PWM_PULSE_VALUE;
@@ -146,7 +146,7 @@ void send_ps_command()
 							}
 
 						} else if (command[2] == MOTOR_CONTROL_PANEL_Y_ORIGO) {
-							pwm_pulse_2 = (uint32_t)side_c / 2;
+							pwm_pulse_2 = (uint32_t)side_c >> 1;
 							if (command[1] > MOTOR_CONTROL_PANEL_X_ORIGO) {//left of right
 								gpio_m1_p1_on();
 								gpio_m1_p2_off();
@@ -165,16 +165,41 @@ void send_ps_command()
 							}
 						}
 
-					} */
-					if (command[0] == 'a') {
+					} else if (command[0] == 'a') {
 						printf("Message from Android\n");
+						switch (command[1]) {
+						case '1':
+							printf("%c - go forward\r\n", command[1]);
+							go_forward();
+							break;
+						case '2':
+							printf("%c - go backward\r\n", command[1]);
+							go_backward();
+							break;
+						case '3':
+							printf("%c - go left\r\n", command[1]);
+							go_left();
+							break;
+						case '4':
+							printf("%c - go right\r\n", command[1]);
+							go_right();
+							break;
+						case '5':
+							printf("%c - stop\r\n", command[1]);
+							ctrl_stop();
+							break;
+						default:
+							printf("%c - command not recognized\r\n", command[1]);
+							break;
+						}
 					} else {
-						printf("Controller not recognized!\n");
-						printf("%s\n", command);
+						printf("Controller not recognized!\r\n");
+						printf("Message: %s\n", command);
+						printf("Message per byte: %d, %d, %d, %d\r\n", command[0], command[1], command[2], command[3]);
 					}
 					datalen = 0;
 				}
-			} while (WIFI_ReceiveData(socket, (uint8_t *)command, sizeof(command), &datalen, 0) == WIFI_STATUS_OK);
+			} while (WIFI_ReceiveData(socket, command, sizeof(command), &datalen, 0) == WIFI_STATUS_OK);
 			/*Closing socket when connection is lost or could'not connect */
 			printf("Closing the socket...\n");
 			WIFI_CloseClientConnection(socket);

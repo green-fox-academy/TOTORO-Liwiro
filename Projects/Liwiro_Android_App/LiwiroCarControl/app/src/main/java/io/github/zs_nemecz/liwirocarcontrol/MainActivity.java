@@ -31,7 +31,7 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view) {
 
-                String message = "a";
+                String message = "a1";
 
                 //sends the message to the server
                 if (mTcpClient != null) {
@@ -44,7 +44,7 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view) {
 
-                String message = "b";
+                String message = "a3";
 
                 //sends the message to the server
                 if (mTcpClient != null) {
@@ -57,7 +57,7 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view) {
 
-                String message = "c";
+                String message = "a4";
 
                 //sends the message to the server
                 if (mTcpClient != null) {
@@ -70,7 +70,7 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view) {
 
-                String message = "d";
+                String message = "a5";
 
                 //sends the message to the server
                 if (mTcpClient != null) {
@@ -83,7 +83,7 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view) {
 
-                String message = "e";
+                String message = "a2";
 
                 //sends the message to the server
                 if (mTcpClient != null) {
