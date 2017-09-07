@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "D:\\android_projects\\car_ctrl\\LiwiroCarControl\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\crispo_logo.png",
+        "source": "D:\\android_projects\\car_ctrl\\LiwiroCarControl\\app\\src\\main\\res\\mipmap-xxhdpi\\crispo_logo.png"
+    },
+    {
+        "merged": "D:\\android_projects\\car_ctrl\\LiwiroCarControl\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_launcher.png",
+        "source": "D:\\android_projects\\car_ctrl\\LiwiroCarControl\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\android_projects\\car_ctrl\\LiwiroCarControl\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi\\ic_launcher_round.png",
+        "source": "D:\\android_projects\\car_ctrl\\LiwiroCarControl\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+    }
+]
