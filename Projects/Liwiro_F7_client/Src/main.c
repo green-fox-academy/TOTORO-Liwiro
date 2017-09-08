@@ -64,6 +64,7 @@
 #include "WindowDLG.h"
 #include "k_bsp.h"
 #include "program_gui.h"
+#include "client.h"
 
 
 /* Private typedef -----------------------------------------------------------*/
