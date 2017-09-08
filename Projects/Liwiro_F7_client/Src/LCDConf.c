@@ -2,8 +2,8 @@
   ******************************************************************************
   * @file    lcdconf.c
   * @author  MCD Application Team
-  * @version V1.2.0
-  * @date    30-December-2016
+  * @version V1.3.0
+  * @date    30-December-2016  
   * @brief   This file implements the configuration for the GUI library
   ******************************************************************************
   * @attention
@@ -68,6 +68,15 @@
 /** @defgroup LCD CONFIGURATION_Private_Defines
 * @{
 */ 
+/* LCD Timings */
+
+#define  HSYNC            ((uint16_t)41)   /* Horizontal synchronization */
+#define  HBP              ((uint16_t)13)   /* Horizontal back porch      */
+#define  HFP              ((uint16_t)32)   /* Horizontal front porch     */
+#define  VSYNC            ((uint16_t)10)   /* Vertical synchronization   */
+#define  VBP              ((uint16_t)2)    /* Vertical back porch        */
+#define  VFP              ((uint16_t)2)    /* Vertical front porch       */
+
 #undef  LCD_SWAP_XY
 #undef  LCD_MIRROR_Y
 
@@ -87,7 +96,7 @@
 #define BK_COLOR GUI_DARKBLUE
 
 #undef  GUI_NUM_LAYERS
-#define GUI_NUM_LAYERS 1
+#define GUI_NUM_LAYERS 2
 
 #define COLOR_CONVERSION_0 GUICC_M8888I
 #define DISPLAY_DRIVER_0   GUIDRV_LIN_32
@@ -137,7 +146,6 @@
 * @{
 */
 LTDC_HandleTypeDef                   hltdc;  
-static DMA2D_HandleTypeDef           hdma2d;
 static LCD_LayerPropTypedef          layer_prop[GUI_NUM_LAYERS];
 
 static const LCD_API_COLOR_CONV * apColorConvAPI[] = 
@@ -155,15 +163,16 @@ static const LCD_API_COLOR_CONV * apColorConvAPI[] =
 /** @defgroup LCD CONFIGURATION_Private_FunctionPrototypes
 * @{
 */ 
-static void     DMA2D_CopyBuffer         (U32 LayerIndex, void * pSrc, void * pDst, U32 xSize, U32 ySize, U32 OffLineSrc, U32 OffLineDst);
+static void     DMA2D_CopyBuffer(U32 LayerIndex, void * pSrc, void * pDst, U32 xSize, U32 ySize, U32 OffLineSrc, U32 OffLineDst);
 static void     DMA2D_FillBuffer(U32 LayerIndex, void * pDst, U32 xSize, U32 ySize, U32 OffLine, U32 ColorIndex);
+
 static void     LCD_LL_Init(void); 
 static void     LCD_LL_LayerInit(U32 LayerIndex); 
+static void     LCD_LL_CopyBuffer(int LayerIndex, int IndexSrc, int IndexDst);
+static void     LCD_LL_CopyRect(int LayerIndex, int x0, int y0, int x1, int y1, int xSize, int ySize);
+static void     LCD_LL_FillRect(int LayerIndex, int x0, int y0, int x1, int y1, U32 PixelIndex);
+static void     LCD_LL_DrawBitmap32bpp(int LayerIndex, int x, int y, U8 const * p,  int xSize, int ySize, int BytesPerLine);
 
-static void     CUSTOM_CopyBuffer(int LayerIndex, int IndexSrc, int IndexDst);
-static void     CUSTOM_CopyRect(int LayerIndex, int x0, int y0, int x1, int y1, int xSize, int ySize);
-static void     CUSTOM_FillRect(int LayerIndex, int x0, int y0, int x1, int y1, U32 PixelIndex);
-static void     CUSTOM_DrawBitmap32bpp(int LayerIndex, int x, int y, U8 const * p,  int xSize, int ySize, int BytesPerLine);
 static U32      GetBufferSize(U32 LayerIndex);
 /**
 * @}
@@ -187,38 +196,6 @@ static inline U32 LCD_LL_GetPixelformat(U32 LayerIndex)
   {
     return LTDC_PIXEL_FORMAT_ARGB1555;
   } 
-}
-/*******************************************************************************
-                       LTDC and DMA2D BSP Routines
-*******************************************************************************/
-/**
-  * @brief DMA2D MSP Initialization 
-  *        This function configures the hardware resources used in this example: 
-  *           - Peripheral's clock enable
-  *           - Peripheral's GPIO Configuration  
-  * @param hdma2d: DMA2D handle pointer
-  * @retval None
-  */
-void HAL_DMA2D_MspInit(DMA2D_HandleTypeDef *hdma2d)
-{  
-  /* Enable peripheral */
-  __HAL_RCC_DMA2D_CLK_ENABLE();   
-}
-
-/**
-  * @brief DMA2D MSP De-Initialization 
-  *        This function frees the hardware resources used in this example:
-  *          - Disable the Peripheral's clock
-  * @param hdma2d: DMA2D handle pointer
-  * @retval None
-  */
-void HAL_DMA2D_MspDeInit(DMA2D_HandleTypeDef *hdma2d)
-{
-  /* Enable DMA2D reset state */
-  __HAL_RCC_DMA2D_FORCE_RESET();
-  
-  /* Release DMA2D from reset state */ 
-  __HAL_RCC_DMA2D_RELEASE_RESET();
 }
 
 /**
@@ -415,11 +392,11 @@ void LCD_X_Config(void)
     /*Initialize GUI Layer structure */
     layer_prop[0].address = LCD_LAYER0_FRAME_BUFFER;
     
-#if (GUI_NUM_LAYERS > 1)
+#if (GUI_NUM_LAYERS > 1)    
     layer_prop[1].address = LCD_LAYER1_FRAME_BUFFER; 
 #endif
        
-   /* Setting up VRam address and custom functions for CopyBuffer-, CopyRect- and FillRect operations */
+   /* Setting up VRam address and LCD_LL functions for CopyBuffer-, CopyRect- and FillRect operations */
   for (i = 0; i < GUI_NUM_LAYERS; i++) 
   {
 
@@ -433,14 +410,14 @@ void LCD_X_Config(void)
     /* Remember color depth for further operations */
     layer_prop[i].BytesPerPixel = LCD_GetBitsPerPixelEx(i) >> 3;
 
-    /* Set custom functions for several operations */
-    LCD_SetDevFunc(i, LCD_DEVFUNC_COPYBUFFER, (void(*)(void))CUSTOM_CopyBuffer);
-    LCD_SetDevFunc(i, LCD_DEVFUNC_COPYRECT,   (void(*)(void))CUSTOM_CopyRect);
-    LCD_SetDevFunc(i, LCD_DEVFUNC_FILLRECT, (void(*)(void))CUSTOM_FillRect);
+    /* Set LCD_LL functions for several operations */
+    LCD_SetDevFunc(i, LCD_DEVFUNC_COPYBUFFER, (void(*)(void))LCD_LL_CopyBuffer);
+    LCD_SetDevFunc(i, LCD_DEVFUNC_COPYRECT,   (void(*)(void))LCD_LL_CopyRect);
+    LCD_SetDevFunc(i, LCD_DEVFUNC_FILLRECT, (void(*)(void))LCD_LL_FillRect);
 
     /* Set up drawing routine for 32bpp bitmap using DMA2D */
     if (LCD_LL_GetPixelformat(i) == LTDC_PIXEL_FORMAT_ARGB8888) {
-     LCD_SetDevFunc(i, LCD_DEVFUNC_DRAWBMP_32BPP, (void(*)(void))CUSTOM_DrawBitmap32bpp);     /* Set up drawing routine for 32bpp bitmap using DMA2D. Makes only sense with ARGB8888 */
+     LCD_SetDevFunc(i, LCD_DEVFUNC_DRAWBMP_32BPP, (void(*)(void))LCD_LL_DrawBitmap32bpp);     /* Set up drawing routine for 32bpp bitmap using DMA2D. Makes only sense with ARGB8888 */
     }    
   }
 }
@@ -553,7 +530,7 @@ int LCD_X_DisplayDriver(unsigned LayerIndex, unsigned Cmd, void * pData)
   */
 static void LCD_LL_LayerInit(U32 LayerIndex) 
 {
-  LTDC_LayerCfgTypeDef             layer_cfg;
+  LTDC_LayerCfgTypeDef   layer_cfg;
   
   if (LayerIndex < GUI_NUM_LAYERS) 
   { 
@@ -563,7 +540,7 @@ static void LCD_LL_LayerInit(U32 LayerIndex)
     layer_cfg.WindowY0 = 0;
     layer_cfg.WindowY1 = YSIZE_PHYS; 
     layer_cfg.PixelFormat = LCD_LL_GetPixelformat(LayerIndex);
-    layer_cfg.FBStartAdress = ((uint32_t)0xC0000000);
+    layer_cfg.FBStartAdress = layer_prop[LayerIndex].address;
     layer_cfg.Alpha = 255;
     layer_cfg.Alpha0 = 0;
     layer_cfg.Backcolor.Blue = 0;
@@ -595,14 +572,14 @@ static void LCD_LL_Init(void)
   HAL_LTDC_DeInit(&hltdc);
   
   /* Set LCD Timings */
-  hltdc.Init.HorizontalSync = 40;
-  hltdc.Init.VerticalSync = 9;
-  hltdc.Init.AccumulatedHBP = 53;
-  hltdc.Init.AccumulatedVBP = 11;
-  hltdc.Init.AccumulatedActiveH = 283;
-  hltdc.Init.AccumulatedActiveW = 533;
-  hltdc.Init.TotalHeigh = 285;
-  hltdc.Init.TotalWidth = 565;
+  hltdc.Init.HorizontalSync = (HSYNC - 1);
+  hltdc.Init.VerticalSync = (VSYNC - 1);
+  hltdc.Init.AccumulatedHBP = (HSYNC + HBP - 1);
+  hltdc.Init.AccumulatedVBP = (VSYNC + VBP - 1);
+  hltdc.Init.AccumulatedActiveH = (YSIZE_PHYS + VSYNC + VBP - 1);
+  hltdc.Init.AccumulatedActiveW = (XSIZE_PHYS + HSYNC + HBP - 1);
+  hltdc.Init.TotalHeigh = (YSIZE_PHYS + VSYNC + VBP + VFP - 1);
+  hltdc.Init.TotalWidth = (XSIZE_PHYS + HSYNC + HBP + HFP - 1);
   
   /* background value */
   hltdc.Init.Backcolor.Blue = 0;
@@ -621,19 +598,10 @@ static void LCD_LL_Init(void)
   
   /* Enable dithering */
   HAL_LTDC_EnableDither(&hltdc);
-    
-   /* Configure the DMA2D default mode */ 
-  hdma2d.Init.Mode         = DMA2D_R2M;
-  hdma2d.Init.ColorMode    = DMA2D_RGB565;
-  hdma2d.Init.OutputOffset = 0x0;     
-
-  hdma2d.Instance          = DMA2D; 
-
-  if(HAL_DMA2D_Init(&hdma2d) != HAL_OK)
-  {
-    while (1);
-  }
   
+  /* Enable DMA2D */
+  __HAL_RCC_DMA2D_CLK_ENABLE(); 
+
   /* Assert display enable LCD_DISP pin */
   HAL_GPIO_WritePin(GPIOI, GPIO_PIN_12, GPIO_PIN_SET);
 
@@ -731,13 +699,13 @@ static U32 GetBufferSize(U32 LayerIndex)
 }
 
 /**
-  * @brief  Customized copy buffer
+  * @brief  LCD_LLized copy buffer
   * @param  LayerIndex : Layer Index
   * @param  IndexSrc:    index source
   * @param  IndexDst:    index destination           
   * @retval None.
   */
-static void CUSTOM_CopyBuffer(int LayerIndex, int IndexSrc, int IndexDst) {
+static void LCD_LL_CopyBuffer(int LayerIndex, int IndexSrc, int IndexDst) {
   U32 BufferSize, AddrSrc, AddrDst;
 
   BufferSize = GetBufferSize(LayerIndex);
@@ -758,7 +726,7 @@ static void CUSTOM_CopyBuffer(int LayerIndex, int IndexSrc, int IndexDst) {
   * @param  ySize:       Y size.            
   * @retval None.
   */
-static void CUSTOM_CopyRect(int LayerIndex, int x0, int y0, int x1, int y1, int xSize, int ySize) 
+static void LCD_LL_CopyRect(int LayerIndex, int x0, int y0, int x1, int y1, int xSize, int ySize) 
 {
   U32 AddrSrc, AddrDst;  
 
@@ -777,26 +745,25 @@ static void CUSTOM_CopyRect(int LayerIndex, int x0, int y0, int x1, int y1, int 
   * @param  PixelIndex:  Pixel index.             
   * @retval None.
   */
-static void CUSTOM_FillRect(int LayerIndex, int x0, int y0, int x1, int y1, U32 PixelIndex) 
+static void LCD_LL_FillRect(int LayerIndex, int x0, int y0, int x1, int y1, U32 PixelIndex) 
 {
   U32 BufferSize, AddrDst;
   int xSize, ySize;
-
-
+  
   if (GUI_GetDrawMode() == GUI_DM_XOR) 
   {		
     LCD_SetDevFunc(LayerIndex, LCD_DEVFUNC_FILLRECT, NULL);
     LCD_FillRect(x0, y0, x1, y1);
-    LCD_SetDevFunc(LayerIndex, LCD_DEVFUNC_FILLRECT, (void(*)(void))CUSTOM_FillRect);
+    LCD_SetDevFunc(LayerIndex, LCD_DEVFUNC_FILLRECT, (void(*)(void))LCD_LL_FillRect);
   } 
   else 
   {
     xSize = x1 - x0 + 1;
     ySize = y1 - y0 + 1;
     BufferSize = GetBufferSize(LayerIndex);
-		AddrDst = layer_prop[LayerIndex].address + BufferSize * layer_prop[LayerIndex].buffer_index + (y0 * layer_prop[LayerIndex].xSize + x0) * layer_prop[LayerIndex].BytesPerPixel;
+    AddrDst = layer_prop[LayerIndex].address + BufferSize * layer_prop[LayerIndex].buffer_index + (y0 * layer_prop[LayerIndex].xSize + x0) * layer_prop[LayerIndex].BytesPerPixel;
     DMA2D_FillBuffer(LayerIndex, (void *)AddrDst, xSize, ySize, layer_prop[LayerIndex].xSize - xSize, PixelIndex);
-	}
+  }
 }
 
 /**
@@ -810,7 +777,7 @@ static void CUSTOM_FillRect(int LayerIndex, int x0, int y0, int x1, int y1, U32 
   * @param  ySize: Y size
   * @retval None
   */
-static void CUSTOM_DrawBitmap32bpp(int LayerIndex, int x, int y, U8 const * p, int xSize, int ySize, int BytesPerLine)
+static void LCD_LL_DrawBitmap32bpp(int LayerIndex, int x, int y, U8 const * p, int xSize, int ySize, int BytesPerLine)
 {
   U32 BufferSize, AddrDst;
   int OffLineSrc, OffLineDst;
@@ -821,5 +788,5 @@ static void CUSTOM_DrawBitmap32bpp(int LayerIndex, int x, int y, U8 const * p, i
   OffLineDst = layer_prop[LayerIndex].xSize - xSize;
   DMA2D_CopyBuffer(LayerIndex, (void *)p, (void *)AddrDst, xSize, ySize, OffLineSrc, OffLineDst);
 }
-
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

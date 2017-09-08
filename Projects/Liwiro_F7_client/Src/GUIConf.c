@@ -59,13 +59,11 @@ Purpose     : Display controller initialization
 *
 **********************************************************************
 */
-//
-// Define the available number of bytes available for the GUI
-//
-#define GUI_NUMBYTES  (1024) *  150
+
+/* Define the available number of bytes available for the GUI */
+#define GUI_NUMBYTES  (128) *  1024 
 
 U32 aMemory[GUI_NUMBYTES / 4];
-
 /*********************************************************************
 *
 *       Public code
@@ -82,9 +80,6 @@ U32 aMemory[GUI_NUMBYTES / 4];
 */
 void GUI_X_Config(void) 
 {
-  //
-  // Assign memory to STemWin
-  //
   GUI_ALLOC_AssignMemory(aMemory, GUI_NUMBYTES);
 }
 

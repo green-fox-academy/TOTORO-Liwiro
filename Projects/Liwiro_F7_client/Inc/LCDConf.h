@@ -1,5 +1,11 @@
 /**
   ******************************************************************************
+  * @file    lcdconf.h
+  * @author  MCD Application Team
+  * @version V1.3.0
+  * @date    30-December-2016  
+  * @brief   Header for LCDConf file
+  ******************************************************************************
   * @attention
   *
   * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics International N.V. 
@@ -38,7 +44,9 @@
   *
   ******************************************************************************
   */
+  
 #include "main.h"
+#include "GUI.h"
 #include "GUIDRV_Lin.h"
 
 #ifndef LCDCONF_H
@@ -47,9 +55,9 @@
 
 typedef struct
 {
-  int32_t      address;          
-  __IO int32_t pending_buffer;   
-  int32_t      buffer_index;     
+  __IO int32_t      address;          
+  __IO int32_t      pending_buffer;   
+  __IO int32_t      buffer_index;     
   int32_t      xSize;            
   int32_t      ySize;            
   int32_t      BytesPerPixel;
@@ -59,4 +67,4 @@ LCD_LayerPropTypedef;
 
 #endif /* LCDCONF_H */
 
-/*************************** End of file ****************************/
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

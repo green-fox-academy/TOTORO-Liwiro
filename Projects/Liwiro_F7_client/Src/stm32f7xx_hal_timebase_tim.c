@@ -57,6 +57,7 @@
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef        TimHandle;
 /* Private function prototypes -----------------------------------------------*/
+void TIM6_DAC_IRQHandler(void);
 /* Private functions ---------------------------------------------------------*/
 
 /**
@@ -150,6 +151,28 @@ void HAL_ResumeTick(void)
   __HAL_TIM_ENABLE_IT(&TimHandle, TIM_IT_UPDATE);
 }
 
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM6 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  HAL_IncTick();
+}
+
+/**
+  * @brief  This function handles TIM interrupt request.
+  * @param  None
+  * @retval None
+  */
+void TIM6_DAC_IRQHandler(void)
+{
+  HAL_TIM_IRQHandler(&TimHandle);
+}
 
 /**
   * @}

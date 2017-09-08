@@ -181,7 +181,7 @@ void SystemInit(void)
   RCC->CIR = 0x00000000;
 
 #if defined (DATA_IN_ExtSDRAM)
-  SystemInit_ExtMemCtl();
+  SystemInit_ExtMemCtl(); 
 #endif /* DATA_IN_ExtSDRAM */
 
   /* Configure the Vector Table location add offset address ------------------*/

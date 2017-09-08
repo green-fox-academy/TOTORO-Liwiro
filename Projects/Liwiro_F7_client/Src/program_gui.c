@@ -2,7 +2,6 @@
 #include "program_gui.h"
 #include "stm32f7xx_hal.h"
 #include "cmsis_os.h"
-#include "init_program.h"
 #include "client.h"
 
 #include "main.h"
@@ -10,7 +9,6 @@
 #include "GUI.h"
 #include "DIALOG.h"
 #include "stm32746g_discovery_ts.h"
-#include "client.h"
 #include "timers.h"
 
 /* Private typedef -----------------------------------------------------------*/
