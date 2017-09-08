@@ -5,7 +5,6 @@
 #include "cmsis_os.h"
 #include "lwip/sockets.h"
 #include "stm32746g_discovery_ts.h"
-#include "init_program.h"
 #include "program_gui.h"
 #include <string.h>
 #include <stdint.h>
